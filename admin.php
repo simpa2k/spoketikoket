@@ -10,7 +10,7 @@ $user = new User();
 
 if ( $user->isLoggedIn() ) {
     
-    $db = DBUTF8::getInstance();
+    $db = DB::getInstance();
     
     $admin = new Admin();
 

@@ -175,7 +175,9 @@ class DB {
 
     public function getTableColumnCount($tableName) {
 
-        $count = ("Select COUNT(*) totalColumns FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$tableName' AND TABLE_SCHEMA = 'vilde'");
+        $databaseName = Config::get('mysql/db');
+
+        $count = ("Select COUNT(*) totalColumns FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$tableName' AND TABLE_SCHEMA = '$databaseName'");
         $result = $this->_pdo->prepare($count);
         $result->execute();
         $number = $result->fetchColumn();
@@ -186,7 +188,9 @@ class DB {
 
     public function getColumns($tableName) {
 
-        $columnStatement = ("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'vilde' AND `TABLE_NAME` = '$tableName'");
+        $databaseName = Config::get('mysql/db');
+
+        $columnStatement = ("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = '$databaseName' AND `TABLE_NAME` = '$tableName'");
         $result = $this->_pdo->prepare($columnStatement);
         $result->execute();
         $unformattedColumns = $result->fetchAll();

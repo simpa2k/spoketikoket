@@ -169,8 +169,8 @@ class DBUTF8 {
     }
 
     public function getColumns($tableName) {
-
-        $columnStatement = ("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'vilde' AND `TABLE_NAME` = '$tableName'");
+        
+        $columnStatement = ("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'spoketikoket_co' AND `TABLE_NAME` = '$tableName'");
         $result = $this->_pdo->prepare($columnStatement);
         $result->execute();
         $unformattedColumns = $result->fetchAll();
