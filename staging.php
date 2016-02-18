@@ -54,7 +54,7 @@ $contact = $contact[0];
                     
                     <p class="small-heading">Spöket i köket är:</p>
                     <?php foreach($members as $member) {
-                        echo "<p>$member->Förnamn $member->Efternamn - $member->Instrument</p>";
+                        echo "<p>$member->Firstname $member->Lastname - $member->Instrument</p>";
                     }; ?>
 
             </div>

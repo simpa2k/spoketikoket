@@ -51,8 +51,8 @@ $(function() {
         })
         
         $.post("admin.php", postObject, function() {
-            
-            location.reload();
+            console.log(postObject);
+            //location.reload();
 
         })
 
