@@ -46,7 +46,15 @@ $(function() {
 
         $(textareas).each(function(textarea) {
 
-            postObject[$(this).attr('id')] = $(this).val();
+            if($(this).is('textarea')) {
+                
+                postObject[$(this).attr('id')] = $(this).val();
+
+            } else if($(this).is('input')) {
+
+                postObject[$(this).attr('id')] = $(this).attr('placeholder');                
+
+            }
 
         })
         
