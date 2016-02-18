@@ -2,9 +2,9 @@
 require_once 'core/init.php';
 
 // Setting header
-header('Content-Type: text/html; charset=utf-8');
+/*header('Content-Type: text/html; charset=utf-8');
 header("Content-Security-Policy: script-src 'self'");
-header('Strict-Transport-Security: max-age=3600');
+header('Strict-Transport-Security: max-age=3600');*/
 
 $user = new User();
 
