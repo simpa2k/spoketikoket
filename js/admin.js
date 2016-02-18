@@ -51,7 +51,7 @@ $(function() {
         })
         
         $.post("newAdmin.php", postObject, function() {
-
+            
             location.reload();
 
         })

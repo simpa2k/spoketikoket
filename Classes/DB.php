@@ -210,7 +210,7 @@ class DB {
     public function first() {
 
         if(isset($this->results()[0])) {
-
+            
             return $this->results()[0];
         }
     }
