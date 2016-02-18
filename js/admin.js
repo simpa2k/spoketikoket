@@ -8,7 +8,7 @@ $(function() {
         var classes = $(this).attr('class').split(" ");
         var table = classes[classes.length - 1];
 
-        $.post("newAdmin.php", {id: $(this).attr('id'), table: table}, function(response) {
+        $.post("admin.php", {id: $(this).attr('id'), table: table}, function(response) {
 
             location.reload();
 
@@ -50,8 +50,8 @@ $(function() {
 
         })
         
-        $.post("newAdmin.php", postObject, function() {
-
+        $.post("admin.php", postObject, function() {
+            
             location.reload();
 
         })
