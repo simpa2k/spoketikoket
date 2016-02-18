@@ -165,6 +165,6 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
             <p class="large-text">Upp igen</p>
         </div>
             
-        <script type="text/javascript" src="js/spoketikoket.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
