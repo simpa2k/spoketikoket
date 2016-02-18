@@ -29,6 +29,7 @@ if ( Input::exists() ) {
             $user = new User();
             
             $salt = Hash::salt(32);
+            $salt = utf8_encode($salt)
             
             echo 'Validation passed';
             
