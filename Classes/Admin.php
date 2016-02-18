@@ -27,7 +27,7 @@ Class Admin {
 
     private function printDatePicker($name, $placeholder) {
 
-        echo "<div class='col-md-2'><div class='form-group'><label for='$name'>Datum</label></br><input class='form-control name='$name' id='$name' placeholder='$placeholder'></div></div>";
+        echo "<div class='col-md-2'><div class='form-group'><label for='$name'>Datum</label></br><input class='form-control name='$name' id='$name' value='$placeholder' placeholder='$placeholder'></div></div>";
 
     } 
 

@@ -45,16 +45,8 @@ $(function() {
         var postObject = {table: $(eventFiringElement).attr('id')};
 
         $(textareas).each(function(textarea) {
-
-            if($(this).is('textarea')) {
                 
-                postObject[$(this).attr('id')] = $(this).val();
-
-            } else if($(this).is('input')) {
-
-                postObject[$(this).attr('id')] = $(this).attr('placeholder');                
-
-            }
+            postObject[$(this).attr('id')] = $(this).val();
 
         })
         
