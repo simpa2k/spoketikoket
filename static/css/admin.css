@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200, 300, 400, 600');
+@import url('https://fonts.googleapis.com/css?family=Oswald:300, 400, 700');
+
 @viewport {
     zoom: 0.3;
     width: extend-to-zoom;
@@ -9,25 +12,42 @@
 }
 
 body {
-    font-family: "Open Sans", sans-serif;
-}
-/* Mobile first! */
-#background {
-    background: rgba( 0, 0, 0, 0 ) 
-                url(https://www.spoketikoket.com/static/images/backgroundimages/spoketbackgroundsmall.jpg) no-repeat 50% 0 / cover;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 0;
+    /*font-family: "Oswald", "Source Sans Pro", sans-serif !important;*/
+    font-family: "Oswald" !important;
+    font-weight: 300 !important;
 }
 
-/* For devices bigger than an iPhone 4s, might need to up this minimum a bit */
+/* Mobile first! */
+
+#main {
+    /*left: 10%;*/
+    width: 100%;
+    background-color: #DFDBC3;
+    z-index: 1;
+    text-align: center;
+    overflow-x: visible;
+    border-radius: 2px;
+}
+
+/* Preventing the embedded youtube player from getting wider than the #main div */
+#main iframe {
+    width: 100%;
+    box-shadow: 1px 1px 5px #919292;
+}
+
+.heading {
+    display: inline-block;
+    width: 17%;
+    font-size: 14pt;
+    color: #D0D7DA;
+    transition: all .5s ease;
+}
+
+/* For devices bigger than an iPhone 4s, might need to up this minimum a bit, check samsung device widths */
 @media (min-width: 641px) {
     #background {
         background: rgba( 0, 0, 0, 0 ) 
-                    url(https://www.spoketikoket.com/static/images/backgroundimages/spoketbackground.jpg) no-repeat 50% 0 / cover;
+                    url(https://www.spoketikoket.com/static/images/backgroundimages/backgroundLogo.jpg) no-repeat 50% 0 / cover;
         width: 100%;
         height: 100%;
         position: fixed;
@@ -35,124 +55,65 @@ body {
         left: 0;
         z-index: 0;
     }
-}
+    
+    #main {
+        width: 100%;
+        /*background-color: #F5F5F5;*/
+        background-color: #DFDBC3;
+        z-index: 1;
+        text-align: center;
+        overflow-x: hidden;
+        border-radius: 2px;
+    }
 
-#main {
-    position: absolute;
-    top: 90%;
-    left: 10%;
-    width: 80%;
-    background-color: #F1F1F1;
-    z-index: 1;
-    text-align: center;
-    overflow-x: hidden;
-    /*border: 2px solid #D1D1D1;*/
-    /*border: 2px solid #123848;*/
-    border-radius: 2px;
+    .heading {
+        display: inline-block;
+        width: 15%;
+        font-size: 14pt;
+        /*margin-bottom: 10%;*/
+        color: #D0D7DA;
+        /*font-weight: bold;*/
+        transition: all .5s ease;
+    }
 }
-
-/*.heading + .section {
-    margin-top: 10%;
-}*/
 
 #header {
-    /*background-color: #D1D1D1;*/
     background-color: #123848;
     margin-bottom: 10%;
 }
 
 .heading {
     display: inline-block;
-    width: 15%;
-    /*margin-bottom: 10%;*/
+    width: 17%;
+    font-size: 14pt;
     color: #D0D7DA;
-    font-weight: bold;
-    transition: all .5s ease;
-}
-
-.heading-link {
-    display: inline-block;
-    width: 15%;
-    /*margin-bottom: 10%;*/
-    color: #D0D7DA;
-    font-weight: bold;
-    -webkit-transition: all .5s ease;
     transition: all .5s ease;
 }
 
 .heading:hover {
     cursor: pointer;
-    color: #F1F1F1;
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
-}
-
-.heading-link:hover {
-    color: #F1F1F1;
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-}
-
-#main a {
-    text-decoration: none;
-    /*color: black;*/
-}
-
-.section {
-    width: 70%;
-    height: 100%;
-    margin: auto;
-    background-color: #F1F1F1;
-    text-align: left;
-    line-height: 1.3;
-    /*border-left: 2px solid #D1D1D1;*/
-    border-left: 2px solid #D0D7DA;
-    padding-left: 1%;
-}
-
-.section img {
-    float: right;
-    margin-right: 1%;
-    opacity: 1;
 }
 
 .section-heading {
-    color: #123848;
-}
-
-textarea {
     width: 60%;
-    height: 100%;
-    border: none;
-    padding: 1% 1% 1% 1%;
-    font-family: "Open Sans", sans-serif;
-    line-height: 1.3;
+    color: #123848;
+    font-size: 28pt;
+    font-weight: medium;
+    border-top: 2px solid #123848;
+    padding-top: 1%;
 }
 
-.image-form {
-    float: right;
-    width: 30%;
+#current-gig {
+    font-size: 20pt;
+    width: 40%;
 }
 
-.image-form form {
-    float: left;
+.upcoming-gig {
+    font-size: 18pt
 }
 
-/*#visible {
-    position: absolute;
-    z-index: 3;
-}
-
-#not-visible {
-    position: absolute;
-    z-index: 3;
-    top: 10%;
-    right: 10%;
-}*/
-
-/*input {
-    display: none;
-}*/
 #not-visible, #visible {
     display: none;
 }
@@ -164,7 +125,6 @@ textarea {
     right: 1%;
     color: #F1F1F1;
     background-color: #123848;
-    border-radius: 2px;
     padding: 0% 1% 0% 1%;
     opacity: 0.0;
     -webkit-transition: all .5s ease-in-out;
@@ -174,7 +134,7 @@ textarea {
 }
 
 #visible:checked + #to-top {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 #visible:checked + #to-top:hover {

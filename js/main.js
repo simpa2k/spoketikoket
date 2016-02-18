@@ -1,3 +1,5 @@
+//Vanilla JavaScript
+
 /*
  * 
  * Declarations and initializations
@@ -24,7 +26,7 @@ var toTheTopVisible = document.getElementById('visible');
 var toTheTopInvisible = document.getElementById('not-visible');
 
 // Storing dropdown menu
-var earlierGigsDropDownButton = document.getElementById('dropdown-menu-button');
+var earlierGigsDropDownButton = document.getElementById('dropdown-menu-button'); 
 var earlierGigs = document.getElementsByClassName('dropdown-menu-item');
 
 // Hiding earlier gigs
@@ -127,6 +129,16 @@ function hideEarlierGigs() {
     for( var i = 0; i < earlierGigs.length; i++ ) {
         earlierGigs[i].style.display = "none";
     }
+}
+
+// Function to delete database entry
+function deleteEntry() {
+    console.log("working");
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.open("POST", "127.0.0.1", false);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    send("test");
 }
 
 // Adding event listeners

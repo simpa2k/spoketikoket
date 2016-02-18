@@ -12,8 +12,9 @@
 }
 
 body {
-    font-family: "Oswald", "Source Sans Pro", sans-serif;
-    font-weight: 300;
+    /*font-family: "Oswald", "Source Sans Pro", sans-serif !important;*/
+    font-family: "Oswald" !important;
+    font-weight: 300 !important;
 }
 
 /* Mobile first! */
@@ -240,6 +241,12 @@ body {
     transition: all .2s ease-in-out;
     -webkit-transform: scale(1.05);
     transform: scale(1.05);
+}
+
+.dropdown-menu-item {
+
+    display: block;
+
 }
 
 .large-text {

@@ -1,9 +1,9 @@
 <?php
 require_once 'core/init.php';
 
-/*header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=utf-8');
 header("Content-Security-Policy: script-src 'self'");
-header('Strict-Transport-Security: max-age=3600');*/
+header('Strict-Transport-Security: max-age=3600');
 
 if ( Input::exists() ) {
     if ( Token::check( Input::get( 'token' ) ) ) {
@@ -29,6 +29,7 @@ if ( Input::exists() ) {
             $user = new User();
             
             $salt = Hash::salt(32);
+            $salt = utf8_encode($salt);
             echo 'Validation passed';
             
             try {

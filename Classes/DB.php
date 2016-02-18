@@ -172,6 +172,36 @@ class DB {
         return $array;
     
     }
+
+    public function getTableColumnCount($tableName) {
+
+        $count = ("Select COUNT(*) totalColumns FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '$tableName' AND TABLE_SCHEMA = 'vilde'");
+        $result = $this->_pdo->prepare($count);
+        $result->execute();
+        $number = $result->fetchColumn();
+        
+        return $number;
+
+    }
+
+    public function getColumns($tableName) {
+
+        $columnStatement = ("SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA` = 'vilde' AND `TABLE_NAME` = '$tableName'");
+        $result = $this->_pdo->prepare($columnStatement);
+        $result->execute();
+        $unformattedColumns = $result->fetchAll();
+
+        $formattedColumns = array();
+
+        foreach($unformattedColumns as $column => $name) {
+
+            $formattedColumns[] = $name[0];
+
+        }
+
+        return $formattedColumns;
+
+    }
     
     public function results() {
         return $this->_results;

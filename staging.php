@@ -10,34 +10,16 @@ header('Strict-Transport-Security: max-age=3600');
 $db = DB::getInstance('utf8');
 
 // Initializing variables
-$currentDate = date('Y-m-d');
 
-$allGigs = $db->getAll('konserter')->results();
-$counter = 0;
+$gigs = new Gigs();
 
-$about = $db->get('admin_main_page', array('type', '=', 'about'))->first();
+$members = $db->getAll('medlemmar')->results();
 
-$noGigs = $db->get('admin_main_page', array('type', '=', 'noGigs'))->first();
-$kontaktRubrik = $db->get('admin_main_page', array('type', '=', 'kontaktRubrik'))->first();
-$kontaktMail = $db->get('admin_main_page', array('type', '=', 'kontaktMail'))->first();
-$kontaktTelSE = $db->get('admin_main_page', array('type', '=', 'kontaktTelSE'))->first();
-$kontaktTelDK = $db->get('admin_main_page', array('type', '=', 'kontaktTelDK'))->first();
+$description = $db->getAll('beskrivning')->results();
+$description = $description[0];
 
-$years = array();
-
-$allGigs = $db->sortArrayByDate($allGigs);
-
-//Make a list of every year with associated entries
-foreach($allGigs as $gig) {
-    
-    $date = $gig->{'date'};
-    $explodedDate = explode('-', $date);
-    $year = $explodedDate[0];
-                            
-    if(!in_array($year, $years)) {
-        $years[] = $year;
-    }
-}
+$contact = $db->getAll('kontakt')->results();
+$contact = $contact[0];
 
 ?>
 
@@ -58,94 +40,23 @@ foreach($allGigs as $gig) {
                 <p class="heading">OM SPÖKET</p>
                 <p class="heading">MUSIK OCH MEDIA</p>
                 <p class="heading">KONTAKT</p>
-                <!--<a class="heading-link" href="kul">Kul!</a>-->
             </div>
             
             <div class="section" id="shows">
                 <p class="section-heading">KONSERTER</p>
-                    <?php 
-                        
-                        foreach($allGigs as $index => $gig) {
-                            
-                            $dateAndLocation = $gig->{'dateAndLocation'};
-                            $dateAndLocation = explode(',', $dateAndLocation);
-                                
-                            //Formatting the next gig differently. The formatting is based on the info of the
-                            //first gig that was displayed on the web site and the division into several fields 
-                            //in the database structure was done so that the gig could be displayed with less 
-                            //info once it had been played.
-                            if( ($gig->{'date'} > $currentDate) && ($counter == 0) ) {
-                                
-                                echo '<p id="current-gig">' . $dateAndLocation[0] .
-                                ', ' . $allGigs[0]->{'address'} . ', ' . $dateAndLocation[1] .
-                                ' ' . $allGigs[0]->{'additionalInfo'} . '</p>';
-                                
-                                if($allGigs[0]->{'ticketLink'}) {
-                                
-                                    echo '<a class="small-small-heading" href="' . $gig->{'ticketLink'} .
-                                    '">Klicka här för att köpa biljetter!</a></p>';    
-                                }
-                                
-                                unset($allGigs[$index]);
-                                
-                            } else if ( ($gig->{'date'} < $currentDate) && ($counter == 0) ) {
-                                
-                                //If there are no upcoming gigs
-                                echo '<p id="current-gig">' . $noGigs->content . '</p>';  
-                              
-                                
-                            } else if ( $gig->{'date'} > $currentDate && ($counter > 0) ) {
-                                //All the rest of the gigs that are yet to be played
-                                echo '<p class="upcoming-gig">' . $dateAndLocation . '</p>';
-                                    
-                                if($gig->{'ticketLink'}) {
-                                    echo '<a class="small-small-heading" href="' . $gig->{'ticketLink'} .
-                                    '">Klicka här för att köpa biljetter!</a></p>';    
-                                }
-                                
-                                unset($allGigs[$index]);
-        
-                            }
-                            
-                            $counter++;   
-                            
-                                
-                        }
-                        
-                        //Displaying gigs that have already been played in a kind of dropdown menu
-                        echo '<br/><p class="small-heading" id="dropdown-menu-button">Här har vi spelat tidigare &raquo;</p>';
-                        foreach($years as $year) {
-                            echo '<h5 class="dropdown-menu-item">' . $year . '</h5>';
-                            foreach($allGigs as $gig) {
-                                $entryDate = $gig->{'date'};
-                                $explodedEntryDate = explode('-', $entryDate);
-                                $entryYear = $explodedEntryDate[0];
-                                
-                                if($entryYear == $year) {
-                                    echo '<p class="dropdown-menu-item">' . $gig->{'dateAndLocation'} . '</p>';
-                                }
-                            }
-                        }
-                    ; ?>
+                    <?php $gigs->displayGigs(); ?>
             </div>
             
             <div class="section" id="about">
                 <p class="section-heading">OM SPÖKET</p>
                     <a href="static/images/about.jpg"><img src="static/images/about.jpg"></a>
-                    <?php echo '<p class="large-text">' . $about->content . '</p>' ;?>
+                    <?php echo "<p class='large-text'>$description->Beskrivning</p>" ;?>
                     
                     <p class="small-heading">Spöket i köket är:</p>
-                    <p class="large text">
-                        Clara Tesch - fiol<br/>
-                        Mads Kj&#248ller-Henningsen - flöjter, vevlira, sång<br/>
-                        Emma Engström - piano<br/>
-                        Erik Bengtsson - bas<br/>
-                        Troels Strange Lorentzen - dragspel<br/>
-                        Nisse Blomster - gitarr, mandolin, stomp, sång<br/>
-                        Albin Lagg - trumpet<br/>
-                        Erik Wennerberg - trombon<br/>Henrik Büller - barytonsax, altsax<br/>
-                        Erik Larsson - tenorsax, klarinett
-                    </p>
+                    <?php foreach($members as $member) {
+                        echo "<p>$member->Förnamn $member->Efternamn - $member->Instrument</p>";
+                    }; ?>
+
             </div>
                 
             <div class="section" id="musikochfilm">
@@ -214,10 +125,9 @@ foreach($allGigs as $gig) {
             
             <div class="section" id="kontakt">
                 <p class="section-heading">KONTAKT</p>
-                    <p class="small-heading"><?php echo $kontaktRubrik->content; ?></p>
-                        <p><?php echo $kontaktMail->content; ?></p>
-                        <p><?php echo $kontaktTelSE->content; ?></p>
-                        <p><?php echo $kontaktTelDK->content; ?></p>
+                    <p class="small-heading">Bokning, press, säga hej och allting:</p>
+                        <?php echo "<p>Mail: $contact->Email</p><p>Tel SE: $contact->TelSE</p><p>Tel DK: $contact->TelDK</p>";
+                        ?>
             </div>
             
             <div id="footer">
@@ -231,6 +141,6 @@ foreach($allGigs as $gig) {
             <p class="large-text">Upp igen</p>
         </div>
             
-        <script type="text/javascript" src="js/spoketikoket.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>

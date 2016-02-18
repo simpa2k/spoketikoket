@@ -1,6 +1,20 @@
 <?php
 Class Gigs {
     
+    private $_db;
+    private $_allGigs = array();
+    private $_noGigs = array();
+    private $_dateUtilities;
+    
+    public function __construct() {
+        
+        $this->_db = DB::getInstance();
+        $this->_allGigs = $this->_db->getAll('konserter')->results();
+        $this->_noGigs = $this->_db->get('admin_main_page', array('type', '=', 'noGigs'))->first();
+        $this->_dateUtilities = new DateUtilities();
+        
+    }
+    
     public function sortArrayByDate($array) {
             
         //Sorting the entries recorded in the database,
@@ -10,14 +24,14 @@ Class Gigs {
             $entry = $array[$i];
                                     
             //Storing date of current entry
-            $date = $array[$i]->{'date'};
+            $date = $array[$i]->{'Datum'};
                                     
             //Storing $i in separate variable $j for manipulation
             $j = $i;
                                     
             //As long as $j is greater than zero (index of the first entry) and the date of the entry in the previous iteration
             //is less than that of the current entry
-            while($j > 0 && $array[$j - 1]->{'date'} < $date) {
+            while($j > 0 && $array[$j - 1]->{'Datum'} < $date) {
                                         
                 //The entry at the index of the current iteration is assigned the value of the previous iteration
                 $array[$j] = $array[$j - 1];
@@ -34,51 +48,60 @@ Class Gigs {
         return $array;
         
     }
+
+
     
-    private function displayGigsToBePlayed($allGigs = array()) {
+    public function getAllGigs() {
+
+        $this->_allGigs = $this->sortArrayByDate($this->_allGigs);
+
+        return $this->_allGigs;
+        
+    }
+    
+    private function displayGigsToBePlayed() {
         
         $counter = 0;
         $currentDate = date('Y-m-d');
         
-        foreach($allGigs as $index => $gig) {
-                            
-            $dateAndLocation = $gig->{'dateAndLocation'};
-            $dateAndLocation = explode(',', $dateAndLocation);
+        foreach($this->_allGigs as $index => $gig) {
+            
+            $dayAndMonth = $this->_dateUtilities->dayAndMonth($gig->{'Datum'});
                 
             //Formatting the next gig differently. The formatting is based on the info of the
             //first gig that was displayed on the web site and the division into several fields 
             //in the database structure was done so that the gig could be displayed with less 
             //info once it had been played.
-            if( ($gig->{'date'} > $currentDate) && ($counter == 0) ) {
+            if( ($gig->{'Datum'} > $currentDate) && ($counter == 0) ) {
                 
-                echo '<p id="current-gig">' . $dateAndLocation[0] .
-                ', ' . $allGigs[0]->{'address'} . ', ' . $dateAndLocation[1] .
-                ' ' . $allGigs[0]->{'additionalInfo'} . '</p>';
+                echo '<p id="current-gig">' . $dayAndMonth .
+                ' - ' . $this->_allGigs[0]->{'Spelställe'} . ', ' . $this->_allGigs[0]->{'Adress'} .
+                ' ' . $this->_allGigs[0]->{'Extrainfo'} . '</p>';
                 
-                if($allGigs[0]->{'ticketLink'}) {
+                if($this->_allGigs[0]->{'Biljettlänk'}) {
                 
-                    echo '<a class="small-small-heading" href="' . $gig->{'ticketLink'} .
+                    echo '<a class="small-small-heading" href="' . $gig->{'Biljettlänk'} .
                     '">Klicka här för att köpa biljetter!</a></p>';    
                 }
                 
-                unset($allGigs[$index]);
+                unset($this->_allGigs[$index]);
                 
-            } else if ( ($gig->{'date'} < $currentDate) && ($counter == 0) ) {
+            } else if ( ($gig->{'Datum'} < $currentDate) && ($counter == 0) ) {
                 
                 //If there are no upcoming gigs
-                echo '<p id="current-gig">' . $noGigs->content . '</p>';  
+                echo '<p id="current-gig">' . $this->_noGigs->content . '</p>';  
               
                 
-            } else if ( $gig->{'date'} > $currentDate && ($counter > 0) ) {
+            } else if ( $gig->{'Datum'} > $currentDate && ($counter > 0) ) {
                 //All the rest of the gigs that are yet to be played
-                echo '<p class="upcoming-gig">' . $dateAndLocation . '</p>';
+                echo '<p class="upcoming-gig">' . $dayAndMonth . ", " . $gig->{"Spelställe"} . '</p>';
                     
-                if($gig->{'ticketLink'}) {
-                    echo '<a class="small-small-heading" href="' . $gig->{'ticketLink'} .
+                if($gig->{'Biljettlänk'}) {
+                    echo '<a class="small-small-heading" href="' . $gig->{'Biljettlänk'} .
                     '">Klicka här för att köpa biljetter!</a></p>';    
                 }
                 
-                unset($allGigs[$index]);
+                unset($this->_allGigs[$index]);
 
             }
             
@@ -88,15 +111,13 @@ Class Gigs {
         
     }
     
-    private function getGigYears($allGigs) {
+    private function getGigYears() {
         
         $years = array();
                 
-        foreach($allGigs as $gig) {
+        foreach($this->_allGigs as $gig) {
     
-            $date = $gig->{'date'};
-            $explodedDate = explode('-', $date);
-            $year = $explodedDate[0];
+            $year = $this->_dateUtilities->year($gig->{'Datum'});
                             
             if(!in_array($year, $years)) {
     
@@ -107,30 +128,38 @@ Class Gigs {
         return $years;
     }
     
-    private function displayGigsAlreadyPlayed($allGigs = array(), $years = array()) {
+    private function displayGigsAlreadyPlayed() {
         
-        $years = getGigYears($allGigs);
+        $years = $this->getGigYears();
         
          //Displaying gigs that have already been played in a kind of dropdown menu
         echo '<br/><p class="small-heading" id="dropdown-menu-button">Här har vi spelat tidigare &raquo;</p>';
         foreach($years as $year) {
             echo '<h5 class="dropdown-menu-item">' . $year . '</h5>';
-            foreach($allGigs as $gig) {
-                $entryDate = $gig->{'date'};
-                $explodedEntryDate = explode('-', $entryDate);
-                $entryYear = $explodedEntryDate[0];
+            foreach($this->_allGigs as $gig) {
                 
+                $entryDate = $gig->{'Datum'};
+                $entryYear = $this->_dateUtilities->year($entryDate);
+
                 if($entryYear == $year) {
-                    echo '<p class="dropdown-menu-item">' . $gig->{'dateAndLocation'} . '</p>';
+                    echo '<p class="dropdown-menu-item">' . $this->_dateUtilities->dayAndMonth($entryDate);
+
+                    if($gig->{'Spelställe'}) {
+
+                        echo ", " . $gig->{'Spelställe'};
+                    }
+
+                    echo "</p>";
                 }
             }
         }
     }
     
-    public function displayGigs($allGigs) {
+    public function displayGigs() {
         
-       displayGigsToBePlayed($allGigs);
-       displayGigsAlreadyPlayed($allGigs);
+       $this->sortArrayByDate($this->_allGigs);
+       $this->displayGigsToBePlayed();
+       $this->displayGigsAlreadyPlayed();
         
     }
     
