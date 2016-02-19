@@ -27,7 +27,7 @@ Class Admin {
 
     private function printDatePicker($name, $placeholder) {
 
-        echo "<div class='col-md-2'><div class='form-group'><label for='$name'>Datum</label></br><input class='form-control name='$name' id='$name' value='$placeholder' placeholder='$placeholder'></div></div>";
+        echo "<div class='col-md-2'><div class='form-group'><label for='$name'>Date</label></br><input class='form-control name='$name' id='$name' value='$placeholder' placeholder='$placeholder'></div></div>";
 
     } 
 
@@ -46,7 +46,7 @@ Class Admin {
                     $length = strlen($value) + 1;
                     $uniqueName = $databaseEntry->id . "_" . $field;
 
-                    if($field == 'Datum') {
+                    if($field == 'Date') {
 
                         $this->printDatePicker($uniqueName, $value);
 
@@ -78,9 +78,9 @@ Class Admin {
 
             if(!in_array($column, $fieldsToIgnore)) {
 
-                if($column == 'Datum') {
+                if($column == 'Date') {
 
-                    $this->printDatePicker('Datum', '');
+                    $this->printDatePicker('Date', '');
 
                 } else {
 
