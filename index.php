@@ -53,11 +53,10 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
                     <p class="upcoming-gig">29 Maj - Kulturernas Karneval, Uppsala.</p>
                     <a class="small-small-heading" href="http://kulturernaskarneval.se">Gratis! Klicka här för mer info</a></p>
                     <br/>
-                    
+
                     <p class="large-text">Lång sommarturné planeras!</p>
-
                     <br/>
-
+                    
                     <p class="small-heading" id="dropdown-menu-button">Här har vi spelat tidigare &raquo;</p>
                         <h5 class="dropdown-menu-item">2015</h5>
                         <p class="dropdown-menu-item">16 Oktober - Oceanen, Göteborg</p>
