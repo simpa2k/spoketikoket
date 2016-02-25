@@ -140,6 +140,7 @@ Class Gigs {
 
             //If there are no upcoming gigs
             echo '<p id="current-gig">' . $this->_noGigs->content . '</p>'; 
+            return;
 
         }
 
@@ -154,10 +155,10 @@ Class Gigs {
             if( ($counter == 0) ) {
                 
                 echo '<p id="current-gig">' . $dayAndMonth .
-                ' - ' . $this->_allGigs[0]->{'Venue'} . ', ' . $this->_allGigs[0]->{'Address'} .
-                ' ' . $this->_allGigs[0]->{'Info'} . '</p>';
+                ' - ' . $gig->Venue . ', ' . $gig->Address .
+                ' ' . $gig->Info . '</p>';
                 
-                if($this->_allGigs[0]->{'Ticketlink'}) {
+                if($gig->Ticketlink) {
                 
                     echo '<a class="small-small-heading" href="' . $gig->{'Ticketlink'} .
                     '">Klicka här för att köpa biljetter!</a></p>';    
