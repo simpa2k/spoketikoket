@@ -90,6 +90,18 @@ body {
         /*font-weight: bold;*/
         transition: all .5s ease;
     }
+
+    .social-media-button {
+
+        background-image: url(/static/images/sociala_medier/facebooklogga_liten.jpg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 50px;
+        display: inline-block;
+        width: 10%;
+
+    }
+
     /*Resetting the width of the embedded youtube player, as per the width specified in the original iframe*/
     #main iframe {
         width: 560px;
@@ -118,12 +130,19 @@ body {
     }
 }
 
+nav {
+
+    background-color: #123848;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    margin-bottom: 10% !important;
+
+}
+
 #header {
     background-color: #123848;
     margin-bottom: 10%;
 }
-
-
 
 .heading-link {
     display: inline-block;

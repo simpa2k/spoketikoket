@@ -24,18 +24,44 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
         <!--Setting viewport for mobile devices-->
         <meta name="viewport" content="width=device-width, initial-scale=0.5">
         <link rel="stylesheet" type="text/css" href="static/css/alternate.css">
+
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body id="body">
         <div id="background"></div>
         
         <div id="main">
+            <!--<nav class="navbar">
+                <div class="container">
+                    <p class="heading">KONSERTER</p>
+                    <p class="heading">OM SPÖKET</p>
+                    <p class="heading">MUSIK OCH MEDIA</p>
+                    <p class="heading">KONTAKT</p>
+                    <a id="facebook" href="http://www.facebook.com/spoketikoket"><img src="static/images/sociala_medier/facebooklogga_liten.jpg"></a>
+                    <a id="soundcloud" href="http://www.soundcloud.com/sp-ket-i-k-ket"><img src="static/images/sociala_medier/soundcloudlogga_liten.jpg"></a>
+                    <a id="youtube" href="https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw"><img src="static/images/sociala_medier/youtubelogga_liten.jpg"></a>
+                </div>
+            </nav>-->
+
             <div id="header">
                 <p class="heading">KONSERTER</p>
                 <p class="heading">OM SPÖKET</p>
                 <p class="heading">MUSIK OCH MEDIA</p>
                 <p class="heading">KONTAKT</p>
-                <!--<a class="heading-link" href="kul">Kul!</a>-->
+
+                <a id="facebook" href="http://www.facebook.com/spoketikoket"><img src="static/images/sociala_medier/facebooklogga_liten.jpg"></a>
+                <a id="soundcloud" href="http://www.soundcloud.com/sp-ket-i-k-ket"><img src="static/images/sociala_medier/soundcloudlogga_liten.jpg"></a>
+                <a id="youtube" href="https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw"><img src="static/images/sociala_medier/youtubelogga_liten.jpg"></a>
             </div>
+
             
             <div class="section" id="shows">
                 <p class="section-heading">KONSERTER</p>
@@ -177,7 +203,9 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
         <div id="to-top">
             <p class="large-text">Upp igen</p>
         </div>
-            
+        
+        <script src="js/jquery-1.12.0.min.js"></script> 
+        <script type="text/javascript" src="js/mainjQuery.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
