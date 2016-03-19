@@ -44,7 +44,7 @@ $contact = $contact[0];
         <div id="background"></div>
         
         <div id="main">
-            <nav class="navbar">
+            <!--<nav class="navbar">
                 <div class="container">
                     <p class="heading">KONSERTER</p>
                     <p class="heading">OM SPÖKET</p>
@@ -54,8 +54,19 @@ $contact = $contact[0];
                     <a id="soundcloud" href="http://www.soundcloud.com/sp-ket-i-k-ket"><img src="static/images/sociala_medier/soundcloudlogga_liten.jpg"></a>
                     <a id="youtube" href="https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw"><img src="static/images/sociala_medier/youtubelogga_liten.jpg"></a>
                 </div>
-            </nav>
-            
+            </nav>-->
+
+            <div id="header">
+                <p class="heading">KONSERTER</p>
+                <p class="heading">OM SPÖKET</p>
+                <p class="heading">MUSIK OCH MEDIA</p>
+                <p class="heading">KONTAKT</p>
+
+                <a id="facebook" href="http://www.facebook.com/spoketikoket"><img src="static/images/sociala_medier/facebooklogga_liten.jpg"></a>
+                <a id="soundcloud" href="http://www.soundcloud.com/sp-ket-i-k-ket"><img src="static/images/sociala_medier/soundcloudlogga_liten.jpg"></a>
+                <a id="youtube" href="https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw"><img src="static/images/sociala_medier/youtubelogga_liten.jpg"></a>
+            </div>
+
             <div class="section" id="shows">
                 <p class="section-heading">KONSERTER</p>
                     <?php $gigs->displayGigs(); ?>
