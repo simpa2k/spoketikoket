@@ -65,15 +65,15 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
             
             <div class="section" id="shows">
                 <p class="section-heading">KONSERTER</p>
-                    <p id="current-gig">29 Februari - Koordinaten, Oxelösund<br/></p>
+                    <!--<p id="current-gig">29 Februari - Koordinaten, Oxelösund<br/></p>
                     <a class="small-heading" href="http://www.svetur.se/sv/oxelosund/products/212430/Spoket-i-koket/">Klicka här för att köpa biljetter!</a></p>
                     <br/>
 
                     <p class="upcoming-gig">17 Mars - Huset, Aalborg</p>
                     <a class="small-small-heading" href="http://huset.enkelbillet.dk/book/OnlineBooking.pl?aid=2&sid=ca434014460406b3019271488648af57">Klicka här för att köpa biljetter!</a></p>
-                    <br/>
+                    <br/>-->
 
-                    <p class="upcoming-gig">19-25 Mars - Rod, Nykøping</p>
+                    <p id="current-gig">19-25 Mars - Rod, Nykøping</p>
                     <br/>
 
                     <p class="upcoming-gig">29 Maj - Kulturernas Karneval, Uppsala.</p>
@@ -84,6 +84,10 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
                     <br/>
                     
                     <p class="small-heading" id="dropdown-menu-button">Här har vi spelat tidigare &raquo;</p>
+                        <h5 class="dropdown-menu-item">2016</h5>
+                        <p class="dropdown-menu-item">17 Mars - Huset, Aalborg</p>
+                        <p class="dropdown-menu-item">29 Februari - Koordinaten, Oxelösund</p>
+
                         <h5 class="dropdown-menu-item">2015</h5>
                         <p class="dropdown-menu-item">16 Oktober - Oceanen, Göteborg</p>
                         <p class="dropdown-menu-item">25 Juli - Festival Decimal, Nyköping</p>
