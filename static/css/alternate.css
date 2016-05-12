@@ -20,7 +20,7 @@ body {
 /* Mobile first! */
 #background {
     background: rgba( 0, 0, 0, 0 ) 
-                url(https://www.spoketikoket.com/static/images/backgroundimages/spoketbackgroundsmall.jpg) no-repeat 50% 0 / cover;
+                url(/static/images/backgroundimages/spoketbackgroundsmall.jpg) no-repeat 50% 0 / cover;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -59,7 +59,7 @@ body {
 @media (min-width: 641px) {
     #background {
         background: rgba( 0, 0, 0, 0 ) 
-                    url(https://www.spoketikoket.com/static/images/backgroundimages/summertour2016.jpg) no-repeat 50% 0 / cover;
+                    url(/static/images/backgroundimages/summertour2016.jpg) no-repeat 50% 0 / cover;
         width: 100%;
         height: 100%;
         position: fixed;
