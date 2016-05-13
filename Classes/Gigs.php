@@ -167,7 +167,8 @@ Class Gigs {
             } else {
 
                 //All the rest of the gigs that are yet to be played
-                echo '<p class="upcoming-gig">' . $dayAndMonth . " - " . $gig->{"Venue"} . ', ' . $gig->Address . '</p>';
+                echo '<p class="upcoming-gig">' . $dayAndMonth . " - " . $gig->{"Venue"} . ', ' . $gig->Address .
+                    '</br>$gig->Info' . '</p>';
                     
                 if($gig->{'Ticketlink'}) {
                     echo '<a class="small-small-heading" href="' . $gig->{'Ticketlink'} .
