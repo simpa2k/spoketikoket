@@ -175,6 +175,7 @@ Class Gigs {
                 }
 
             }
+            echo '</br>';
             
             $counter++;   
             

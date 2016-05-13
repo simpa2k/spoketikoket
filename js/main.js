@@ -141,11 +141,22 @@ function deleteEntry() {
     send("test");
 }
 
+function setBackgroundHeight() {
+
+    var background = document.getElementById('background');
+    var backgroundWidth = background.getBoundingClientRect().width;
+    var heightToWidthRatio = 0.5;
+
+    background.style.height = backgroundWidth * heightToWidthRatio + "px";
+
+}
+
 // Adding event listeners
 toTheTop.addEventListener('click', toTheTopClick, false);
 main.addEventListener('click', headingClick, false);
 window.addEventListener('scroll', toTheTopDisplay, false);
 earlierGigsDropDownButton.addEventListener('click', hideOrDisplayEarlierGigs, false);
+window.addEventListener('resize', setBackgroundHeight, false);
 
 /*
  * Jag tog bort en animerad scrolldown när man trycker på headingknapparna eftersom det var svårt att få
