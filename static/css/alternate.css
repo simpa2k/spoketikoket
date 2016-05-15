@@ -58,20 +58,28 @@ body {
 /* For devices bigger than an iPhone 4s, might need to up this minimum a bit, check samsung device widths */
 @media (min-width: 641px) {
     #background {
-        background-image: url(/static/images/backgroundimages/summertour2016.jpg);
+        background-image: url(/static/images/backgroundimages/backgroundLogoCropped.jpg);
         background-size: cover;
-        /*width: 100%;*/
+        width: 100%;
         /*height: 100%;*/
-        height: 100vt;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 0;
     }
+
+    #summertour-text {
+
+        color: white;
+        position: absolute;
+        left: 25%;
+        top: 70%;
+
+    }
     
     #main {
         position: absolute;
-        top: 100%;
+        top: 90%;
         left: 0%;
         width: 100%;
         /*background-color: #F5F5F5;*/

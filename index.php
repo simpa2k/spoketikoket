@@ -7,13 +7,19 @@ header("Content-Security-Policy: script-src 'self'");
 header('Strict-Transport-Security: max-age=3600');
 
 // Instantiating database
-$db = DB::getInstance();
+$db = DB::getInstance('utf8');
 
-// Initializing text sections
-$shows = $db->get('admin_main_page', array('type', '=', 'shows'))->first();
-$about = $db->get('admin_main_page', array('type', '=', 'about'))->first();
-$musikOchFilm = $db->get('admin_main_page', array('type', '=', 'musikOchFilm'))->first();
-$kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
+// Initializing variables
+
+$gigs = new Gigs();
+
+$members = $db->getAll('medlemmar')->results();
+
+$description = $db->getAll('beskrivning')->results();
+$description = $description[0];
+
+$contact = $db->getAll('kontakt')->results();
+$contact = $contact[0];
 
 ?>
 
@@ -24,7 +30,6 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
         <!--Setting viewport for mobile devices-->
         <meta name="viewport" content="width=device-width, initial-scale=0.5">
         <link rel="stylesheet" type="text/css" href="static/css/alternate.css">
-
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -37,7 +42,7 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
     </head>
     <body id="body">
         <div id="background"></div>
-        
+
         <div id="main">
             <!--<nav class="navbar">
                 <div class="container">
@@ -62,59 +67,21 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
                 <a id="youtube" href="https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw"><img src="static/images/sociala_medier/youtubelogga_liten.jpg"></a>
             </div>
 
-            
             <div class="section" id="shows">
                 <p class="section-heading">KONSERTER</p>
-                    <p id="current-gig">19-25 Mars - Rod, Nykøping</p>
-                    <br/>
-
-                    <p class="upcoming-gig">29 Maj - Kulturernas Karneval, Uppsala.</p>
-                    <a class="small-small-heading" href="http://kulturernaskarneval.se">Gratis! Klicka här för mer info</a></p>
-                    <br/>
-
-                    <p class="large-text">Lång sommarturné planeras!</p>
-                    <br/>
-                    
-                    <p class="small-heading" id="dropdown-menu-button">Här har vi spelat tidigare &raquo;</p>
-                        <h5 class="dropdown-menu-item">2016</h5>
-                        <p class="dropdown-menu-item">17 Mars - Huset, Aalborg</p>
-                        <p class="dropdown-menu-item">29 Februari - Koordinaten, Oxelösund</p>
-
-                        <h5 class="dropdown-menu-item">2015</h5>
-                        <p class="dropdown-menu-item">16 Oktober - Oceanen, Göteborg</p>
-                        <p class="dropdown-menu-item">25 Juli - Festival Decimal, Nyköping</p>
-                        <p class="dropdown-menu-item">15 Maj - Stallet, Stockholm</p>
-                        <p class="dropdown-menu-item">27 Mars - Teaterhögskolan Göteborg</p>
+                    <?php $gigs->displayGigs(); ?>
             </div>
-            
-            <!--<a href="static/images/IMG_3079.JPG"><img class="thumbnail" src="static/images/thumbnails/IMG_3079.JPG"></a>
-            <a href="static/images/IMG_3054.JPG"><img class="thumbnail" src="static/images/thumbnails/IMG_3054.JPG"></a>-->
             
             <div class="section" id="about">
                 <p class="section-heading">OM SPÖKET</p>
                     <a href="static/images/about.jpg"><img src="static/images/about.jpg"></a>
-                    <p class="large-text">
-                        Spöket i Köket är ett svenskt/danskt tiohövdat folkmusikmonster med svans. Svansen består av lika delar polska, reel, vals, polka, strathspey, schottis, jig, visa och dans! 
-                        Spöket spelar fiol, vevlira, footstomping, hel blåssektion och en massa annat, och musiken kommer från nordisk och kanadensisk folkmusiktradition och från spökets egna huvuden.
-                        <br/>
-                        <br/>
-                        Musikerna är tio och instrumenten tjugo! Musiken är lounge/rave-folk och bandet är Spöket i Köket!
-                    </p>
+                    <?php echo "<p class='large-text'>$description->Beskrivning</p>" ;?>
                     
-                    <br/>
-                    
-                <p class="small-heading">Spöket i köket är:</p>
-                    <p class="large text">
-                        Clara Tesch - fiol<br/>
-                        Mads Kj&#248ller-Henningsen - flöjter, vevlira, sång<br/>
-                        Emma Engström - piano<br/>
-                        Erik Bengtsson - bas<br/>
-                        Troels Strange Lorentzen - dragspel<br/>
-                        Nisse Blomster - gitarr, mandolin, stomp, sång<br/>
-                        Albin Lagg - trumpet<br/>
-                        Erik Wennerberg - trombon<br/>Henrik Büller - barytonsax, altsax<br/>
-                        Erik Larsson - tenorsax, klarinett
-                    </p>
+                    <p class="small-heading">Spöket i köket är:</p>
+                    <?php foreach($members as $member) {
+                        echo "<p>$member->Firstname $member->Lastname - $member->Instrument</p>";
+                    }; ?>
+
             </div>
                 
             <div class="section" id="musikochfilm">
@@ -184,9 +151,8 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
             <div class="section" id="kontakt">
                 <p class="section-heading">KONTAKT</p>
                     <p class="small-heading">Bokning, press, säga hej och allting:</p>
-                        <p>Mail: spoketikoket@gmail.com</p>
-                        <p>Tel SE: Nisse Blomster - +46(0)735591230</p>
-                        <p>Tel DK: Mads Kjøller-Henningsen - +45 50 42 18 35</p>
+                        <?php echo "<p>Mail: $contact->Email</p><p>Tel SE: $contact->TelSE</p><p>Tel DK: $contact->TelDK</p>";
+                        ?>
             </div>
             
             <div id="footer">
@@ -200,7 +166,8 @@ $kontakt = $db->get('admin_main_page', array('type', '=', 'kontakt'))->first();
             <p class="large-text">Upp igen</p>
         </div>
         
-        <script src="js/jquery-1.12.0.min.js"></script> 
+        <script src="js/jquery-1.12.0.min.js"></script>
+        <script src="js/parallax_js/parallax.min.js"></script>
         <script type="text/javascript" src="js/mainjQuery.js"></script>
         <script type="text/javascript" src="js/main.js"></script>
     </body>
