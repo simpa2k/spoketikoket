@@ -1,19 +1,18 @@
 <?php
 
+require_once('core/init.php');
+
 class GigsModel extends BaseModel {
 
     public function get($where = array()) {
         $action = 'SELECT *';
         $table = 'gig, venue';
         $joinCondition = array(0 => array('venue_name', 'name'));
-
-        return $this->getDB()->action($action, $table, $where, $joinCondition)->results();
+        return $this->getDB()->action($action, $table, $where, $joinCondition);
     }
 
-    public function getAll() {
-
-        return $this->get();
-        
+	public function getAll() {
+        return $this->getDB()->getAll('gig')->results();
     }
     
     public function insert($fields) {

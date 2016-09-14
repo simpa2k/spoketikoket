@@ -5,7 +5,7 @@ require_once('core/init.php');
 class DescriptionModel extends BaseModel {
 
     public function get($where) {
-        return $this->getDB()->get('description', $where)->results();
+        return $this->getDB()->get($where)->results();
     }
 
 	public function getAll() {
