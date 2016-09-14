@@ -5,7 +5,7 @@ require_once('core/init.php');
 class UsersModel extends BaseModel {
 
     public function get($where) {
-        return $this->getDB()->get($where)->results();
+        return $this->getDB()->get('user', $where)->results();
     }
 
 	public function getAll() {

@@ -5,7 +5,7 @@ require_once('core/init.php');
 class VenuesModel extends BaseModel {
 
     public function get($where) {
-        return $this->getDB()->get($where)->results();
+        return $this->getDB()->get('venue', $where)->results();
     }
 
 	public function getAll() {
