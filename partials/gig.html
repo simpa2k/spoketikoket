@@ -1,0 +1,19 @@
+<div class="col-xs-12">
+    <div class="row">
+        <div class="gig-text col-xs-9">
+            <p class="text-center">{{ gig.datetime | date:dateFormat}} - <span class="orange-brown">{{ gig.venue_name }}</span>, {{ gig.city }}</p>
+        </div>
+        <div class="gig-button col-xs-3"></div>
+    </div>
+
+    <div class="row">
+        <div class="additional-info col-xs-12">
+            <p>Tid: <span class="orange-brown">{{ gig.datetime | date:timeFormat }}</span></p>
+            <p>Pris: <span class="orange-brown">{{ gig.price }}</span></p>
+            <p ng-if="gig.address">Plats: <span class="orange-brown">{{ gig.address }}</span></p>
+            <p ng-if="gig.webpage">Webbsida: <a href="{{ gig.webpage }}">{{ gig.webpage }}</a></p>
+            <p ng-if="gig.ticketlink">Biljetter: <a href="{{ gig.ticketlink }}">{{ gig.ticketlink }}</a></p>
+            <p>{{ gig.info }}</p>
+        </div>
+    </div>
+</div>

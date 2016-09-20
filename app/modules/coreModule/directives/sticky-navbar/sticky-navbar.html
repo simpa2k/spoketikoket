@@ -1,0 +1,24 @@
+<nav id="navbar">
+    <div class="container-fluid">
+        <a ui-sref="home" class="navbar-brand">
+            <!--<img src="images/brand.png" height="50">-->
+        </a>
+
+        <ul ng-repeat="headingSection in headings">
+            <li ng-repeat="(content, destination) in headingSection" ng-switch on="destination.charAt(0)">
+                <!-- If destination is an id, assume that the intention is to scroll, not to go to another page -->
+                <p ng-switch-when="#" class="navbar-text" ng-click="goToSection(destination)">{{ content }}</p>
+                <!-- Else, assume that the intention is to go to another page, not to scroll -->
+                <a ng-switch-default  class="navbar-text" ui-sref="{{ destination }}">{{ content }}</a>
+            </li>
+        </ul>
+
+        <div id="social-media-section">
+            <a ng-repeat="(linkHref, imgSrc) in socialmedia" class="social-media" href="{{ linkHref }}">
+                <img src="{{ imgSrc }}">
+            </a>
+        </div>
+
+        <button id="navbar-button" type="button" class="btn btn-default" ng-click="toggleNavbar()"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+    </div>
+</nav>

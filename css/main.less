@@ -1,0 +1,121 @@
+@import 'globals.less';
+@import 'navbar.less';
+@import 'gig.less';
+
+body {
+
+  font-family: "Oswald" !important;
+  font-weight: 300 !important;
+
+}
+#background {
+
+  position: fixed;
+  width: 100%;
+  height: @screen-height !important;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-image: url("../images/backgroundimages/spoketbackgroundsmall.jpg");
+  background-size: cover !important;
+
+  img {
+
+    position: absolute;
+    left: 5%;
+    top: 15%;
+    width: 90%;
+    opacity: 0.95;
+
+  }
+
+}
+
+@media(min-width: 560px) {
+
+  #background {
+
+    background-image: url("../images/backgroundimages/summertour2016stor.jpg");
+    background-position: center top;
+
+    img {
+
+      width: 70%;
+      left: 15%;
+      top: 10%;
+
+    }
+  }
+}
+
+@media(min-width: 747px) {
+  #background {
+
+    position: absolute;
+
+    img {
+
+      width: 20%;
+      left: 2%;
+      top: 2%;
+
+    }
+  }
+}
+
+#main {
+
+  position: absolute;
+  top: @screen-height;
+  z-index: 1;
+  background-color: @sand-color;
+  width: 100%;
+
+  .section {
+
+    position: relative;
+    z-index: 1;
+    background-color: @sand-color;
+    padding-top: 5%;
+
+  }
+
+  h1 {
+    color: @deep-blue;
+  }
+
+  .big-image {
+
+    height: @screen-height !important;
+    background-image: url('../images/about.jpg');
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center bottom;
+    z-index: 0;
+    position: relative;
+
+  }
+  #description {
+
+    .drop-cap-container {
+
+      float: left;
+      padding: 0 5px 0 5px;
+      margin-right: 2px;
+
+    }
+
+    .drop-cap {
+
+      font-size: 60pt;
+      color: #f44843;
+      display: inline;
+      float: left;
+      top: 0;
+      line-height: 65px;
+
+    }
+
+  }
+}
+

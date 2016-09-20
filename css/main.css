@@ -1,3 +1,301 @@
-h1 {
-	color: red;
+@import url('https://fonts.googleapis.com/css?family=Oswald:300, 400, 700');
+.selectable-container:hover > .selectable {
+  transform: scale(0.95);
+}
+.selectable {
+  transition: all 0.2s ease-in-out;
+}
+.selectable:hover {
+  cursor: pointer;
+}
+.selectable-container:hover > .selectable:hover {
+  transform: scale(1);
+}
+.admin-item {
+  padding: 1% 1% 1% 1%;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  margin-top: 1%;
+  -webkit-box-shadow: 2px 2px 3px 0px #969696;
+  -moz-box-shadow: 2px 2px 3px 0px #969696;
+  box-shadow: 2px 2px 3px 0px #969696;
+}
+#navbar {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(18, 56, 72, 0.9);
+  color: #D0D7DA;
+  /*.social-media:hover {
+
+      background-color: @dark-grey;
+
+  }*/
+}
+#navbar .navbar-brand {
+  padding-top: 1px;
+  padding-left: 1px;
+}
+#navbar ul {
+  display: none;
+}
+#navbar .navbar-text {
+  display: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 11pt;
+  margin: 15px 15px 15px 15px;
+}
+#navbar .navbar-text:hover {
+  transform: scale(1.05);
+}
+#navbar a {
+  color: red;
+  text-decoration: none;
+}
+#navbar #social-media-section {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: inline-block;
+  float: left;
+}
+#navbar .social-media {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#navbar #navbar-button {
+  float: right;
+  margin-top: 8px;
+  background-color: #262626;
+  color: white;
+  border-color: #123848;
+}
+#navbar #navbar-button:hover {
+  background-color: #0c3242;
+  -webkit-box-shadow: inset 1px 1px 5px 0px #101010;
+  -moz-box-shadow: inset 1px 1px 5px 0px #101010;
+  box-shadow: inset 1px 1px 5px 0px #101010;
+}
+#navbar #navbar-button.active {
+  background-color: #0c3242;
+  -webkit-box-shadow: inset 1px 1px 5px 0px #101010;
+  -moz-box-shadow: inset 1px 1px 5px 0px #101010;
+  box-shadow: inset 1px 1px 5px 0px #101010;
+}
+#navbar.expanded ul {
+  display: inline-block;
+  list-style: none;
+  margin-top: 10px;
+  padding-left: 0;
+  padding-right: 5px;
+}
+#navbar.expanded .navbar-text {
+  display: inline;
+  margin-left: 10%;
+  margin-top: 10px;
+}
+#navbar.expanded .navbar-text:hover {
+  transform: scale(1.05);
+}
+#navbar.expanded .social-media-section {
+  display: none;
+}
+#navbar.expanded .social-media {
+  display: none;
+}
+#navbar.expanded #navbar-button:hover {
+  background-color: #082e3e;
+}
+@media (min-width: 500px) {
+  #navbar ul {
+    padding-left: 10%;
+    float: left;
+  }
+}
+@media (min-width: 931px) {
+  #navbar .navbar-brand {
+    display: initial;
+  }
+  #navbar ul {
+    display: initial;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+  #navbar li {
+    display: inline-block;
+  }
+  #navbar .navbar-text {
+    display: initial;
+  }
+  #navbar #social-media-section {
+    float: right;
+  }
+  #navbar .social-media {
+    display: initial;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  #navbar #navbar-button {
+    display: none;
+  }
+}
+.navbar {
+  margin-bottom: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.navbar .navbar-brand {
+  padding-top: 1px;
+}
+.navbar .navbar-text {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.navbar .navbar-text:hover {
+  transform: scale(1.05);
+}
+.navbar .navbar-nav > li > a {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#gigs {
+  height: 100vh;
+  overflow-y: auto;
+  color: #123848;
+}
+#gigs h1 {
+  text-shadow: #afab93 2px 2px 2px;
+}
+#gigs #gigs-container {
+  overflow-y: auto;
+  padding-bottom: 2%;
+}
+#gigs .gig {
+  margin: 2% 2% 0 2%;
+  width: 90%;
+  max-height: 500px;
+  font-size: 16pt;
+  border: 1px solid #123848;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
+}
+#gigs .gig .gig-text {
+  border-right: 1px solid #123848;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  padding: 2% 2% 1% 2%;
+}
+#gigs .gig .gig-button {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 2% 2% 1% 2%;
+  text-align: center;
+}
+#gigs .additional-info {
+  border-top: 1px solid #123848;
+  padding: 2% 2% 1% 2%;
+  cursor: default;
+  overflow-x: auto;
+}
+#gigs .additional-info a {
+  text-decoration: none;
+  color: #fa9663;
+}
+#gigs .collapsed .gig-button:after {
+  content: 'Mer info';
+}
+#gigs .collapsed .additional-info {
+  display: none;
+}
+#gigs .expanded .gig-button:after {
+  content: 'Mindre info';
+}
+#gigs .expanded .additional-info {
+  display: initial;
+}
+body {
+  font-family: "Oswald" !important;
+  font-weight: 300 !important;
+}
+#background {
+  position: fixed;
+  width: 100%;
+  height: 100vh !important;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-image: url("../images/backgroundimages/spoketbackgroundsmall.jpg");
+  background-size: cover !important;
+}
+#background img {
+  position: absolute;
+  left: 5%;
+  top: 15%;
+  width: 90%;
+  opacity: 0.95;
+}
+@media (min-width: 560px) {
+  #background {
+    background-image: url("../images/backgroundimages/summertour2016stor.jpg");
+    background-position: center top;
+  }
+  #background img {
+    width: 70%;
+    left: 15%;
+    top: 10%;
+  }
+}
+@media (min-width: 747px) {
+  #background {
+    position: absolute;
+  }
+  #background img {
+    width: 20%;
+    left: 2%;
+    top: 2%;
+  }
+}
+#main {
+  position: absolute;
+  top: 100vh;
+  z-index: 1;
+  background-color: #DFDBC3;
+  width: 100%;
+}
+#main .section {
+  position: relative;
+  z-index: 1;
+  background-color: #DFDBC3;
+  padding-top: 5%;
+}
+#main h1 {
+  color: #123848;
+}
+#main .big-image {
+  height: 100vh !important;
+  background-image: url('../images/about.jpg');
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center bottom;
+  z-index: 0;
+  position: relative;
+}
+#main #description .drop-cap-container {
+  float: left;
+  padding: 0 5px 0 5px;
+  margin-right: 2px;
+}
+#main #description .drop-cap {
+  font-size: 60pt;
+  color: #f44843;
+  display: inline;
+  float: left;
+  top: 0;
+  line-height: 65px;
 }

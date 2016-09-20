@@ -1,6 +1,6 @@
 define(['modules/coreModule/runners/rootScopeRunner'], function(rootScopeRunner) {
 
-	var coreModule = angular.module('coreModule', ['ui.router']);
+	var coreModule = angular.module('coreModule', ['ui.router', 'duParallax']);
 
 	coreModule.config(function($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/home');

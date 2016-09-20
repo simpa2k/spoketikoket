@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:300, 400, 700');
+.selectable-container:hover > .selectable {
+  transform: scale(0.95);
+}
+.selectable {
+  transition: all 0.2s ease-in-out;
+}
+.selectable:hover {
+  cursor: pointer;
+}
+.selectable-container:hover > .selectable:hover {
+  transform: scale(1);
+}
+.admin-item {
+  padding: 1% 1% 1% 1%;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  margin-top: 1%;
+  -webkit-box-shadow: 2px 2px 3px 0px #969696;
+  -moz-box-shadow: 2px 2px 3px 0px #969696;
+  box-shadow: 2px 2px 3px 0px #969696;
+}
+#gigs {
+  height: 100vh;
+  overflow-y: auto;
+  color: #123848;
+}
+#gigs h1 {
+  text-shadow: #afab93 2px 2px 2px;
+}
+#gigs #gigs-container {
+  overflow-y: auto;
+  padding-bottom: 2%;
+}
+#gigs .gig {
+  margin: 2% 2% 0 2%;
+  width: 90%;
+  max-height: 500px;
+  font-size: 16pt;
+  border: 1px solid #123848;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
+}
+#gigs .gig .gig-text {
+  border-right: 1px solid #123848;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  padding: 2% 2% 1% 2%;
+}
+#gigs .gig .gig-button {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 2% 2% 1% 2%;
+  text-align: center;
+}
+#gigs .additional-info {
+  border-top: 1px solid #123848;
+  padding: 2% 2% 1% 2%;
+  cursor: default;
+  overflow-x: auto;
+}
+#gigs .additional-info a {
+  text-decoration: none;
+  color: #fa9663;
+}
+#gigs .collapsed .gig-button:after {
+  content: 'Mer info';
+}
+#gigs .collapsed .additional-info {
+  display: none;
+}
+#gigs .expanded .gig-button:after {
+  content: 'Mindre info';
+}
+#gigs .expanded .additional-info {
+  display: initial;
+}

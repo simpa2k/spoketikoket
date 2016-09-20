@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:300, 400, 700');
+
+@white: #eaeaea;
+@red: #f44843;
+//@light-grey: #bfbfbf;
+@light-grey: #d9d9d9;
+@dark-grey: #333333;
+@black: #262626;
+@transparent-black: rgba(38, 38, 38, 0.9);
+@orange-brown: #fa9663;
+//@gig-border: #6f6f6f;
+//@gig-border: #333333;
+@gig-border: @deep-blue;
+
+@sand-color: #DFDBC3;
+@deep-blue: #123848;
+@transparent-deep-blue: rgba(18, 56, 72, 0.9);
+@off-white: #D0D7DA;
+
+@screen-height: 100vh;
+@half-screen-height: @screen-height / 2;
+@double-screen-height: @screen-height * 2;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  -moz-box-shadow: @style @c;
+  box-shadow: @style @c;
+}
+
+.selectable-container:hover > .selectable {
+  transform: scale(0.95);
+}
+
+.selectable {
+  transition: all .2s ease-in-out;
+}
+
+.selectable:hover {
+  cursor: pointer;
+}
+
+.selectable-container:hover > .selectable:hover {
+  transform: scale(1.0);
+}
+
+.admin-item {
+  padding: 1% 1% 1% 1%;
+  border: 1px solid @light-grey;
+  border-radius: 2px;
+  margin-top: 1%;
+  .box-shadow(2px 2px 3px 0px, rgba(150, 150, 150, 1));
+}
