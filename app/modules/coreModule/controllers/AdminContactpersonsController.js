@@ -13,6 +13,7 @@ define(function() {
 	    $scope.setPutState = function(contactperson) {
 	        $scope.contactpersonToBeSent.phonenumber = contactperson.phonenumber;
 	        $scope.contactpersonToBeSent.name = contactperson.name;
+	        $scope.contactpersonToBeSent.country = contactperson.country;
 	        $scope.sendContactpersons = $scope.putContactpersons;
 	    };
 	
