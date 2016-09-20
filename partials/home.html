@@ -1,1 +1,33 @@
-<h1>{{ working }}</h1>
+<h1>Konserter</h1>
+<div ng-repeat="gig in gigs">
+    <p>{{ gig }}</p>
+</div>
+
+<h1>Om Spöket</h1>
+<p>{{ description.content }}</p>
+
+<h1>Spöket är</h1>
+<div ng-repeat="member in members">
+    <p>{{ member }}</p>
+</div>
+
+<h1>Media</h1>
+<div ng-repeat="image in images">
+    <a href="{{ image.full }}"><img src="{{ image.thumb }}"></a>
+</div>
+
+<div ng-repeat="embeddedVideo in embeddeditems">
+    <iframe width="560"
+             height="315"
+             src="{{ trustUrl(embeddedVideo.src) }}"
+             frameborder="0"
+             allowfullscreen>
+    </iframe>
+</div>
+
+<h1>Press, bokning och allting</h1>
+<div ng-repeat="contactperson in contactpersons">
+    <p>{{ contactperson }}</p>
+</div>
+
+

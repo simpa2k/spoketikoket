@@ -1,4 +1,4 @@
-define(function() {
+define(['modules/coreModule/runners/rootScopeRunner'], function(rootScopeRunner) {
 
 	var coreModule = angular.module('coreModule', ['ui.router']);
 
@@ -9,9 +9,11 @@ define(function() {
 			.state('home', {
 				url: '/home',
 				templateUrl: 'partials/home.html',
-				controller: 'mainController'
+				controller: 'MainController'
 			});
 	});
+
+	coreModule.run(rootScopeRunner);
 
 	require(['modules/coreModule/references'], function(references) {
 		require(references, function() {

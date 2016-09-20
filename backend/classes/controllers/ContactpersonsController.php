@@ -75,8 +75,8 @@ class ContactpersonsController extends BaseController {
      */
 
     public function delete($request) {
-        $id = $this->filterParameters(array('id'), $request->parameters);
-        $this->getModel()->delete($this->formatParameters($id));
+        $primaryKey = $this->filterParameters(array('phonenumber', 'name'), $request->parameters);
+        $this->getModel()->delete($this->formatParameters($primaryKey));
     }
 
 }
