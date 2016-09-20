@@ -30,7 +30,10 @@ class ImagesController extends BaseController {
     public function getAction($request) {
         
         if (isset($request->urlElements[2])) {
-            /* Not implemented */
+
+            $qualifiedAction = ucfirst($request->urlElements[2]);
+            return $this->handleQuery($request, $qualifiedAction);
+            
         } else {
             return $this->handleQuery($request);
         }

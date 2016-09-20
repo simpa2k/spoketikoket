@@ -17,6 +17,7 @@ define(function() {
 											  EmbeddeditemsService) {
 
 		$scope.background = parallaxHelper.createAnimator(-0.3, 300, -250);
+		$scope.foreground = parallaxHelper.createAnimator(-0.1, 150, -150);
 
 		$scope.dateFormat = 'd/M, yyyy';
 		$scope.timeFormat = 'HH:mm';
@@ -35,9 +36,19 @@ define(function() {
 	    GigsService.getGigs().then(function(gigs) {
 	        $scope.gigs = gigs;
 	    });
+
 		ImagesService.getImages().then(function(images) {
 			$scope.images = images;
 		});
+
+		ImagesService.getAlbums().then(function(albums) {
+			$scope.albums = albums;
+		});
+
+		ImagesService.getAlbumCovers().then(function(albumCovers) {
+			$scope.albumCovers = albumCovers;
+		});
+
 	    MembersService.getMembers().then(function(members) {
 	        $scope.members = members;
 	    });

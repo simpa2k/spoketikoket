@@ -20,8 +20,7 @@ class ContactpersonsController extends BaseController {
     /**
      *
      * Method for handling GET
-     * requests. Currently does not handle
-     * more than one url element.
+     * requests.
      *
      * @param Request $request An object representing a request to be handled.
      *
@@ -30,7 +29,10 @@ class ContactpersonsController extends BaseController {
     public function getAction($request) {
         
         if (isset($request->urlElements[2])) {
-            /* Not implemented */
+
+            $qualifiedAction = "get" . ucfirst($request->urlElements[2]);
+            return $this->handleQuery($request, $qualifiedAction);
+
         } else {
             return $this->handleQuery($request);
         }
@@ -60,11 +62,9 @@ class ContactpersonsController extends BaseController {
     public function put($request) {
         $phonenumber = $request->parameters['phonenumber'];
         $name = $request->parameters['name'];
-        $country = $request->parameters['country'];
-        $primaryKey = "phonenumber = $phonenumber, name = $name, country = $country";
+        $primaryKey = "phonenumber = $phonenumber, name = $name";
         unset($request->parameters['phonenumber']);
         unset($request->parameters['name']);
-        unset($request->parameters['country']);
         $this->getModel()->update($primaryKey, $request->parameters);
     }
 
@@ -77,7 +77,7 @@ class ContactpersonsController extends BaseController {
      */
 
     public function delete($request) {
-        $primaryKey = $this->filterParameters(array('phonenumber', 'name', 'country'), $request->parameters);
+        $primaryKey = $this->filterParameters(array('phonenumber', 'name'), $request->parameters);
         $this->getModel()->delete($this->formatParameters($primaryKey));
     }
 

@@ -5,22 +5,52 @@ define(function() {
 	app.factory('ImagesService', ['$http', '$rootScope', function($http, $rootScope) {
 	
 	    var imagesEndpoint = $rootScope.serverRoot + 'images';
-	    var promise;
-	
+		var albumsEndpoint = imagesEndpoint  + '/albums';
+		var albumCoversEndpoint = imagesEndpoint  + '/albumcovers';
+	    var imagesPromise;
+		var albumsPromise;
+		var albumCoversPromise;
+
 	    var imagesService = {
 	        getImages: function() {
-	            if(!promise) {
-	                promise = $http.get(imagesEndpoint).then(function(response) {
+	            if(!imagesPromise) {
+	                imagesPromise = $http.get(imagesEndpoint).then(function(response) {
 	                    return response.data
 	                });
-	            } return promise;
+	            } return imagesPromise;
 	        },
 			refreshImages: function() {
-	            promise = $http.get(imagesEndpoint).then(function(response) {
+	            imagesPromise = $http.get(imagesEndpoint).then(function(response) {
 	                return response.data
 	            });
-	            return promise;
-	        }
+	            return imagesPromise;
+	        },
+			getAlbums: function() {
+				if(!albumsPromise) {
+					albumsPromise = $http.get(albumsEndpoint).then(function(response) {
+						return response.data
+					});
+				} return albumsPromise;
+			},
+			refreshAlbums: function() {
+				albumsPromise = $http.get(albumsEndpoint).then(function(response) {
+					return response.data
+				});
+				return albumsPromise;
+			},
+			getAlbumCovers: function() {
+				if(!albumCoversPromise) {
+					albumsCoversPromise = $http.get(albumCoversEndpoint).then(function(response) {
+						return response.data
+					});
+				} return albumsCoversPromise;
+			},
+			refreshAlbumCovers: function() {
+				albumCoversPromise = $http.get(albumCoversEndpoint).then(function(response) {
+					return response.data
+				});
+				return albumCoversPromise;
+			}
 	    };
 	    return imagesService;
 	

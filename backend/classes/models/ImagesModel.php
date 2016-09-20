@@ -13,7 +13,8 @@ require_once('core/init.php');
 
 class ImagesModel extends BaseModel {
 
-    private $gallery;
+    private $gallery,
+            $albumPath;
 
     public function __construct() {
 
@@ -21,6 +22,7 @@ class ImagesModel extends BaseModel {
 
         $this->gallery = new Gallery();
         $this->gallery->setPath("../images/");
+        $this->albumPath = "../images/albums/";
 
     }
 
@@ -52,6 +54,78 @@ class ImagesModel extends BaseModel {
 
         return $this->gallery->getImages();
 
+    }
+    
+    public function getAlbums($where) {
+        
+        return "getting albums";
+        
+    }
+
+    private function isHiddenDirectory($directory) {
+        
+        if($directory == "." || $directory == "..") {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+    public function getAllAlbums() {
+
+        $albums = array();
+
+        foreach(scandir($this->albumPath) as $album) {
+            
+            if($this->isHiddenDirectory($album)){
+                continue;
+            }
+            
+            $this->gallery->setPath($this->albumPath . $album);
+            $images = $this->gallery->getImages();
+            
+            $albums[$album] = $images;
+
+        }
+
+        return $albums;
+
+    }
+    
+    public function getAlbumcovers($where) {
+        
+        return "getting album covers";
+        
+    }
+    
+    public function getAllAlbumcovers() {
+        
+        $albumCovers = array();
+        
+        foreach(scandir($this->albumPath) as $album) {
+
+            if($this->isHiddenDirectory($album)) {
+                continue;
+            }
+            
+            $albumCovers[$album] = array();
+            $pathToAlbumCovers = $this->albumPath . $album . '/albumcover';
+            
+            foreach(scandir($pathToAlbumCovers) as $albumCover) {
+                
+                if($this->isHiddenDirectory($albumCover)) {
+                    continue;
+                }
+                
+                $albumCovers[$album][] = $pathToAlbumCovers . '/' . $albumCover;
+                
+            }
+            
+        }
+        
+        return $albumCovers;
+        
     }
 
     /**
