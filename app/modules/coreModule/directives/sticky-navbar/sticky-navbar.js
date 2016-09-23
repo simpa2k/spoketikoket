@@ -134,6 +134,63 @@ define(function() {
 
                };
 
+               var extractFilenameFromPath = function(path) {
+
+                   var splitPath = path.split('/');
+                   var filename = splitPath[splitPath.length - 1];
+
+                   return filename;
+               };
+
+               var removeFileExtension = function(filename, isFullPath = false) {
+
+                   if(isFullPath) {
+                       filename = extractFilenameFromPath(filename)
+                   }
+
+                   var filenameWithoutExtension = filename.split('.')[0];
+
+                   return filenameWithoutExtension;
+
+               };
+
+               var positionNewElement = function(element, elementToPositionRelativeTo) {
+
+                   var top = $(elementToPositionRelativeTo).offset().top + 50;
+                   var left = $(elementToPositionRelativeTo).position().left;
+
+                   $(element).css({
+                       "position": "absolute",
+                       "z-index": "100",
+                       "width": "50px",
+                       "top": top,
+                       "left": left
+                   });
+
+               };
+
+               $scope.appendSocialMediaText = function($event, textImagePath) {
+
+                   var imageFilename = removeFileExtension(textImagePath, true);
+
+                   var clickedElement = $($event.currentTarget);
+                   clickedElement.parents('#navbar').after(
+                       "<img id='" + imageFilename + "' src='" + textImagePath + "'>"
+                   );
+
+                   positionNewElement($('#' + imageFilename), clickedElement);
+
+
+               };
+
+               $scope.removeSocialMediaText = function(textImagePath) {
+
+                   var imageFilename = removeFileExtension(textImagePath, true);
+
+                   $('#' + imageFilename).remove();
+
+               };
+
 
                if(elementToStickTo.length == 0) {
                    $(element).css({

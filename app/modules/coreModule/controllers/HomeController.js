@@ -17,6 +17,24 @@ define(function() {
 
         ];
 
+        $scope.socialmedia = [
+            {
+                linkHref: "http://www.facebook.com/spoketikoket",
+                imageSource: "images/socialmedia/facebooklogga_29.png",
+                imageText: "images/socialmedia/facebooktext.jpg"
+            },
+            {
+                linkHref: "http://www.soundcloud.com/sp-ket-i-k-ket",
+                imageSource: "images/socialmedia/sc29.png",
+                imageText: "images/socialmedia/soundcloudtext.jpg"
+            },
+            {
+                linkHref: "https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw",
+                imageSource: "images/socialmedia/yt29.png",
+                imageText: "images/socialmedia/youtubetext.jpg"
+            }
+        ]
+
     });
 
 });

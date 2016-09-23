@@ -55,10 +55,15 @@ define(function() {
 	    UsersService.getUsers().then(function(users) {
 	        $scope.users = users;
 	    });
-	    EmbeddeditemsService.getEmbeddeditems().then(function(embeddeditems) {
-	        $scope.embeddeditems = embeddeditems;
+
+	    EmbeddeditemsService.getVideos().then(function(videos) {
+	        $scope.videos = videos;
 	    });
-	
+
+		EmbeddeditemsService.getSounds().then(function(sounds) {
+			$scope.sounds = sounds;
+		});
+
 	    $scope.trustUrl = function(src) {
 	        return $sce.trustAsResourceUrl(src);
 	    };

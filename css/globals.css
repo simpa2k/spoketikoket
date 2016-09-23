@@ -20,3 +20,8 @@
   -moz-box-shadow: 2px 2px 3px 0px #969696;
   box-shadow: 2px 2px 3px 0px #969696;
 }
+.shadowed {
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
+}

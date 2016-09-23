@@ -20,6 +20,11 @@
   -moz-box-shadow: 2px 2px 3px 0px #969696;
   box-shadow: 2px 2px 3px 0px #969696;
 }
+.shadowed {
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
+}
 #navbar {
   position: absolute;
   width: 100%;
@@ -274,6 +279,26 @@ body {
   background-color: #DFDBC3;
   padding-top: 5%;
 }
+#main .section .section-heading {
+  color: #123848;
+  width: 60%;
+}
+#main .section .smaller-section-heading {
+  font-size: 18pt;
+  color: #123848;
+  width: 60%;
+}
+#main .section .small-section-heading {
+  font-size: 22pt;
+  color: #123848;
+  width: 60%;
+}
+#main .section .large-section-heading {
+  font-size: 30pt;
+  border-top: 2px solid #123848;
+  color: #123848;
+  width: 60%;
+}
 #main h1 {
   color: #123848;
 }
@@ -298,4 +323,15 @@ body {
   float: left;
   top: 0;
   line-height: 65px;
+}
+#main #media-section img {
+  margin: 1% 1% 1% 1%;
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
+}
+#main #media-section iframe {
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
