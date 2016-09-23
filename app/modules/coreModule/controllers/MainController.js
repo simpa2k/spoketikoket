@@ -40,6 +40,7 @@ define(function() {
 		ImagesService.getImages().then(function(images) {
 			$scope.images = images;
 		});
+        console.log($scope.images);
 
 		ImagesService.getAlbums().then(function(albums) {
 			$scope.albums = albums;

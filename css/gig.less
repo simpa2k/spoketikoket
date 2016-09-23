@@ -10,10 +10,10 @@
   overflow-y: auto;
   color: @gig-text-color;
 
-  h1 {
+  .large-section-heading {
     //text-shadow: rgb(3, 3, 3) 2px 2px 2px;
     // The following RGB value is @sand-color - 303030
-    text-shadow: rgb(175, 171, 147) 2px 2px 2px;
+    text-shadow: @dark-background-shadow 2px 2px 2px;
   }
 
   #gigs-container {
@@ -32,8 +32,7 @@
     border: 1px solid @gig-border;
     border-radius: 2px;
 
-    // The folllowing RGB value is @sand-color - 1C1C1C
-    .box-shadow(2px 2px 3px 0px, rgba(195, 191, 167, 1));
+    .shadowed;
 
     .gig-text {
 

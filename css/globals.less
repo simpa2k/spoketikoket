@@ -12,7 +12,9 @@
 //@gig-border: #333333;
 @gig-border: @deep-blue;
 
-@sand-color: #DFDBC3;
+@background: #DFDBC3;
+@light-background-shadow: @background - #1C1C1C;
+@dark-background-shadow: @background - #303030;
 @deep-blue: #123848;
 @transparent-deep-blue: rgba(18, 56, 72, 0.9);
 @off-white: #D0D7DA;
@@ -53,7 +55,7 @@
 
 .shadowed {
 
-  .box-shadow(2px 2px 3px 0px, rgba(195, 191, 167, 1));
+  .box-shadow(2px 2px 3px 0px, @light-background-shadow);
 
 }
 

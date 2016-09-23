@@ -22,6 +22,8 @@
     "angular-scroll": "^1.0.0"
   },
   "resolutions": {
-    "angular-scroll": "^0.6.x"
+    "angular-scroll": "^0.6.x",
+    "jquery": "^3.1.0",
+    "angular": "^1.5.8"
   }
 }

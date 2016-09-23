@@ -30,7 +30,7 @@
   overflow-y: auto;
   color: #123848;
 }
-#gigs h1 {
+#gigs .large-section-heading {
   text-shadow: #afab93 2px 2px 2px;
 }
 #gigs #gigs-container {

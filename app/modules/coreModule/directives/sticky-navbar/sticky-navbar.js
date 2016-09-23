@@ -17,6 +17,9 @@ define(function() {
                var collapsedNavbarHeight = element.height();
                var expandedNavbarHeight;
 
+               var fixatedTop = false;
+               var fixatedBottom = true;
+
                var navbarPositionListener = function() {
                    var navbarHeight = element.hasClass('expanded') ? expandedNavbarHeight : collapsedNavbarHeight;
                    var elementToStickToY = elementToStickTo.offset().top;
@@ -31,6 +34,9 @@ define(function() {
                };
 
                var fixateElementPositionTop = function(element, elementHeight) {
+                   fixatedTop = true;
+                   fixatedBottom = false;
+
                    element.css({
                        'z-index': '10',
                        'position': 'fixed',
@@ -40,6 +46,9 @@ define(function() {
                };
 
                var fixateElementPositionBottom = function(element, bottomOffset) {
+                   fixatedTop = false;
+                   fixatedBottom = true;
+
                    element.css({
                        'z-index': '10',
                        'position': 'absolute',
@@ -154,9 +163,9 @@ define(function() {
 
                };
 
-               var positionNewElement = function(element, elementToPositionRelativeTo) {
+               var positionNewElement = function(element, elementToPositionRelativeTo, offset) {
 
-                   var top = $(elementToPositionRelativeTo).offset().top + 50;
+                   var top = $(elementToPositionRelativeTo).offset().top + offset;
                    var left = $(elementToPositionRelativeTo).position().left;
 
                    $(element).css({
@@ -178,7 +187,12 @@ define(function() {
                        "<img id='" + imageFilename + "' src='" + textImagePath + "'>"
                    );
 
-                   positionNewElement($('#' + imageFilename), clickedElement);
+                   var imageTextElement = ($('#' + imageFilename));
+                   if(fixatedTop) {
+                       positionNewElement(imageTextElement, clickedElement, 50);
+                   } else {
+                       positionNewElement(imageTextElement, clickedElement, -50);
+                   }
 
 
                };
@@ -193,6 +207,7 @@ define(function() {
 
 
                if(elementToStickTo.length == 0) {
+                   fixatedTop = true;
                    $(element).css({
                        'position': 'static'
                    });
