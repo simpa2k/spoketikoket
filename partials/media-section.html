@@ -7,13 +7,13 @@
 
                 <p class="large-section-heading">MEDIA</p>
 
-                <div class="selectable-container">
+                <div class="non-cascading-selectable-container">
 
                     <p class="small-section-heading">Spöket på bild:</p>
 
-                    <div class="selectable" ng-repeat="(albumName, albumCover) in albumCovers">
-                        <a href=""><img src="{{ albumCover[1] }}"></a>
-                        <p class="smaller-section-heading">{{ albumName }}</p>
+                    <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
+                        <a ui-sref="galleries( { name: '{{ galleryName }}' } )"><img src="{{ galleryCover[1] }}"></a>
+                        <p class="smaller-section-heading">{{ galleryName }}</p>
                     </div>
 
                 </div>

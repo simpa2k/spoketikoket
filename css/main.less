@@ -1,6 +1,7 @@
 @import 'globals.less';
 @import 'navbar.less';
 @import 'gig.less';
+@import 'gallery.less';
 
 body {
 
@@ -150,9 +151,15 @@ body {
 
   #media-section {
 
+    .non-cascading-selectable-container {
+
+      display: inline-block;
+
+    }
+
     img {
 
-      margin: 1% 1% 1% 1%;
+      margin: 1% 1% 1% 0%;
       .shadowed
 
     }
@@ -164,5 +171,12 @@ body {
     }
 
   }
+}
+
+#gallery-page {
+
+  height: @screen-height;
+  background-color: @background;
+
 }
 

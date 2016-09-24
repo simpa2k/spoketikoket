@@ -3,6 +3,7 @@ define(function() {
 	return [
 		'modules/coreModule/controllers/MainController',
 		'modules/coreModule/controllers/HomeController',
+		'modules/coreModule/controllers/GalleryController',
 		'modules/coreModule/controllers/AdminContactpersonsController',
 		'modules/coreModule/controllers/AdminDescriptionController',
 		'modules/coreModule/controllers/AdminGigsController',
@@ -20,6 +21,7 @@ define(function() {
 		'modules/coreModule/services/users-service',
 		'modules/coreModule/services/venues-service',
 		'modules/coreModule/directives/sticky-navbar/sticky-navbar',
+		'modules/coreModule/directives/gallery',
 		'modules/coreModule/directives/gig'
 	]
 

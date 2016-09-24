@@ -29,10 +29,6 @@
   box-shadow: @style @c;
 }
 
-.selectable-container:hover > .selectable {
-  transform: scale(0.95);
-}
-
 .selectable {
   transition: all .2s ease-in-out;
 }
@@ -41,8 +37,36 @@
   cursor: pointer;
 }
 
+.selectable-container:hover > .selectable {
+  transform: scale(0.95);
+}
+
 .selectable-container:hover > .selectable:hover {
   transform: scale(1.0);
+}
+
+.opacity-altering-selectable-container {
+
+  &:extend(.selectable-container all);
+
+}
+
+.opacity-altering-selectable-container:hover > .selectable {
+
+  opacity: 0.8;
+
+}
+
+.opacity-altering-selectable-container:hover > .selectable:hover {
+
+  opacity: 1.0;
+
+}
+
+.non-cascading-selectable-container:hover > .selectable:hover {
+
+  transform: scale(1.05);
+
 }
 
 .admin-item {
@@ -58,4 +82,3 @@
   .box-shadow(2px 2px 3px 0px, @light-background-shadow);
 
 }
-

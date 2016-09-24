@@ -1,15 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald:300, 400, 700');
-.selectable-container:hover > .selectable {
-  transform: scale(0.95);
-}
 .selectable {
   transition: all 0.2s ease-in-out;
 }
 .selectable:hover {
   cursor: pointer;
 }
-.selectable-container:hover > .selectable:hover {
+.selectable-container:hover > .selectable,
+.opacity-altering-selectable-container:hover > .selectable {
+  transform: scale(0.95);
+}
+.selectable-container:hover > .selectable:hover,
+.opacity-altering-selectable-container:hover > .selectable:hover {
   transform: scale(1);
+}
+.opacity-altering-selectable-container:hover > .selectable {
+  opacity: 0.8;
+}
+.opacity-altering-selectable-container:hover > .selectable:hover {
+  opacity: 1.0;
+}
+.non-cascading-selectable-container:hover > .selectable:hover {
+  transform: scale(1.05);
 }
 .admin-item {
   padding: 1% 1% 1% 1%;

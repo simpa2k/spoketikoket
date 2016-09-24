@@ -37,18 +37,10 @@ define(function() {
 	        $scope.gigs = gigs;
 	    });
 
-		ImagesService.getImages().then(function(images) {
-			$scope.images = images;
-		});
-        console.log($scope.images);
-
-		ImagesService.getAlbums().then(function(albums) {
-			$scope.albums = albums;
+		ImagesService.getGalleryCovers().then(function(galleryCovers) {
+			$scope.galleryCovers = galleryCovers;
 		});
 
-		ImagesService.getAlbumCovers().then(function(albumCovers) {
-			$scope.albumCovers = albumCovers;
-		});
 
 	    MembersService.getMembers().then(function(members) {
 	        $scope.members = members;
@@ -68,7 +60,7 @@ define(function() {
 	    $scope.trustUrl = function(src) {
 	        return $sce.trustAsResourceUrl(src);
 	    };
-	
+
 	});
 
 });

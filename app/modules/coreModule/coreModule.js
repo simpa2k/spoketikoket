@@ -1,6 +1,6 @@
 define(['modules/coreModule/runners/rootScopeRunner'], function(rootScopeRunner) {
 
-	var coreModule = angular.module('coreModule', ['ui.router', 'duParallax']);
+	var coreModule = angular.module('coreModule', ['angularModalService', 'ui.bootstrap', 'ui.router', 'duParallax']);
 
 	coreModule.config(function($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise('/home');
@@ -10,6 +10,12 @@ define(['modules/coreModule/runners/rootScopeRunner'], function(rootScopeRunner)
 				url: '/home',
 				templateUrl: 'partials/home.html',
 				controller: 'MainController'
+			})
+
+			.state('galleries', {
+				url: '/galleries?name',
+				templateUrl: 'partials/gallery-page.html',
+				controller: 'GalleryController'
 			});
 	});
 

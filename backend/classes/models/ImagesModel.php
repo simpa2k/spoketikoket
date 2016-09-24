@@ -14,7 +14,7 @@ require_once('core/init.php');
 class ImagesModel extends BaseModel {
 
     private $gallery,
-            $albumPath;
+            $galleryPath;
 
     public function __construct() {
 
@@ -22,7 +22,7 @@ class ImagesModel extends BaseModel {
 
         $this->gallery = new Gallery();
         $this->gallery->setPath("../images/");
-        $this->albumPath = "../images/albums/";
+        $this->galleryPath = "../images/galleries/";
 
     }
 
@@ -56,75 +56,130 @@ class ImagesModel extends BaseModel {
 
     }
     
-    public function getAlbums($where) {
-        
-        return "getting albums";
-        
-    }
+    private function shouldBeIgnored($directory) {
 
-    private function isHiddenDirectory($directory) {
-        
-        if($directory == "." || $directory == "..") {
-            return true;
-        } else {
-            return false;
+        switch($directory) {
+            case ".":
+            case "..":
+            case "metadata.json":
+                return true;
+            default:
+                return false;
         }
-        
+
     }
     
-    public function getAllAlbums() {
+    private function readDirectoryContents($directory) {
 
-        $albums = array();
+        $contents = array();
 
-        foreach(scandir($this->albumPath) as $album) {
+        foreach(scandir($directory) as $file) {
+
+            if($this->shouldBeIgnored($file)) {
+                continue;
+            }
+
+            $contents[] = $directory . '/' . $file;
+
+        }
+        return $contents;
+
+    }
+
+    private function readDirectoryMetaData($directory) {
+
+        $metadataFilePath = $directory . '/metadata.json';
+
+        $metadata = fopen($metadataFilePath, 'r');
+        $data = fread($metadata, filesize($metadataFilePath));
+        fclose($metadata);
+
+        $data = json_decode($data);
+
+
+        return $data;
+
+    }
+
+    private function getFilePathsConditionally($parentDirectory, $where, $fileDirectory = "") {
+
+        $results = array();
+
+        foreach(scandir($parentDirectory) as $directory) {
+
+            if($this->shouldBeIgnored($directory)) {
+                continue;
+            }
+
+            $data = $this->readDirectoryMetaData($parentDirectory . $directory);
+
+            foreach($where as $queryParameter) {
+                if(!(isset($data->$queryParameter[0])) || $data->$queryParameter[0] != $queryParameter[2]) {
+                    continue 2;
+                }
+            }
+
+            $fileDirectory = $parentDirectory . $directory . $fileDirectory;
+            $this->gallery->setPath($fileDirectory);
+            $results[$directory] = $this->gallery->getImages();
+
+        }
+        return $results;
+
+    }
+    
+    public function getGalleries($where) {
+        
+        $galleries = $this->getFilePathsConditionally($this->galleryPath, $where);
+        return $galleries;
+        
+    }
+
+    
+    public function getAllGalleries() {
+
+        $galleries = array();
+
+        foreach(scandir($this->galleryPath) as $gallery) {
             
-            if($this->isHiddenDirectory($album)){
+            if($this->shouldBeIgnored($gallery)){
                 continue;
             }
             
-            $this->gallery->setPath($this->albumPath . $album);
+            $this->gallery->setPath($this->galleryPath . $gallery);
             $images = $this->gallery->getImages();
             
-            $albums[$album] = $images;
+            $galleries[$gallery] = $images;
 
         }
 
-        return $albums;
+        return $galleries;
 
     }
     
-    public function getAlbumcovers($where) {
+    public function getGallerycovers($where) {
         
-        return "getting album covers";
+        $galleryCovers = $this->getFilePathsConditionally($this->galleryPath, $where, '/gallerycover');
+        return $galleryCovers;
         
     }
     
-    public function getAllAlbumcovers() {
+    public function getAllGallerycovers() {
         
-        $albumCovers = array();
+        $galleryCovers = array();
         
-        foreach(scandir($this->albumPath) as $album) {
+        foreach(scandir($this->galleryPath) as $gallery) {
 
-            if($this->isHiddenDirectory($album)) {
+            if($this->shouldBeIgnored($gallery)) {
                 continue;
             }
             
-            $albumCovers[$album] = array();
-            $pathToAlbumCovers = $this->albumPath . $album . '/albumcover';
-            
-            foreach(scandir($pathToAlbumCovers) as $albumCover) {
-                
-                if($this->isHiddenDirectory($albumCover)) {
-                    continue;
-                }
-                
-                $albumCovers[$album][] = $pathToAlbumCovers . '/' . $albumCover;
-                
-            }
+            $pathToGalleryCovers = $this->galleryPath . $gallery . '/gallerycover';
+            $galleryCovers[$gallery] = $this->readDirectoryContents($pathToGalleryCovers);
             
         }
         
-        return $albumCovers;
+        return $galleryCovers;
         
     }
 

@@ -5,11 +5,11 @@ define(function() {
 	app.factory('ImagesService', ['$http', '$rootScope', function($http, $rootScope) {
 	
 	    var imagesEndpoint = $rootScope.serverRoot + 'images';
-		var albumsEndpoint = imagesEndpoint  + '/albums';
-		var albumCoversEndpoint = imagesEndpoint  + '/albumcovers';
+		var galleriesEndpoint = imagesEndpoint  + '/galleries';
+		var galleryCoversEndpoint = imagesEndpoint  + '/gallerycovers';
 	    var imagesPromise;
-		var albumsPromise;
-		var albumCoversPromise;
+		var galleriesPromise;
+		var galleryCoversPromise;
 
 	    var imagesService = {
 	        getImages: function() {
@@ -25,31 +25,37 @@ define(function() {
 	            });
 	            return imagesPromise;
 	        },
-			getAlbums: function() {
-				if(!albumsPromise) {
-					albumsPromise = $http.get(albumsEndpoint).then(function(response) {
+			getGalleries: function() {
+				if(!galleriesPromise) {
+					galleriesPromise = $http.get(galleriesEndpoint).then(function(response) {
 						return response.data
 					});
-				} return albumsPromise;
+				} return galleriesPromise;
 			},
-			refreshAlbums: function() {
-				albumsPromise = $http.get(albumsEndpoint).then(function(response) {
+			refreshGalleries: function() {
+				galleriesPromise = $http.get(galleriesEndpoint).then(function(response) {
 					return response.data
 				});
-				return albumsPromise;
+				return galleriesPromise;
 			},
-			getAlbumCovers: function() {
-				if(!albumCoversPromise) {
-					albumsCoversPromise = $http.get(albumCoversEndpoint).then(function(response) {
+			getGalleryWhere: function(queryParameters, callback) {
+				console.log(galleriesEndpoint + '?' + queryParameters);
+				$http.get(galleriesEndpoint + '?' + queryParameters).then(function(response) {
+				    callback(response.data);
+				});
+			},
+			getGalleryCovers: function() {
+				if(!galleryCoversPromise) {
+					galleryCoversPromise = $http.get(galleryCoversEndpoint).then(function(response) {
 						return response.data
 					});
-				} return albumsCoversPromise;
+				} return galleryCoversPromise;
 			},
-			refreshAlbumCovers: function() {
-				albumCoversPromise = $http.get(albumCoversEndpoint).then(function(response) {
+			refreshGalleryCovers: function() {
+				galleryCoversPromise = $http.get(galleryCoversEndpoint).then(function(response) {
 					return response.data
 				});
-				return albumCoversPromise;
+				return galleryCoversPromise;
 			}
 	    };
 	    return imagesService;

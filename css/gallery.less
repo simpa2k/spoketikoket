@@ -1,0 +1,44 @@
+@import 'globals.less';
+
+#gallery-container {
+
+  h1 {
+
+    font-weight: 300 !important;
+    color: @deep-blue;
+
+  }
+
+  img {
+
+    .shadowed;
+
+  }
+
+  #selected-image-container {
+
+    width: 100%;
+
+    #selected-image {
+
+      padding: 0 0 0 0;
+
+    }
+
+  }
+
+  .selectable-container {
+
+    overflow-y: auto;
+    height: @screen-height * 0.8;
+
+  }
+
+  .image-container {
+
+    display: inline-block;
+    margin: 0 5px 5px 0;
+
+  }
+
+}
