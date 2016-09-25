@@ -3,6 +3,7 @@ require.config({
 	paths: {
 		'jquery': '../bower_components/jquery/dist/jquery.min',
 		'angular': '../bower_components/angular/angular.min',
+		'bootstrap-tabs': '../bower_components/bootstrap/js/tab',
 		'angular-modal-service': '../bower_components/angular-modal-service/dst/angular-modal-service.min',
 		'angular-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
 		'angular-scroll': '../bower_components/angular-scroll/angular-scroll.min',
@@ -14,6 +15,9 @@ require.config({
 
 	shim: {
 		'angular': {
+			deps: ['jquery']
+		},
+		'bootstrap-tabs': {
 			deps: ['jquery']
 		},
 		'angular-modal-service': {
@@ -35,7 +39,8 @@ require.config({
 			deps: ['angular']
 		},
 		'coreModule': {
-			deps: ['angular-modal-service',
+			deps: ['bootstrap-tabs',
+				   'angular-modal-service',
 				   'angular-bootstrap',
 				   'angular-scroll',
 				   'ng-parallax',

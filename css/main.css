@@ -237,33 +237,7 @@
   display: initial;
 }
 #gallery-page {
-  height: 100vh;
   background-color: #123848;
-}
-#gallery-page #gallery-container {
-  /*.gallery-row {
-      display: flex;
-    }
-
-    #child-1 {
-      background-color: @background;
-      height: @screen-height;
-
-      img {
-        max-width: 100%;
-        padding: 0 0 0 0;
-      }
-    }
-
-    #child-2 {
-      background-color: @black;
-      //height: @screen-height * 0.8;
-    }
-
-    .gallery-column {
-      //flex: 1;
-    }*/
-
 }
 #gallery-page #gallery-container h1 {
   font-weight: 300 !important;
@@ -275,18 +249,33 @@
   box-shadow: 2px 2px 3px 0px #001c2c;
 }
 #gallery-page #gallery-container #selected-image-container {
-  width: 100%;
+  display: none;
 }
-#gallery-page #gallery-container #selected-image-container #selected-image {
-  padding: 0 0 0 0;
-}
-#gallery-page #gallery-container .selectable-container,
-#gallery-page #gallery-container .opacity-altering-selectable-container {
-  overflow-y: auto;
+@media (min-width: 768px) {
+  #gallery-page #gallery-container #selected-image-container {
+    display: initial;
+    width: 100%;
+  }
+  #gallery-page #gallery-container #selected-image-container #selected-image {
+    padding: 0 0 0 0;
+  }
+  #gallery-page #gallery-container .selectable-container,
+  #gallery-page #gallery-container .opacity-altering-selectable-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 #gallery-page #gallery-container .image-container {
-  display: inline-block;
   margin: 0 5px 5px 0;
+  max-width: 100%;
+}
+#gallery-page #gallery-container .image-container img {
+  display: block;
+  max-width: 100%;
+  min-width: 150px;
+}
+html {
+  background-color: #123848;
 }
 body {
   font-family: "Oswald" !important;
@@ -387,6 +376,23 @@ body {
   float: left;
   top: 0;
   line-height: 65px;
+}
+#main #media-section .nav-tabs > .nav-tabs {
+  border-bottom: 1px solid #123848;
+}
+#main #media-section .nav-tabs > li.active > a {
+  background-color: #dfdbc3 !important;
+  color: #123848;
+  border-bottom-color: transparent !important;
+  border: 1px solid #123848;
+}
+#main #media-section .nav-tabs > li > a:hover {
+  background-color: #123848;
+  color: #dfdbc3;
+  border-bottom: 1px solid #123848;
+}
+#main #media-section .nav-tabs > li.active > a:hover {
+  color: #123848;
 }
 #main #media-section .non-cascading-selectable-container {
   display: inline-block;

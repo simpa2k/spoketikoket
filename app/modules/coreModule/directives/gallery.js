@@ -32,10 +32,14 @@ define(function() {
 
                $timeout(function() {
 
-                  var imageHeight = selectedImage.height();
-                  console.log(imageHeight);
-
-                  setElementHeight(selectableContainer, selectedImage);
+                  /*
+                   On screens less than 768px in width the selectedImage is not
+                   displayed. See gallery.less.
+                   */
+                  if($(window).width() >= 768) {
+                     var imageHeight = selectedImage.height();
+                     setElementHeight(selectableContainer, selectedImage);
+                  }
 
               });
 
@@ -43,7 +47,14 @@ define(function() {
 
             $(window).on('resize', function() {
 
-               setElementHeight(selectableContainer, selectedImage);
+               /*
+                On screens less than 768px in width the selectedImage is not
+                displayed. See gallery.less.
+                */
+
+               if($(window).width() >= 768) {
+                  setElementHeight(selectableContainer, selectedImage);
+               }
 
             });
          }

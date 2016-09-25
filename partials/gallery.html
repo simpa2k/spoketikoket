@@ -1,14 +1,14 @@
 <div id="gallery-container">
 
-    <h1 class="large-section-heading text-center col-md-8">{{ name }}</h1>
+    <h1 class="large-section-heading text-center col-sm-8 col-sm-offset-0 col-xs-6 col-xs-offset-3">{{ name }}</h1>
 
     <div id="selected-image-container">
         <a href="{{ selectedImage.image.full }}">
-            <img id="selected-image" class="col-md-8" src="{{ selectedImage.image.full }}">
+            <img id="selected-image" class="col-xs-8" src="{{ selectedImage.image.full }}">
         </a>
     </div>
 
-    <div class="selectable-container col-md-3">
+    <div class="selectable-container col-sm-3 col-sm-offset-0 col-xs-6 col-xs-offset-3">
         <div class="selectable image-container" ng-repeat="image in images">
             <img src="{{ image.thumb }}" ng-click="selectImage(image)">
         </div>

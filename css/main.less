@@ -3,6 +3,12 @@
 @import 'gig.less';
 @import 'gallery.less';
 
+html {
+
+  background-color: @deep-blue;
+
+}
+
 body {
 
   font-family: "Oswald" !important;
@@ -150,6 +156,36 @@ body {
   }
 
   #media-section {
+
+    .nav-tabs > .nav-tabs {
+
+      border-bottom: 1px solid @deep-blue;
+
+    }
+
+    .nav-tabs > li.active > a {
+
+      background-color: @background !important;
+      color: @deep-blue;
+      border-bottom-color: transparent !important;
+      border: 1px solid @deep-blue;
+
+    }
+
+    .nav-tabs > li > a:hover {
+
+      //background-color: #EDECDE;
+      background-color: @deep-blue;
+      color: @background;
+      border-bottom: 1px solid @deep-blue;
+
+    }
+
+    .nav-tabs > li.active > a:hover {
+
+      color: @deep-blue;
+
+    }
 
     .non-cascading-selectable-container {
 

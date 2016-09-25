@@ -7,7 +7,60 @@
 
                 <p class="large-section-heading">MEDIA</p>
 
-                <div class="non-cascading-selectable-container">
+                <ul class="nav nav-tabs">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#images" aria-controls="images" role="tab" data-toggle="tab">Spöket på bild</a></li>
+                        <li role="presentation"><a href="#youtube" aria-controls="youtube" role="tab" data-toggle="tab">Spöket på film</a></li>
+                        <li role="presentation"><a href="#soundcloud" aria-controls="soundcloud" role="tab" data-toggle="tab">Spöket i ljud</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="images">
+
+                            <div class="non-cascading-selectable-container">
+
+                                <p class="small-section-heading">Spöket på bild:</p>
+
+                                <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
+                                    <a ui-sref="galleries( { name: '{{ galleryName }}' } )"><img src="{{ galleryCover[1] }}"></a>
+                                    <p class="smaller-section-heading">{{ galleryName }}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="youtube">
+
+                            <p class="small-section-heading">Spöket på film:</p>
+                            <div ng-repeat="video in videos">
+                                <iframe width="560"
+                                        height="315"
+                                        src="{{ trustUrl(video.src) }}"
+                                        frameborder="0"
+                                        allowfullscreen>
+                                </iframe>
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="soundcloud">
+
+                            <p class="small-section-heading">Spöket i ljud:</p>
+                            <div ng-repeat="sound in sounds">
+                                <iframe width="100%"
+                                        height="166"
+                                        scrolling="no"
+                                        frameborder="no"
+                                        src="{{ trustUrl(sound.src) }}">
+                                </iframe>
+                            </div>
+
+                        </div>
+                    </div>
+                </ul>
+
+                <!--<div class="non-cascading-selectable-container">
 
                     <p class="small-section-heading">Spöket på bild:</p>
 
@@ -37,7 +90,7 @@
                             frameborder="no"
                             src="{{ trustUrl(sound.src) }}">
                     </iframe>
-                </div>
+                </div>-->
 
             </div>
 
