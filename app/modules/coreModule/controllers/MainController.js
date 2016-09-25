@@ -79,6 +79,8 @@ define(function() {
 			});
 		}
 
+		$scope.membersClasses = ['blue', 'pink', 'green'];
+
 	});
 
 });

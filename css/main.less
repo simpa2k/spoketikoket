@@ -170,6 +170,49 @@ body {
 
   }
 
+  #members-section {
+
+    /* The css for centering text is taken from https://css-tricks.com/centering-css-complete-guide/*/
+    .member {
+
+      display: inline-block;
+      width: 20%;
+      height: 150px;
+      position: relative;
+
+      p {
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: @background;
+        margin-bottom: 0;
+
+      }
+
+    }
+
+    .blue {
+
+      background-color: @deep-blue;
+
+    }
+
+    .pink {
+
+      background-color: #B16356;
+
+    }
+
+    .green {
+
+      background-color: #7B995D;
+
+    }
+
+  }
+
   #media-section {
 
     .nav-tabs > .nav-tabs {

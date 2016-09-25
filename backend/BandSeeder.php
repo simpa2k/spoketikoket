@@ -101,10 +101,56 @@ class BandSeeder {
 
         $members = array(
             0 => array(
+                'firstname' => 'Clara',
+                'lastname' => 'Tesch',
+                'instrument' => 'fiol'
+            ),
+            1 => array(
+                'firstname' => 'Mads',
+                'lastname' => 'Kjøller-Henningsen',
+                'instrument' => 'flöjter, vevlira, sång'
+            ),
+            2 => array(
+                'firstname' => 'Emma',
+                'lastname' => 'Engström',
+                'instrument' => 'piano'
+            ),
+            3 => array(
+                'firstname' => 'Erik',
+                'lastname' => 'Bengtsson',
+                'instrument' => 'bas'
+            ),
+            4 => array(
+                'firstname' => 'Troels',
+                'lastname' => 'Strange Lorentzen',
+                'instrument' => 'dragspel'
+            ),
+            5 => array(
                 'firstname' => 'Nisse',
                 'lastname' => 'Blomster',
-                'instrument' => 'Allt'
-            )
+                'instrument' => 'gitarr, banjo, mandolin, stomp, sång'
+            ),
+            6 => array(
+                'firstname' => 'Albin',
+                'lastname' => 'Lagg',
+                'instrument' => 'trumpet'
+            ),
+            7 => array(
+                'firstname' => 'Ella',
+                'lastname' => 'Wennerberg',
+                'instrument' => 'trombon'
+            ),
+            8 => array(
+                'firstname' => 'Henrik',
+                'lastname' => 'Büller',
+                'instrument' => 'barytonsax, altsax'
+            ),
+            9 => array(
+                'firstname' => 'Erik',
+                'lastname' => 'Larsson',
+                'instrument' => 'tenorsax, klarinett'
+            ),
+
         );
 
         foreach($members as $member) {
