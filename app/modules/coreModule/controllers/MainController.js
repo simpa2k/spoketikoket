@@ -7,6 +7,7 @@ define(function() {
 											  $http,
 											  $sce,
                                               parallaxHelper,
+											  DateService,
 											  ContactpersonsService,
 											  DescriptionService,
 											  VenuesService,
@@ -23,6 +24,10 @@ define(function() {
 		$scope.timeFormat = 'HH:mm';
 
 		$scope.email = "spoketikoket@gmail.com";
+
+		DateService.getCurrentDatetime(function(currentDatetime) {
+			$scope.currentDate = currentDatetime;
+		});
 
 	    ContactpersonsService.getContactpersons().then(function(contactpersons) {
 	        $scope.contactpersons = contactpersons;

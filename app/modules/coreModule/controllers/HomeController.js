@@ -2,7 +2,7 @@ define(function() {
 
     var app = angular.module('coreModule');
 
-    app.controller('HomeController', function($scope) {
+    app.controller('HomeController', function($scope, DateService) {
 
         $scope.headings = [
             {
@@ -34,6 +34,12 @@ define(function() {
                 imageText: "images/socialmedia/youtubetext.png"
             }
         ]
+
+        $scope.dateFilter = function() {
+            return function(gig) {
+                return DateService.compareYearMonthDay(gig.datetime, $scope.currentDate);
+            }
+        };
 
     });
 

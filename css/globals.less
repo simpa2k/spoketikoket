@@ -82,3 +82,9 @@
   .box-shadow(2px 2px 3px 0px, @light-background-shadow);
 
 }
+
+.dynamic-shadow(@background-color) {
+
+  .box-shadow(2px 2px 3px 0px, @background-color - #1C1C1C);
+
+}

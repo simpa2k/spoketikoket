@@ -8,6 +8,7 @@ require.config({
 		'angular-scroll': '../bower_components/angular-scroll/angular-scroll.min',
 		'ng-parallax': '../bower_components/ng-parallax/angular-parallax.min',
 		'ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
+		'date-module': 'modules/date-module/date-module',
 		'coreModule': 'modules/coreModule/coreModule'
 	},
 
@@ -30,12 +31,16 @@ require.config({
 		'ui-router': {
 			deps: ['angular']
 		},
+		'date-module': {
+			deps: ['angular']
+		},
 		'coreModule': {
 			deps: ['angular-modal-service',
 				   'angular-bootstrap',
 				   'angular-scroll',
 				   'ng-parallax',
-				   'ui-router']
+				   'ui-router',
+				   'date-module']
 		}
 	}
 
