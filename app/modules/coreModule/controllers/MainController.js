@@ -6,6 +6,7 @@ define(function() {
 											  $rootScope,
 											  $http,
 											  $sce,
+											  $uibModal,
                                               parallaxHelper,
 											  DateService,
 											  ContactpersonsService,
@@ -65,6 +66,18 @@ define(function() {
 	    $scope.trustUrl = function(src) {
 	        return $sce.trustAsResourceUrl(src);
 	    };
+
+	    $scope.openGallery = function(galleryName) {
+	    	$rootScope.name = galleryName;
+			console.log(galleryName);
+
+	    	var modalInstance = $uibModal.open({
+	    		templateUrl: 'partials/gallery-page.html',
+	    		controller: 'GalleryController',
+				windowClass: 'modal-window',
+				scope: $scope
+			});
+		}
 
 	});
 

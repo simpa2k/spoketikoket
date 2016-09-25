@@ -37,7 +37,6 @@ define(function() {
                    displayed. See gallery.less.
                    */
                   if($(window).width() >= 768) {
-                     var imageHeight = selectedImage.height();
                      setElementHeight(selectableContainer, selectedImage);
                   }
 

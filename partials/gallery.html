@@ -1,6 +1,6 @@
 <div id="gallery-container">
 
-    <h1 class="large-section-heading text-center col-sm-8 col-sm-offset-0 col-xs-6 col-xs-offset-3">{{ name }}</h1>
+    <!--<h1 class="large-section-heading text-center col-sm-8 col-sm-offset-0 col-xs-6 col-xs-offset-3">{{ name }}</h1>-->
 
     <div id="selected-image-container">
         <a href="{{ selectedImage.image.full }}">
@@ -8,9 +8,15 @@
         </a>
     </div>
 
-    <div class="selectable-container col-sm-3 col-sm-offset-0 col-xs-6 col-xs-offset-3">
+    <div id="large-screen-container" class="selectable-container col-sm-3 col-sm-offset-0 col-xs-6 col-xs-offset-3">
         <div class="selectable image-container" ng-repeat="image in images">
             <img src="{{ image.thumb }}" ng-click="selectImage(image)">
+        </div>
+    </div>
+
+    <div id="small-screen-container" class="selectable-container col-xs-6 col-xs-offset-3">
+        <div class="selectable image-container" ng-repeat="image in images">
+            <a href="{{ image.full }}"><img src="{{ image.thumb }}"></a>
         </div>
     </div>
 

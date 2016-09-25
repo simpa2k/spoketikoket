@@ -2,12 +2,23 @@
 
 @gallery-background: @deep-blue;
 
-
 #gallery-page {
 
-  background-color: @gallery-background;
+  //height: 100%;
+  //background-color: @gallery-background;
+  background-color: transparent;
+  overflow-y: auto;
+
+  .container-fluid {
+
+    height: 100%;
+
+  }
 
   #gallery-container {
+
+    height: 100%;
+    margin: 2% 0 2% 0;
 
     h1 {
 
@@ -29,6 +40,12 @@
 
     }
 
+    #large-screen-container {
+
+      display: none;
+
+    }
+
     @media(min-width: @screen-sm-min) {
 
       #selected-image-container {
@@ -39,8 +56,21 @@
         #selected-image {
 
           padding: 0 0 0 0;
+          margin-bottom: 2%;
 
         }
+
+      }
+
+      #small-screen-container {
+
+        display: none;
+
+      }
+
+      #large-screen-container {
+
+        display: initial;
 
       }
 

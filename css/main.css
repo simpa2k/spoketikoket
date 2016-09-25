@@ -237,7 +237,15 @@
   display: initial;
 }
 #gallery-page {
-  background-color: #123848;
+  background-color: transparent;
+  overflow-y: auto;
+}
+#gallery-page .container-fluid {
+  height: 100%;
+}
+#gallery-page #gallery-container {
+  height: 100%;
+  margin: 2% 0 2% 0;
 }
 #gallery-page #gallery-container h1 {
   font-weight: 300 !important;
@@ -251,6 +259,9 @@
 #gallery-page #gallery-container #selected-image-container {
   display: none;
 }
+#gallery-page #gallery-container #large-screen-container {
+  display: none;
+}
 @media (min-width: 768px) {
   #gallery-page #gallery-container #selected-image-container {
     display: initial;
@@ -258,6 +269,13 @@
   }
   #gallery-page #gallery-container #selected-image-container #selected-image {
     padding: 0 0 0 0;
+    margin-bottom: 2%;
+  }
+  #gallery-page #gallery-container #small-screen-container {
+    display: none;
+  }
+  #gallery-page #gallery-container #large-screen-container {
+    display: initial;
   }
   #gallery-page #gallery-container .selectable-container,
   #gallery-page #gallery-container .opacity-altering-selectable-container {
@@ -280,6 +298,13 @@ html {
 body {
   font-family: "Oswald" !important;
   font-weight: 300 !important;
+}
+.modal-window .modal-dialog {
+  width: 80%;
+}
+.modal-window .modal-dialog .modal-content {
+  height: 100%;
+  background-color: rgba(18, 56, 72, 0.9);
 }
 #background {
   position: fixed;
@@ -379,6 +404,7 @@ body {
 }
 #main #media-section .nav-tabs > .nav-tabs {
   border-bottom: 1px solid #123848;
+  width: 60%;
 }
 #main #media-section .nav-tabs > li.active > a {
   background-color: #dfdbc3 !important;
