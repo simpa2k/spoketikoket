@@ -7075,13 +7075,23 @@ body {
   margin-left: 8.33333333% !important;
 }
 .image-not-selected {
-  position: relative !important;
   float: left !important;
-  width: 50% !important;
+  width: 100% !important;
+  position: relative !important;
   min-height: 1px !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
-  margin-left: 25% !important;
+}
+@media (min-width: 992px) {
+  .image-not-selected {
+    float: left;
+    width: 50%;
+  }
+}
+@media (min-width: 992px) {
+  .image-not-selected {
+    margin-left: 25%;
+  }
 }
 #background {
   position: fixed;
