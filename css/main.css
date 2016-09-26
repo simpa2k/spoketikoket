@@ -7153,18 +7153,16 @@ body {
   /* The css for centering text is taken from https://css-tricks.com/centering-css-complete-guide/*/
 }
 #main #members-section .member {
-  display: inline-block;
-  width: 20%;
-  height: 150px;
-  position: relative;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  width: 60%;
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
 #main #members-section .member p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #DFDBC3;
   margin-bottom: 0;
+  border-radius: 5px;
 }
 #main #members-section .colored-text {
   padding: 1% 1% 1% 1%;
