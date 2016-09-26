@@ -222,6 +222,11 @@ define(function() {
                        setNavbarHeight();
                        checkNavbarUpperEdge();
                        checkNavbarLowerEdge();
+
+                       if($(window).width() >= 931 && element.hasClass('expanded')) {
+                           $scope.toggleNavbar();
+                       }
+
                    });
                }
            }
