@@ -6815,13 +6815,14 @@ button.close {
   width: 90%;
   max-height: 500px;
   font-size: 16pt;
+  border: 1px solid #D0D7DA;
   border-radius: 2px;
   -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
   box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
 #gigs .gig .gig-text {
-  border-right: 1px solid #123848;
+  border-right: 1px solid #D0D7DA;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   padding: 2% 2% 1% 2%;
@@ -6833,7 +6834,7 @@ button.close {
   text-align: center;
 }
 #gigs .additional-info {
-  border-top: 1px solid #123848;
+  border-top: 1px solid #D0D7DA;
   padding: 2% 2% 1% 2%;
   cursor: default;
   overflow-x: auto;

@@ -87,7 +87,7 @@ define(function() {
 		};
 
 		$scope.membersColors = ['blue', 'red', 'green'];
-		$scope.gigsColors = ['red', 'sand', 'green'];
+		$scope.gigsColors = ['blue', 'red', 'green'];
 
 		$scope.getColorClass = function($index, colorsArray) {
 			return colorsArray[$index % colorsArray.length];

@@ -6846,16 +6846,16 @@ button.close {
   margin-top: 8px;
   background-color: #262626;
   color: white;
-  border-color: #123848;
+  border-color: #D0D7DA;
 }
 #navbar #navbar-button:hover {
-  background-color: #0c3242;
+  background-color: #cad1d4;
   -webkit-box-shadow: inset 1px 1px 5px 0px #101010;
   -moz-box-shadow: inset 1px 1px 5px 0px #101010;
   box-shadow: inset 1px 1px 5px 0px #101010;
 }
 #navbar #navbar-button.active {
-  background-color: #0c3242;
+  background-color: #cad1d4;
   -webkit-box-shadow: inset 1px 1px 5px 0px #101010;
   -moz-box-shadow: inset 1px 1px 5px 0px #101010;
   box-shadow: inset 1px 1px 5px 0px #101010;
@@ -6882,7 +6882,7 @@ button.close {
   display: none;
 }
 #navbar.expanded #navbar-button:hover {
-  background-color: #082e3e;
+  background-color: #c6cdd0;
 }
 @media (min-width: 500px) {
   #navbar ul {
