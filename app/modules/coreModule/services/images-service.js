@@ -39,7 +39,6 @@ define(function() {
 				return galleriesPromise;
 			},
 			getGalleryWhere: function(queryParameters, callback) {
-				console.log(galleriesEndpoint + '?' + queryParameters);
 				$http.get(galleriesEndpoint + '?' + queryParameters).then(function(response) {
 				    callback(response.data);
 				});

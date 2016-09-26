@@ -18,15 +18,34 @@ body {
 
 .modal-window .modal-dialog {
 
-  width: 80%;
+  //width: 80%;
   //background-color: @transparent-deep-blue;
+  display: inline-block;
 
   .modal-content {
 
-    height: 100%;
+    //height: 100%;
+    //height: @screen-height;
+    display: inline-block;
+    overflow-y: auto;
     background-color: @transparent-deep-blue;
+    padding: 2% 2% 2% 2%;
 
   }
+
+}
+
+.image-selected {
+
+  .make-xs-column(10) !important;
+  .make-xs-column-offset(1) !important;
+
+}
+
+.image-not-selected {
+
+  .make-xs-column(6) !important;
+  .make-xs-column-offset(3) !important;
 
 }
 
@@ -173,6 +192,7 @@ body {
   #members-section {
 
     /* The css for centering text is taken from https://css-tricks.com/centering-css-complete-guide/*/
+
     .member {
 
       display: inline-block;
@@ -193,21 +213,34 @@ body {
 
     }
 
+    .colored-text {
+
+      padding: 1% 1% 1% 1%;
+
+    }
+
+
     .blue {
 
       background-color: @deep-blue;
+      color: @green;
+      .colored-text;
 
     }
 
     .pink {
 
-      background-color: #B16356;
+      background-color: @red;
+      color: @deep-blue;
+      .colored-text;
 
     }
 
     .green {
 
-      background-color: #7B995D;
+      background-color: @green;
+      color: @deep-blue;
+      .colored-text;
 
     }
 
@@ -255,7 +288,8 @@ body {
     img {
 
       margin: 1% 1% 1% 0%;
-      .shadowed
+      max-width: 100%;
+      .shadowed;
 
     }
 

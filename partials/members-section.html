@@ -2,17 +2,18 @@
 
     <div class="container-fluid">
         <div class="row">
-            <p class="small-section-heading">SPÖKET ÄR</p>
-            <div class="member {{ membersClasses[$index % membersClasses.length] }}" ng-repeat="member in members">
-                <p>{{ member.firstname }} {{ member.lastname }} - </br>{{ member.instrument }}</p>
-            </div>
+            <!--<p class="small-section-heading">SPÖKET ÄR</p>-->
 
-            <!--<div class="col-md-8 col-md-offset-2">
-                <p class="small-section-heading">SPÖKET ÄR</p>
-                <!--<div ng-repeat="member in members">
-                    <p>{{ member.firstname }} {{ member.lastname }} - {{ member.instrument }}</p>
-                </div>
+            <!--<div class="member {{ membersClasses[$index % membersClasses.length] }}" ng-repeat="member in members">
+                <p class="text-center">{{ member.firstname }} {{ member.lastname }} - {{ member.instrument }}</p>
             </div>-->
+
+            <div class="col-md-8 col-md-offset-2">
+                <p class="small-section-heading">SPÖKET ÄR</p>
+                <div ng-repeat="member in members">
+                    <p class="{{ membersClasses[$index % membersClasses.length] }}">{{ member.firstname }} {{ member.lastname }} - {{ member.instrument }}</p>
+                </div>
+            </div>
 
         </div>
     </div>

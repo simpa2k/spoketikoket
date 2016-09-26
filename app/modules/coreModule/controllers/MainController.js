@@ -68,16 +68,23 @@ define(function() {
 	    };
 
 	    $scope.openGallery = function(galleryName) {
-	    	$rootScope.name = galleryName;
-			console.log(galleryName);
+	    	$scope.name = galleryName;
+
+			$scope.selectedImage = {
+				image: null
+			};
+
+			ImagesService.getGalleryWhere('galleryname=' + $scope.name, function(images) {
+				$scope.images = images[$scope.name];
+			});
 
 	    	var modalInstance = $uibModal.open({
-	    		templateUrl: 'partials/gallery-page.html',
-	    		controller: 'GalleryController',
+	    		template: '<gallery name="{{ name }}" images="images" selected-image="selectedImage" close-modal="closeModal()"></gallery>',
+                controller: 'GalleryController',
 				windowClass: 'modal-window',
 				scope: $scope
 			});
-		}
+		};
 
 		$scope.membersClasses = ['blue', 'pink', 'green'];
 

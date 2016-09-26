@@ -1,43 +1,31 @@
-<div id="gallery-container">
+<div id="gallery-page">
 
-    <!--<h1 class="large-section-heading text-center col-sm-8 col-sm-offset-0 col-xs-6 col-xs-offset-3">{{ name }}</h1>-->
+    <button class="btn btn-default" ng-click="close()">
+        <span class="glyphicon glyphicon-remove"></span>
+    </button>
+    <button class="btn btn-default" ng-click="back()" ng-show="selectedImage.image">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+    </button>
 
-    <div id="selected-image-container">
-        <a href="{{ selectedImage.image.full }}">
-            <img id="selected-image" class="col-xs-8" src="{{ selectedImage.image.full }}">
-        </a>
-    </div>
+    <div class="container-fluid">
 
-    <div id="large-screen-container" class="selectable-container col-sm-3 col-sm-offset-0 col-xs-6 col-xs-offset-3">
-        <div class="selectable image-container" ng-repeat="image in images">
-            <img src="{{ image.thumb }}" ng-click="selectImage(image)">
-        </div>
-    </div>
+        <div id="gallery-container">
 
-    <div id="small-screen-container" class="selectable-container col-xs-6 col-xs-offset-3">
-        <div class="selectable image-container" ng-repeat="image in images">
-            <a href="{{ image.full }}"><img src="{{ image.thumb }}"></a>
-        </div>
-    </div>
-
-    <!--<div class="col-md-12">
-
-        <div class="gallery-row">
-
-            <div id="child-1" class="col-md-8">
+            <div id="selected-image-container" ng-show="selectedImage.image">
                 <a href="{{ selectedImage.image.full }}">
-                    <img id="selected-image" src="{{ selectedImage.image.full }}">
+                    <img id="selected-image" class="" src="{{ selectedImage.image.full }}">
                 </a>
             </div>
-            <div id="child-2" class="selectable-container col-md-3">
+
+            <div id="small-screen-container" class="selectable-container" ng-hide="selectedImage.image">
                 <div class="selectable image-container" ng-repeat="image in images">
                     <img src="{{ image.thumb }}" ng-click="selectImage(image)">
                 </div>
             </div>
 
         </div>
-    </div>-->
 
+    </div>
 
 
 </div>
