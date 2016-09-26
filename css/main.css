@@ -7242,6 +7242,7 @@ body {
   box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
 #main #media-section iframe {
+  max-width: 100%;
   -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
   box-shadow: 2px 2px 3px 0px #c3bfa7;
