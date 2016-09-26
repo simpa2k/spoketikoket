@@ -7066,13 +7066,23 @@ body {
   padding: 2% 2% 2% 2%;
 }
 .image-selected {
-  position: relative !important;
   float: left !important;
-  width: 83.33333333% !important;
+  width: 100% !important;
+  position: relative !important;
   min-height: 1px !important;
   padding-left: 15px !important;
   padding-right: 15px !important;
-  margin-left: 8.33333333% !important;
+}
+@media (min-width: 992px) {
+  .image-selected {
+    float: left;
+    width: 83.33333333%;
+  }
+}
+@media (min-width: 992px) {
+  .image-selected {
+    margin-left: 8.33333333%;
+  }
 }
 .image-not-selected {
   float: left !important;
