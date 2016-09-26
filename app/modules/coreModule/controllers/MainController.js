@@ -86,7 +86,12 @@ define(function() {
 			});
 		};
 
-		$scope.membersClasses = ['blue', 'pink', 'green'];
+		$scope.membersColors = ['blue', 'red', 'green'];
+		$scope.gigsColors = ['red', 'sand', 'green'];
+
+		$scope.getColorClass = function($index, colorsArray) {
+			return colorsArray[$index % colorsArray.length];
+		}
 
 	});
 

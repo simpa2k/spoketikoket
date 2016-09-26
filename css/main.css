@@ -6759,6 +6759,45 @@ button.close {
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
   box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
+.colored-text {
+  padding: 1% 1% 1% 1%;
+}
+.blue {
+  background-color: #123848;
+  color: #7B995D;
+}
+.bordered-blue {
+  background-color: #123848;
+  color: #7B995D;
+  border: 1px solid #7B995D;
+}
+.sand {
+  background-color: #DFDBC3;
+  color: #123848;
+}
+.bordered-sand {
+  background-color: #DFDBC3;
+  color: #123848;
+  border: 1px solid #123848;
+}
+.red {
+  background-color: #B16356;
+  color: #123848;
+}
+.bordered-red {
+  background-color: #B16356;
+  color: #123848;
+  border: 1px solid #123848;
+}
+.green {
+  background-color: #7B995D;
+  color: #123848;
+}
+.bordered-green {
+  background-color: #7B995D;
+  color: #123848;
+  border: 1px solid #123848;
+}
 #navbar {
   position: absolute;
   width: 100%;
@@ -6918,7 +6957,6 @@ button.close {
   width: 90%;
   max-height: 500px;
   font-size: 16pt;
-  border: 1px solid #123848;
   border-radius: 2px;
   -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
@@ -7162,25 +7200,6 @@ body {
 }
 #main #members-section .member p {
   margin-bottom: 0;
-  border-radius: 5px;
-}
-#main #members-section .colored-text {
-  padding: 1% 1% 1% 1%;
-}
-#main #members-section .blue {
-  background-color: #123848;
-  color: #7B995D;
-  padding: 1% 1% 1% 1%;
-}
-#main #members-section .pink {
-  background-color: #B16356;
-  color: #123848;
-  padding: 1% 1% 1% 1%;
-}
-#main #members-section .green {
-  background-color: #7B995D;
-  color: #123848;
-  padding: 1% 1% 1% 1%;
 }
 #main #media-section .nav-tabs > .nav-tabs {
   border-bottom: 1px solid #123848;

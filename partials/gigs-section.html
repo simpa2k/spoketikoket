@@ -8,7 +8,7 @@
                 <p class="large-section-heading">KOMMANDE KONSERTER</p>
 
                 <div id="gigs-container" class="selectable-container">
-                    <div ng-repeat="gig in gigs | filter:dateFilter()" class="gig selectable collapsed row">
+                    <div ng-repeat="gig in gigs | filter:dateFilter()" class="gig selectable collapsed row bordered-{{ getColorClass($index, gigsColors) }}">
                         <gig></gig>
                     </div>
                 </div>
