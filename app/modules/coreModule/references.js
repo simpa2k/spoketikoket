@@ -2,9 +2,11 @@ define(function() {
 
 	return [
 		'modules/coreModule/controllers/MainController',
+		'modules/coreModule/controllers/LoginController',
 		'modules/coreModule/controllers/HomeController',
 		'modules/coreModule/controllers/GalleryController',
 		'modules/coreModule/controllers/AdminContactpersonsController',
+		'modules/coreModule/controllers/AdminController',
 		'modules/coreModule/controllers/AdminDescriptionController',
 		'modules/coreModule/controllers/AdminGigsController',
 		'modules/coreModule/controllers/AdminImagesController',

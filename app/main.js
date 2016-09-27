@@ -4,12 +4,16 @@ require.config({
 		'jquery': '../bower_components/jquery/dist/jquery.min',
 		'angular': '../bower_components/angular/angular.min',
 		'bootstrap-tabs': '../bower_components/bootstrap/js/tab',
+		'tinymce': '../bower_components/tinymce/tinymce.min',
+		'angular-tinymce': '../bower_components/angular-ui-tinymce/dist/tinymce.min',
+		'ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
 		'angular-modal-service': '../bower_components/angular-modal-service/dst/angular-modal-service.min',
 		'angular-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
 		'angular-scroll': '../bower_components/angular-scroll/angular-scroll.min',
 		'ng-parallax': '../bower_components/ng-parallax/angular-parallax.min',
-		'ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
+		'angular-sanitize': '../bower_components/angular-sanitize/angular-sanitize.min',
 		'date-module': 'modules/date-module/date-module',
+		'authentication-module': 'modules/authentication-module/authentication-module',
 		'coreModule': 'modules/coreModule/coreModule'
 	},
 
@@ -19,6 +23,12 @@ require.config({
 		},
 		'bootstrap-tabs': {
 			deps: ['jquery']
+		},
+		'angular-tinymce': {
+			deps: ['angular', 'tinymce']
+		},
+		'ui-router': {
+			deps: ['angular']
 		},
 		'angular-modal-service': {
 			deps: ['angular']
@@ -32,20 +42,26 @@ require.config({
 		'ng-parallax': {
 			deps: ['angular-scroll']
 		},
-		'ui-router': {
+		'angular-sanitize': {
 			deps: ['angular']
 		},
 		'date-module': {
 			deps: ['angular']
 		},
+		'authentication-module': {
+			deps: ['angular']
+		},
 		'coreModule': {
-			deps: ['bootstrap-tabs',
+			deps: ['ui-router',
+				   'bootstrap-tabs',
+				   'angular-tinymce',
 				   'angular-modal-service',
 				   'angular-bootstrap',
 				   'angular-scroll',
 				   'ng-parallax',
-				   'ui-router',
-				   'date-module']
+				   'angular-sanitize',
+				   'date-module',
+				   'authentication-module']
 		}
 	}
 

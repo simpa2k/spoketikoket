@@ -6819,7 +6819,7 @@ button.close {
   transform: scale(1.05);
 }
 #navbar a {
-  color: red;
+  color: #D0D7DA;
   text-decoration: none;
 }
 #navbar #social-media-section {

@@ -3,12 +3,6 @@
 @import 'gig.less';
 @import 'gallery.less';
 
-html {
-
-  background-color: @deep-blue;
-
-}
-
 body {
 
   font-family: "Oswald" !important;
@@ -20,7 +14,7 @@ body {
 
   //width: 80%;
   //background-color: @transparent-deep-blue;
-  display: inline-block;
+  //display: inline-block;
 
   .modal-content {
 
@@ -45,7 +39,7 @@ body {
 
 .image-not-selected {
 
-  .make-xs-column(12) !important;
+  //.make-xs-column(12) !important;
   .make-md-column(6) !important;
   .make-md-column-offset(3) !important;
 
@@ -106,6 +100,35 @@ body {
   }
 }
 
+.section-heading {
+
+  color: @deep-blue;
+  width: 60%;
+
+}
+
+.smaller-section-heading {
+
+  font-size: 18pt;
+  .section-heading
+
+}
+
+.small-section-heading {
+
+  font-size: 22pt;
+  .section-heading
+
+}
+
+.large-section-heading{
+
+  font-size: 30pt;
+  border-top: 2px solid @deep-blue;
+  .section-heading
+
+}
+
 #main {
 
   position: absolute;
@@ -121,37 +144,7 @@ body {
     background-color: @background;
     padding-top: 5%;
 
-    .section-heading {
-
-      color: @deep-blue;
-      width: 60%;
-
-    }
-
-    .smaller-section-heading {
-
-      font-size: 18pt;
-      .section-heading
-
-    }
-
-    .small-section-heading {
-
-      font-size: 22pt;
-      .section-heading
-
-    }
-
-    .large-section-heading{
-
-      font-size: 30pt;
-      border-top: 2px solid @deep-blue;
-      .section-heading
-
-    }
-
-}
-
+  }
 
   h1 {
     color: @deep-blue;
@@ -270,4 +263,9 @@ body {
   }
 }
 
+#admin-embedded-items {
+
+
+
+}
 

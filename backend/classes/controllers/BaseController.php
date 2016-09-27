@@ -183,7 +183,7 @@ abstract class BaseController {
 
         $db = $this->model->getDB();
 
-        if($db->get('users', $this->formatParameters($usernameAndToken))->results() != null) {
+        if($db->get('user', $this->formatParameters($usernameAndToken))->results() != null) {
             return true;
         } else {
             http_response_code(401);

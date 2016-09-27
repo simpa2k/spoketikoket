@@ -60,11 +60,9 @@ class ContactpersonsController extends BaseController {
      */
 
     public function put($request) {
-        $phonenumber = $request->parameters['phonenumber'];
-        $name = $request->parameters['name'];
-        $primaryKey = "phonenumber = $phonenumber, name = $name";
-        unset($request->parameters['phonenumber']);
-        unset($request->parameters['name']);
+        $id = $request->parameters['id'];
+        $primaryKey = "id = $id";
+        unset($request->parameters['id']);
         $this->getModel()->update($primaryKey, $request->parameters);
     }
 
@@ -77,7 +75,7 @@ class ContactpersonsController extends BaseController {
      */
 
     public function delete($request) {
-        $primaryKey = $this->filterParameters(array('phonenumber', 'name'), $request->parameters);
+        $primaryKey = $this->filterParameters(array('id'), $request->parameters);
         $this->getModel()->delete($this->formatParameters($primaryKey));
     }
 

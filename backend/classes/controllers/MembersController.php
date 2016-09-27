@@ -60,11 +60,9 @@ class MembersController extends BaseController {
      */
 
     public function put($request) {
-        $firstname = $request->parameters['firstname'];
-        $lastname = $request->parameters['lastname'];
-        $primaryKey = "firstname = $firstname, lastname = $lastname";
-        unset($request->parameters['firstname']);
-        unset($request->parameters['lastname']);
+        $id = $request->parameters['id'];
+        $primaryKey = "id = $id";
+        unset($request->parameters['id']);
         $this->getModel()->update($primaryKey, $request->parameters);
     }
 
@@ -77,7 +75,7 @@ class MembersController extends BaseController {
      */
 
     public function delete($request) {
-        $primaryKey = $this->filterParameters(array('firstname', 'lastname'), $request->parameters);
+        $primaryKey = $this->filterParameters(array('id'), $request->parameters);
         $this->getModel()->delete($this->formatParameters($primaryKey));
     }
 

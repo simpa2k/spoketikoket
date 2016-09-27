@@ -61,8 +61,7 @@ class VenuesController extends BaseController {
 
     public function put($request) {
         $name = $request->parameters['name'];
-        $primaryKey = "name = $name";
-        unset($request->parameters['name']);
+        $primaryKey = "name = '$name'";
         $this->getModel()->update($primaryKey, $request->parameters);
     }
 

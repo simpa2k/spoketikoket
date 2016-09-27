@@ -1,0 +1,7 @@
+<h1 class="text-center">Redigera beskrivning</h1>
+
+<form name="descriptionForm" class="col-sm-6 col-sm-offset-3">
+    <textarea class="form-control" ui-tinymce="" ng-model="descriptionToBeSent.content" name="descriptionContent"></textarea>
+    <button class="btn btn-primary col-sm-6 col-sm-offset-3" ng-show="descriptionForm.descriptionContent.$dirty" ng-click="putDescription()">Bekräfta ändringar</button>
+</form>
+

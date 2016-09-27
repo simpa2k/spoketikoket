@@ -1,0 +1,79 @@
+<div id="admin-embedded-items">
+
+    <div class="container-fluid">
+
+        <div class="col-md-6">
+
+            <p class="large-section-heading text-center">VIDEO/LJUD</p>
+            <ul class="nav nav-tabs">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#video" aria-controls="video" role="tab" data-toggle="tab">Filmklipp</a></li>
+                    <li role="presentation"><a href="#sound" aria-controls="sound" role="tab" data-toggle="tab">Ljudklipp</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="video">
+
+                        <div class="selectable-container">
+                            <div ng-repeat="video in videos" id="{{ video.type }}-{{ $index }}">
+                                <iframe class="selectable admin-item"
+                                        width="560"
+                                        height="315"
+                                        src="{{ trustUrl(video.src) }}"
+                                        frameborder="0"
+                                        allowfullscreen>
+                                </iframe>
+
+                                <div class="editing-controls ng-hide">
+                                    <p class="form-group" >
+                                        <input type="text" class="form-control" ng-model="embeddeditemsToBeSent[video.type + '-' + $index].src" placeholder="url">
+                                        <input type="text" class="form-control" ng-model="embeddeditemsToBeSent[video.type + '-' + $index].type" placeholder="Mediatyp">
+                                    </p>
+
+                                    <button class="btn btn-danger" ng-click="deleteEmbeddeditem()">Ta bort klipp</button>
+                                    <button class="btn btn-primary" ng-click="sendEmbeddeditem()">Bekräfta</button>
+                                </div>
+
+                                <button class="btn btn-primary" ng-click="setPutState(video, $index)">{{ editButtonText }}</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="sound">
+
+                        <div ng-repeat="sound in sounds">
+                            <iframe width="100%"
+                                    height="166"
+                                    scrolling="no"
+                                    frameborder="no"
+                                    src="{{ trustUrl(sound.src) }}">
+                            </iframe>
+                            <button class="btn btn-primary" ng-click="setPutState(sound)">Redigera</button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+
+            <p class="large-section-heading">{{ heading }}</p>
+
+            <div class="editing-area">
+
+                <div class="editing-controls">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

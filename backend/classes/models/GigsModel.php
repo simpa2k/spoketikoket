@@ -27,7 +27,9 @@ class GigsModel extends BaseModel {
         $action = 'SELECT *';
         $table = 'gig, venue';
         $joinCondition = array(0 => array('venue_name', 'name'));
-        return $this->getDB()->action($action, $table, $where, $joinCondition)->results();
+        $orderBy = array('datetime');
+        
+        return $this->getDB()->action($action, $table, $where, $joinCondition, $orderBy)->results();
     }
 
     /**
@@ -37,7 +39,7 @@ class GigsModel extends BaseModel {
      */
 
 	public function getAll() {
-        return $this->getDB()->getAll('gig')->results();
+        return $this->get();
     }
 
     /**
