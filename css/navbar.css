@@ -6795,6 +6795,7 @@ button.close {
   bottom: 0;
   background-color: rgba(18, 56, 72, 0.9);
   color: #D0D7DA;
+  letter-spacing: 2px;
   /*.social-media:hover {
 
       background-color: @dark-grey;

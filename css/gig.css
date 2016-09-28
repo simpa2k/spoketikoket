@@ -6802,7 +6802,7 @@ button.close {
   padding-bottom: 2%;
 }
 #gigs .gig {
-  margin: 2% 2% 0 2%;
+  margin: 2% 2% 0 0%;
   width: 90%;
   max-height: 500px;
   font-size: 16pt;

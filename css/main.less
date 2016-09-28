@@ -31,9 +31,9 @@ body {
 
 .image-selected {
 
-  .make-xs-column(12) !important;
-  .make-md-column(10) !important;
-  .make-md-column-offset(1) !important;
+  //.make-xs-column(12) !important;
+  .make-xs-column(10) !important;
+  .make-xs-column-offset(1) !important;
 
 }
 
@@ -124,6 +124,7 @@ body {
 .non-bordered-large-section-heading {
 
   font-size: 30pt;
+  letter-spacing: 2px;
   .section-heading;
 
 }
@@ -158,6 +159,12 @@ body {
 
   h1 {
     color: @deep-blue;
+  }
+
+  .large-text {
+
+    font-size: 14pt;
+
   }
 
   .big-image {
@@ -201,13 +208,16 @@ body {
     .member {
 
       margin-bottom: 5px;
-      border-radius: 5px;
+      border-radius: 3px;
+      border: 1px solid @off-white;
       width: 60%;
       .shadowed;
 
       p {
 
         margin-bottom: 0;
+        font-size: 12pt;
+        letter-spacing: 2px;
 
       }
 
@@ -222,13 +232,20 @@ body {
 
       border-bottom: 1px solid @deep-blue;
       width: 60%;
+      letter-spacing: 2px;
+      .large-text;
+
+    }
+
+    .nav-tabs > li > a {
+
+      color: @deep-blue;
 
     }
 
     .nav-tabs > li.active > a {
 
       background-color: @background !important;
-      color: @deep-blue;
       border-bottom-color: transparent !important;
       border: 1px solid @deep-blue;
 
