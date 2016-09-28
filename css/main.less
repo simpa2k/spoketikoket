@@ -121,13 +121,23 @@ body {
 
 }
 
-.large-section-heading{
+.non-bordered-large-section-heading {
 
   font-size: 30pt;
-  border-top: 2px solid @deep-blue;
-  .section-heading
+  .section-heading;
 
 }
+
+.large-section-heading{
+
+  .non-bordered-large-section-heading;
+  border-top: 2px solid @deep-blue;
+  /*font-size: 30pt;
+  border-top: 2px solid @deep-blue;
+  .section-heading*/
+
+}
+
 
 #main {
 
@@ -261,11 +271,5 @@ body {
     }
 
   }
-}
-
-#admin-embedded-items {
-
-
-
 }
 

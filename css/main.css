@@ -7138,11 +7138,19 @@ body {
   color: #123848;
   width: 60%;
 }
-.large-section-heading {
+.non-bordered-large-section-heading {
   font-size: 30pt;
-  border-top: 2px solid #123848;
   color: #123848;
   width: 60%;
+}
+.large-section-heading {
+  font-size: 30pt;
+  color: #123848;
+  width: 60%;
+  border-top: 2px solid #123848;
+  /*font-size: 30pt;
+  border-top: 2px solid @deep-blue;
+  .section-heading*/
 }
 #main {
   position: absolute;

@@ -1,5 +1,5 @@
 <div id="gigs" class="box col-sm-4">
-    <h1 class="text-center">KONSERTER</h1>
+    <p class="text-center non-bordered-large-section-heading">KONSERTER</p>
     <div class="row">
         <label for="gigDateFilter" class="col-sm-6 col-sm-offset-3">Visar alla efter:</label>
         <p class="input-group col-xs-6 col-xs-offset-3">
@@ -19,7 +19,7 @@
 <div class="col-sm-8">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="row">
-            <p class="large-section-heading text-center">{{ heading }}</p>
+            <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
             <label for="gig-form-date-input">Välj datum:</label>
             <p class="input-group">
                 <input id="gig-form-date-input" type="text" class="form-control" uib-datepicker-popup="{{ dateFormat }}" ng-model="gigToBeSent.datetime" is-open="gigFormDatePopup.opened" close-text="Stäng" placeholder="Datum">
@@ -45,11 +45,12 @@
             <input type="text" class="form-control" ng-model="selectedVenue.address" placeholder="Spelställets gatuadress">
             <input type="text" class="form-control" ng-model="selectedVenue.city" placeholder="Spelställets stad">
             <input type="text" class="form-control" ng-model="selectedVenue.webpage" placeholder="Spelställets webbsida">
+
+            <button class="btn btn-primary pull-left" ng-click="makeRequest()">{{ gigAction }}</button>
+            <button class="btn btn-primary pull-left" ng-hide="addingNewGig" ng-click="setPostState()">Nytt gig</button>
+
+            <button class="btn btn-danger pull-right" ng-hide="addingNewGig" ng-click="deleteGig()">Ta bort gig</button>
         </div>
 
-
-        <button class="btn btn-primary col-sm-6 col-sm-offset-3" ng-click="makeRequest()">{{ gigAction }}</button>
-        <button class="btn btn-danger col-sm-6 col-sm-offset-3" ng-hide="addingNewGig" ng-click="deleteGig()">Ta bort gig</button>
-        <button class="btn btn-primary col-sm-6 col-sm-offset-3" ng-hide="addingNewGig" ng-click="setPostState()">Nytt gig</button>
     </div>
 </div>

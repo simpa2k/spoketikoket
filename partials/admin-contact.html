@@ -3,23 +3,29 @@
     <div class="container-fluid">
 
         <div class="col-md-4 selectable-container">
-            <p class="large-section-heading text-center">KONTAKTPERSONER</p>
+            <p class="non-bordered-large-section-heading text-center">KONTAKTPERSONER</p>
             <div class="selectable admin-item" ng-repeat="contactperson in contactpersons" ng-click="setPutState(contactperson)">
                 <p>Tel {{ contactperson.country }}: {{ contactperson.name }} - {{ contactperson.phonenumber }}</p>
             </div>
         </div>
         <div class="col-md-8">
-            <p class="large-section-heading text-center">{{ heading }}</p>
-            <div class="col-md-6 col-md-offset-3">
+            <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
+            <div class="col-md-8">
 
-                <p class="form-group">
-                    <input type="text" class="form-control" ng-model="contactpersonToBeSent.name" placeholder="Namn">
-                    <input type="text" class="form-control" ng-model="contactpersonToBeSent.phonenumber" placeholder="Telefonnummer">
-                    <input type="text" class="form-control" ng-model="contactpersonToBeSent.country" placeholder="Land">
-                </p>
-                <button class="btn btn-primary col-sm-6 col-sm-offset-3" ng-click="sendContactperson()">{{ contactpersonAction }}</button>
-                <button class="btn btn-danger col-sm-6 col-sm-offset-3" ng-hide="addingNewContactperson" ng-click="deleteContactperson()">Ta bort kontaktperson</button>
-                <button class="btn btn-primary col-sm-6 col-sm-offset-3" ng-hide="addingNewContactperson" ng-click="setPostState()">Ny kontaktperson</button>
+                <form name="contactpersonForm">
+
+                    <p class="form-group">
+                        <input type="text" class="form-control" ng-model="contactpersonToBeSent.name" placeholder="Namn">
+                        <input type="text" class="form-control" ng-model="contactpersonToBeSent.phonenumber" placeholder="Telefonnummer">
+                        <input type="text" class="form-control" ng-model="contactpersonToBeSent.country" placeholder="Land">
+                    </p>
+
+                </form>
+
+                <button class="btn btn-primary pull-left" ng-click="sendContactperson()">{{ contactpersonAction }}</button>
+                <button class="btn btn-primary pull-left" ng-hide="addingNewContactperson" ng-click="setPostState()">Ny kontaktperson</button>
+
+                <button class="btn btn-danger pull-right" ng-hide="addingNewContactperson" ng-click="deleteContactperson()">Ta bort kontaktperson</button>
 
             </div>
         </div>
