@@ -98,23 +98,25 @@ define(function() {
 	
 	    var sendVenue = function() {
 
-			$scope.selectedVenue.name = $scope.gigToBeSent.venue_name;
-			var venueForComparison = $scope.venues[$scope.selectedVenue.name];
-			var venuesEndpoint = $scope.serverRoot + 'venues';
+	        if($scope.selectedVenue) {
+				$scope.selectedVenue.name = $scope.gigToBeSent.venue_name;
+				var venueForComparison = $scope.venues[$scope.selectedVenue.name];
+				var venuesEndpoint = $scope.serverRoot + 'venues';
 
-			if(venueForComparison == undefined) {
-				// If there is no venue with the specified name, post the venue (i.e. create it).
-				SendObjectService.postObject(venuesEndpoint, $scope.selectedVenue, function() {
-					getVenues();
-				});
-			} else if(JSON.stringify($scope.selectedVenue) != JSON.stringify(venueForComparison)) {
-				/*
-				 If there is a venue with the specified name, but some of the other fields have been changed,
-				 put the venue (i.e. update it).
-				 */
-				SendObjectService.putObject(venuesEndpoint, $scope.selectedVenue, function() {
-					getVenues();
-				});
+				if (venueForComparison == undefined) {
+					// If there is no venue with the specified name, post the venue (i.e. create it).
+					SendObjectService.postObject(venuesEndpoint, $scope.selectedVenue, function () {
+						getVenues();
+					});
+				} else if (JSON.stringify($scope.selectedVenue) != JSON.stringify(venueForComparison)) {
+					/*
+					 If there is a venue with the specified name, but some of the other fields have been changed,
+					 put the venue (i.e. update it).
+					 */
+					SendObjectService.putObject(venuesEndpoint, $scope.selectedVenue, function () {
+						getVenues();
+					});
+				}
 			}
 		};
 	
@@ -127,9 +129,10 @@ define(function() {
 	    };
 
 		$scope.makeRequest = function() {
-			$scope.gigToBeSent.datetime = DateService.stringifyDate($scope.gigToBeSent.datetime, 'yyyy-MM-dd HH:mm:00');
 
+			$scope.gigToBeSent.datetime = DateService.stringifyDate($scope.gigToBeSent.datetime, 'yyyy-MM-dd HH:mm:00');
 			$scope.sendGig();
+
 		};
 
 	    $scope.postGig = function() {

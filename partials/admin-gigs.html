@@ -18,39 +18,78 @@
 </div>
 <div class="col-sm-8">
     <div class="col-sm-6 col-sm-offset-3">
-        <div class="row">
-            <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
-            <label for="gig-form-date-input">Välj datum:</label>
-            <p class="input-group">
-                <input id="gig-form-date-input" type="text" class="form-control" uib-datepicker-popup="{{ dateFormat }}" ng-model="gigToBeSent.datetime" is-open="gigFormDatePopup.opened" close-text="Stäng" placeholder="Datum">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="openGigFormDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-            </p>
 
-            <label for="gig-form-time-input">Välj tid:</label>
-            <div uib-timepicker id="gig-form-time-input" ng-model="gigToBeSent.datetime" show-meridian="false"></div>
+        <form name="gigForm" novalidate>
 
-            <label for="extra-fields">Annan nyttig information:</label>
-            <div id="extra-fields">
-                <input type="text" class="form-control" ng-model="gigToBeSent.ticketlink" placeholder="Länk till biljettköp">
-                <input type="text" class="form-control" ng-model="gigToBeSent.info" placeholder="Ytterligare info">
-                <input type="text" class="form-control" ng-model="gigToBeSent.price" placeholder="Pris">
+            <div class="row">
+                <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
+
+                <div class="form-group {{ ((gigForm.$submitted || gigForm.date.$touched) && gigForm.date.$error.required) ? 'has-error' : '' }}">
+                    <label for="gig-form-date-input">Välj datum:</label>
+                    <p class="input-group">
+                        <input id="gig-form-date-input"
+                               class="form-control"
+                               type="text"
+                               name="date"
+                               uib-datepicker-popup="{{ dateFormat }}"
+                               ng-model="gigToBeSent.datetime"
+                               is-open="gigFormDatePopup.opened"
+                               close-text="Stäng"
+                               placeholder="Datum"
+                               required>
+
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openGigFormDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    <div ng-show="gigForm.$submitted || gigForm.date.$touched">
+                        <label class="help-block" for="gig-form-date-input" ng-show="gigForm.date.$error.required">Ett gig behöver ett datum!</label>
+                    </div>
+                    </p>
+
+
+                </div>
+
+                <label for="gig-form-time-input">Välj tid:</label>
+                <div uib-timepicker id="gig-form-time-input" ng-model="gigToBeSent.datetime" show-meridian="false"></div>
+
+                <div class="form-group">
+                    <label for="extra-fields">Annan nyttig information:</label>
+                    <div id="extra-fields">
+                        <input type="text" class="form-control" ng-model="gigToBeSent.ticketlink" placeholder="Länk till biljettköp">
+                        <input type="text" class="form-control" ng-model="gigToBeSent.info" placeholder="Ytterligare info">
+                        <input type="text" class="form-control" ng-model="gigToBeSent.price" placeholder="Pris">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <label for="select-venue">Välj spelställe:</label><br>
-            <input type="text" id="select-venue" class="form-control" ng-model="gigToBeSent.venue_name" ng-change="searchVenues()" placeholder="Spelställets namn">
+            <div class="row">
+                <div class="form-group {{ ((gigForm.$submitted || gigForm.venueName.$touched) && gigForm.venueName.$error.required) ? 'has-error' : '' }}">
+                    <label for="select-venue">Välj spelställe:</label><br>
+                    <input type="text"
+                           id="select-venue"
+                           class="form-control"
+                           name="venueName"
+                           ng-model="gigToBeSent.venue_name"
+                           ng-change="searchVenues()"
+                           placeholder="Spelställets namn"
+                           required>
 
-            <input type="text" class="form-control" ng-model="selectedVenue.address" placeholder="Spelställets gatuadress">
-            <input type="text" class="form-control" ng-model="selectedVenue.city" placeholder="Spelställets stad">
-            <input type="text" class="form-control" ng-model="selectedVenue.webpage" placeholder="Spelställets webbsida">
+                    <div ng-show="gigForm.$submitted || gigForm.venueName.$touched">
+                        <label class="help-block" for="gig-form-date-input" ng-show="gigForm.venueName.$error.required">Ett gig behöver ett spelställe!</label>
+                    </div>
 
-            <button class="btn btn-primary pull-left" ng-click="makeRequest()">{{ gigAction }}</button>
-            <button class="btn btn-primary pull-left" ng-hide="addingNewGig" ng-click="setPostState()">Nytt gig</button>
+                </div>
 
-            <button class="btn btn-danger pull-right" ng-hide="addingNewGig" ng-click="deleteGig()">Ta bort gig</button>
-        </div>
+                <input type="text" class="form-control" ng-model="selectedVenue.address" placeholder="Spelställets gatuadress">
+                <input type="text" class="form-control" ng-model="selectedVenue.city" placeholder="Spelställets stad">
+                <input type="text" class="form-control" ng-model="selectedVenue.webpage" placeholder="Spelställets webbsida">
+
+                <button class="btn btn-primary pull-left" ng-click="makeRequest()">{{ gigAction }}</button>
+                <button class="btn btn-primary pull-left" ng-hide="addingNewGig" ng-click="setPostState()">Nytt gig</button>
+
+                <button class="btn btn-danger pull-right" ng-hide="addingNewGig" ng-click="deleteGig()">Ta bort gig</button>
+            </div>
+
+        </form>
 
     </div>
 </div>

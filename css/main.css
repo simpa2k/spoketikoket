@@ -7186,9 +7186,6 @@ body {
   top: 0;
   line-height: 65px;
 }
-#main #members-section {
-  /* The css for centering text is taken from https://css-tricks.com/centering-css-complete-guide/*/
-}
 #main #members-section .member {
   margin-bottom: 5px;
   border-radius: 3px;

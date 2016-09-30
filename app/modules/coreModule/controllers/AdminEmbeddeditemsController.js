@@ -2,9 +2,34 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminEmbeddeditemsController', function($scope, $rootScope, $http, $filter, SendObjectService, EmbeddeditemsService) {
+	app.controller('AdminEmbeddeditemsController', function($scope, $rootScope, $http, $filter, SendObjectService, EmbeddeditemsService, validationService) {
 
 		var embeddeditemsEndpoint = $rootScope.serverRoot + 'embeddeditems';
+
+		$scope.isSubmittedOrTouched = function(form, nestedFormControl, nestedForms = []) {
+
+			let submitted = validationService.isSubmitted(form, nestedForms);
+			let touched = validationService.isTouched(form, nestedFormControl, nestedForms);
+
+			return submitted || touched;
+
+		};
+
+		$scope.isRequired = function(form, nestedFormControl, nestedForms = []) {
+
+			return validationService.isRequired(form, nestedFormControl, nestedForms);
+
+		};
+
+		$scope.isRequiredAndSubmittedOrTouched = function(form, nestedFormControl, nestedForms = []) {
+
+		    let required = $scope.isRequired(form, nestedFormControl, nestedForms);
+			let submittedOrTouched = $scope.isSubmittedOrTouched(form, nestedFormControl, nestedForms);
+
+			return required && submittedOrTouched;
+
+		};
+
 
 	    $scope.embeddeditemsToBeSent = {
 	        newEmbeddeditem: {}
