@@ -21,30 +21,51 @@
                             <p class="small-section-heading">Lägg till nytt klipp</p>
                             <div class="new-item-controls">
                                 <form name="newVideoForm">
-                                    <div class="form-group" ng-class="isRequiredAndSubmittedOrTouched(newVideoForm, 'url') ? 'has-error' : ''">
+                                    <div class="form-group" ng-class="hasError(newVideoForm, 'url')">
                                         <label for="new-video-url-input">Url:</label>
-                                        <input type="text" id="new-video-url-input" class="form-control" name="url" ng-model="embeddeditemsToBeSent.newEmbeddeditem.src" placeholder="url" required>
+                                        <input type="text"
+                                               id="new-video-url-input"
+                                               class="form-control"
+                                               name="url"
+                                               ng-model="embeddeditemsToBeSent.newEmbeddeditem.src"
+                                               placeholder="url"
+                                               required>
 
                                         <div ng-show="isSubmittedOrTouched(newVideoForm, 'url')">
-                                            <label class="help-block" for="new-video-url-input" ng-show="isRequired(newVideoForm, 'url')">En video behöver en url!</label>
+                                            <label class="help-block"
+                                                   for="new-video-url-input"
+                                                   ng-show="isRequired(newVideoForm, 'url')">
+                                                En video behöver en url!
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="form-group" ng-class="isRequiredAndSubmittedOrTouched(newVideoForm, 'type') ? 'has-error': ''">
+                                    <div class="form-group" ng-class="hasError(newVideoForm, 'type')">
                                         <label for="new-video-type-input">Mediatyp:</label>
-                                        <input type="text" id="new-video-type-input" class="form-control" name="type" ng-model="embeddeditemsToBeSent.newEmbeddeditem.type" placeholder="Mediatyp" required>
+                                        <input type="text"
+                                               id="new-video-type-input"
+                                               class="form-control"
+                                               name="type"
+                                               ng-model="embeddeditemsToBeSent.newEmbeddeditem.type"
+                                               placeholder="Mediatyp"
+                                               required>
 
                                         <div ng-show="isSubmittedOrTouched(newVideoForm, 'type')">
-                                            <label class="help-block" for="new-video-type-input" ng-show="isRequired(newVideoForm, 'type')">En video behöver en mediatyp!</label>
+                                            <label class="help-block"
+                                                   for="new-video-type-input"
+                                                   ng-show="isRequired(newVideoForm, 'type')">
+                                                En video behöver en mediatyp!
+                                            </label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" ng-click="postEmbeddeditem()">Bekräfta</button>
+                                    <button class="btn btn-primary" ng-click="postEmbeddeditem(newVideoForm)">Bekräfta</button>
                                 </form>
                             </div>
 
                             <p class="small-section-heading">Redigera existerande klipp</p>
                             <form name="videoEditForm" novalidate>
 
-                                <div ng-repeat="video in videos" id="{{ video.type }}-{{ $index }}">
+                                <!--<div ng-repeat="video in videos" id="{{ video.type }}-{{ $index }}">-->
+                                <div ng-repeat="video in videos" id="{{ constructItemID(video.type, $index) }}">
                                     <iframe class="selectable admin-item"
                                             width="560"
                                             height="315"
@@ -55,30 +76,52 @@
 
                                     <div class="editing-controls ng-hide">
 
-                                            <ng-form name="{{ video.type }}{{ $index }}EditForm" novalidate>
-                                                <div class="form-group" ng-class="isRequiredAndSubmittedOrTouched(videoEditForm, 'url', [video.type + $index + 'EditForm']) ? 'has-error' : ''">
+                                            <ng-form name="{{ constructEditFormName(video.type, $index) }}" novalidate>
 
-                                                    <label for="{{ video.type }}-{{ $index }}-url-input">Url:</label>
-                                                    <input type="text" id="{{ video.type }}-{{ $index }}-url-input" class="form-control" name="url" ng-model="embeddeditemsToBeSent[video.type + '-' + $index].src" placeholder="url" required>
+                                                <div class="form-group" ng-class="hasError(videoEditForm, 'url', [constructEditFormName(video.type, $index)])">
 
-                                                    <div ng-show="isSubmittedOrTouched(videoEditForm, 'url', [video.type + $index + 'EditForm'])">
-                                                        <label class="help-block" for="{{ video.type }}-{{ $index }}-url-input" ng-show="isRequired(videoEditForm, 'url', [video.type + $index + 'EditForm'])">Ett gig behöver ett datum!</label>
+                                                    <label for="{{ constructItemID(video.type, $index) }}-url-input">Url:</label>
+                                                    <input type="text"
+                                                           id="{{ constructItemID(video.type, $index) }}-url-input"
+                                                           class="form-control"
+                                                           name="url"
+                                                           ng-model="embeddeditemsToBeSent[constructItemID(video.type, $index)].src"
+                                                           placeholder="url"
+                                                           required>
+
+                                                    <div ng-show="isSubmittedOrTouched(videoEditForm, 'url', [constructEditFormName(video.type, $index)])">
+                                                        <label class="help-block"
+                                                               for="{{ constructItemID(video.type, $index) }}-url-input"
+                                                               ng-show="isRequired(videoEditForm, 'url', [constructEditFormName(video.type, $index)])">
+                                                            En video behöver en url!
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <div class="form-group" ng-class="isRequiredAndSubmittedOrTouched(videoEditForm, 'type', [video.type + $index + 'EditForm']) ? 'has-error' : ''">
-                                                    <label for="{{ video.type }}-{{ $index }}-type-input">Mediatyp:</label>
-                                                    <input type="text" id="{{ video.type }}-{{ $index }}-type-input" class="form-control" name="type" ng-model="embeddeditemsToBeSent[video.type + '-' + $index].type" placeholder="Mediatyp" required>
 
-                                                    <div ng-show="isSubmittedOrTouched(videoEditForm, 'type', [video.type + $index + 'EditForm'])">
-                                                        <label class="help-block" for="{{ video.type }}-{{ $index }}-type-input" ng-show="isRequired(videoEditForm, 'type', [video.type + $index + 'EditForm'])">Ett gig behöver ett datum!</label>
+                                                <div class="form-group" ng-class="hasError(videoEditForm, 'type', [constructEditFormName(video.type, $index)])">
+                                                    <label for="{{ constructItemID(video.type, $index) }}-type-input">Mediatyp:</label>
+                                                    <input type="text"
+                                                           id="{{ constructItemID(video.type, $index) }}-type-input"
+                                                           class="form-control"
+                                                           name="type"
+                                                           ng-model="embeddeditemsToBeSent[constructItemID(video.type, $index)].type"
+                                                           placeholder="Mediatyp"
+                                                           required>
+
+                                                    <div ng-show="isSubmittedOrTouched(videoEditForm, 'type', [constructEditFormName(video.type, $index)])">
+                                                        <label class="help-block"
+                                                               for="{{ constructItemID(video.type, $index) }}-type-input"
+                                                               ng-show="isRequired(videoEditForm, 'type', [constructEditFormName(video.type, $index)])">
+                                                            En video behöver en mediatyp!
+                                                        </label>
                                                     </div>
                                                 </div>
 
                                                 <div class="btn-group pull-left">
-                                                    <button class="btn btn-primary" ng-click="putEmbeddeditem()">Bekräfta</button>
+                                                    <button class="btn btn-primary" ng-click="putEmbeddeditem(videoEditForm)">Bekräfta</button>
                                                     <button class="btn btn-primary" ng-click="hideControls()">Avsluta redigeringsläge</button>
                                                 </div>
-                                                <button class="btn btn-danger pull-right" ng-click="deleteEmbeddeditem()">Ta bort klipp</button>
+                                                <button class="btn btn-danger pull-right" ng-click="deleteEmbeddeditem(videoEditForm)">Ta bort klipp</button>
                                             </ng-form>
 
                                     </div>
@@ -98,64 +141,117 @@
                             <div class="new-item-controls">
 
                                 <form name="newSoundForm" novalidate>
-                                    <div class="form-group {{ ((newSoundForm.$submitted || newSoundForm.date.$touched) && newSoundForm.date.$error.required) ? 'has-error' : '' }}">
+                                    <div class="form-group" ng-class="hasError(newSoundForm, 'url')">
                                         <label for="new-sound-url-input">Url:</label>
-                                        <input type="text" id="new-sound-url-input" class="form-control" ng-model="embeddeditemsToBeSent.newEmbeddeditem.src" placeholder="url" required>
+                                        <input type="text"
+                                               id="new-sound-url-input"
+                                               class="form-control"
+                                               name="url"
+                                               ng-model="embeddeditemsToBeSent.newEmbeddeditem.src"
+                                               placeholder="url"
+                                               required>
 
-                                        <div ng-show="newSoundForm.$submitted || newSoundForm.date.$touched">
-                                            <label class="help-block" for="new-sound-url-input" ng-show="newSoundForm.date.$error.required">Ett gig behöver ett datum!</label>
+                                        <div ng-show="isSubmittedOrTouched(newSoundForm, 'url')">
+                                            <label class="help-block"
+                                                   for="new-sound-url-input"
+                                                   ng-show="isRequired(newSoundForm, 'url')">
+                                                Ett ljudklipp behöver en url!
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="form-group {{ ((newSoundForm.$submitted || newSoundForm.date.$touched) && newSoundForm.date.$error.required) ? 'has-error' : '' }}">
-                                        <label for="new-sound-type-input">Url:</label>
-                                        <input type="text" id="new-sound-type-input" class="form-control" ng-model="embeddeditemsToBeSent.newEmbeddeditem.type" placeholder="Mediatyp" required>
+                                    <div class="form-group" ng-class="hasError(newSoundForm, 'type')">
+                                        <label for="new-sound-type-input">Mediatyp:</label>
+                                        <input type="text"
+                                               id="new-sound-type-input"
+                                               class="form-control"
+                                               name="type"
+                                               ng-model="embeddeditemsToBeSent.newEmbeddeditem.type"
+                                               placeholder="Mediatyp"
+                                               required>
 
-                                        <div ng-show="newSoundForm.$submitted || newSoundForm.date.$touched">
-                                            <label class="help-block" for="new-sound-type-input" ng-show="newSoundForm.date.$error.required">Ett gig behöver ett datum!</label>
+                                        <div ng-show="isSubmittedOrTouched(newSoundForm, 'type')">
+                                            <label class="help-block"
+                                                   for="new-sound-type-input"
+                                                   ng-show="isRequired(newSoundForm, 'type')">
+                                                Ett ljudklipp behöver en mediatyp!
+                                            </label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary" ng-click="postEmbeddeditem()">Bekräfta</button>
+                                    <button class="btn btn-primary" ng-click="postEmbeddeditem(newSoundForm)">Bekräfta</button>
                                 </form>
                             </div>
 
                             <p class="small-section-heading">Redigera existerande klipp</p>
-                            <div ng-repeat="sound in sounds" id="{{ sound.type }}-{{ $index }}">
-                                <iframe width="100%"
-                                        height="166"
-                                        scrolling="no"
-                                        frameborder="no"
-                                        src="{{ trustUrl(sound.src) }}">
-                                </iframe>
+                            <form name="soundEditForm" novalidate>
 
-                                <div class="editing-controls ng-hide">
-                                    <form name="{{ sound.type }}{{ $index }}EditForm" novalidate>
-                                        <div class="form-group {{ ((sound.type + $index + 'EditForm'.$submitted || sound.type + $index + 'EditForm'.url.$touched) && sound.type + $index + 'EditForm'.url.$error.required) ? 'has-error' : '' }}">
-                                            <label for="{{ sound.type }}-{{ $index }}-url-input">Url:</label>
-                                            <input type="text" id="{{ sound.type }}-{{ $index }}-url-input" class="form-control" ng-model="embeddeditemsToBeSent[sound.type + '-' + $index].src" placeholder="url" required>
+                                <div ng-repeat="sound in sounds" id="{{ constructItemID(sound.type, $index) }}">
+                                    <iframe width="100%"
+                                            height="166"
+                                            scrolling="no"
+                                            frameborder="no"
+                                            src="{{ trustUrl(sound.src) }}">
+                                    </iframe>
 
-                                            <div ng-show="sound.type + $index + 'EditForm'.$submitted || sound.type + $index + 'EditForm'.url.$touched">
-                                                <label class="help-block" for="{{ sound.type }}-{{ $index }}-url-input" ng-show="sound.type + $index + 'EditForm'.url.$error.required">Ett gig behöver ett datum!</label>
+                                    <div class="editing-controls ng-hide">
+                                        <ng-form name="{{ constructEditFormName(sound.type, $index) }}" novalidate>
+
+                                            <div class="form-group" ng-class="hasError(soundEditForm, 'url', [constructEditFormName(sound.type, $index)])">
+
+                                                <label for="{{ constructItemID(sound.type, $index) }}-url-input">Url:</label>
+                                                <input type="text"
+                                                       id="{{ constructItemID(sound.type, $index) }}-url-input"
+                                                       class="form-control"
+                                                       name="url"
+                                                       ng-model="embeddeditemsToBeSent[constructItemID(sound.type, $index)].src"
+                                                       placeholder="url"
+                                                       required>
+
+                                                <div ng-show="isSubmittedOrTouched(soundEditForm, 'url', [constructEditFormName(sound.type, $index)])">
+
+                                                    <label class="help-block"
+                                                           for="{{ constructItemID(sound.type, $index) }}-url-input"
+                                                           ng-show="isRequired(soundEditForm, 'url', [constructEditFormName(sound.type, $index)])">
+                                                        Ett ljudklipp behöver en url!
+                                                    </label>
+
+                                                </div>
+
                                             </div>
-                                        </div>
-                                        <div class="form-group {{ ((sound.type + $index + 'EditForm'.$submitted || sound.type + $index + 'EditForm'.type.$touched) && sound.type + $index + 'EditForm'.type.$error.required) ? 'has-error' : '' }}">
-                                            <label for="{{ sound.type }}-{{ $index }}-type-input">Mediatype:</label>
-                                            <input type="text" id="{{ sound.type }}-{{ $index }}-type-input" class="form-control" ng-model="embeddeditemsToBeSent[sound.type + '-' + $index].type" placeholder="Mediatyp" required>
 
-                                            <div ng-show="sound.type + $index + 'EditForm'.$submitted || sound.type + $index + 'EditForm'.type.$touched">
-                                                <label class="help-block" for="{{ sound.type }}-{{ $index }}-type-input" ng-show="sound.type + $index + 'EditForm'.type.$error.required">Ett gig behöver ett datum!</label>
+                                            <div class="form-group" ng-class="hasError(soundEditForm, 'type', [constructEditFormName(sound.type, $index)])">
+
+                                                <label for="{{ constructItemID(sound.type, $index) }}-type-input">Mediatyp:</label>
+                                                <input type="text"
+                                                       id="{{ constructItemID(sound.type, $index) }}-type-input"
+                                                       class="form-control"
+                                                       name="type"
+                                                       ng-model="embeddeditemsToBeSent[constructItemID(sound.type, $index)].type"
+                                                       placeholder="Mediatyp"
+                                                       required>
+
+                                                <div ng-show="isSubmittedOrTouched(soundEditForm, 'type', [constructEditFormName(sound.type, $index)])">
+
+                                                    <label class="help-block"
+                                                           for="{{ constructItemID(sound.type, $index) }}-type-input"
+                                                           ng-show="isRequired(soundEditForm, 'type', [constructEditFormName(sound.type, $index)])">
+                                                        Ett ljudklipp behöver en mediatyp!
+                                                    </label>
+
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="btn-group pull-left">
-                                            <button class="btn btn-primary" ng-click="putEmbeddeditem()">Bekräfta</button>
-                                            <button class="btn btn-primary" ng-click="hideControls()">Avsluta redigeringsläge</button>
-                                        </div>
-                                        <button class="btn btn-danger pull-right" ng-click="deleteEmbeddeditem()">Ta bort klipp</button>
-                                    </form>
+                                            <div class="btn-group pull-left">
+                                                <button class="btn btn-primary" ng-click="putEmbeddeditem(soundEditForm)">Bekräfta</button>
+                                                <button class="btn btn-primary" ng-click="hideControls()">Avsluta redigeringsläge</button>
+                                            </div>
+                                            <button class="btn btn-danger pull-right" ng-click="deleteEmbeddeditem(soundEditForm)">Ta bort klipp</button>
+                                        </ng-form>
+                                    </div>
+
+                                    <button class="btn btn-primary put-state-button" ng-click="setPutState(sound, $index)">Redigera klipp</button>
                                 </div>
 
-                                <button class="btn btn-primary put-state-button" ng-click="setPutState(sound, $index)">Redigera klipp</button>
-                            </div>
+                            </form>
 
                         </div>
 

@@ -2,38 +2,44 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminEmbeddeditemsController', function($scope, $rootScope, $http, $filter, SendObjectService, EmbeddeditemsService, validationService) {
+	app.controller('AdminEmbeddeditemsController', function($scope, $rootScope, $http, $filter, SendObjectService, EmbeddeditemsService, ValidationService) {
 
 		var embeddeditemsEndpoint = $rootScope.serverRoot + 'embeddeditems';
 
-		$scope.isSubmittedOrTouched = function(form, nestedFormControl, nestedForms = []) {
+		$scope.isSubmittedOrTouched = function(form, nestedFormControl, nestedForms = null) {
 
-			let submitted = validationService.isSubmitted(form, nestedForms);
-			let touched = validationService.isTouched(form, nestedFormControl, nestedForms);
-
-			return submitted || touched;
+			return ValidationService.isSubmittedOrTouched(form, nestedFormControl, nestedForms);
 
 		};
 
-		$scope.isRequired = function(form, nestedFormControl, nestedForms = []) {
+		$scope.isRequired = function(form, nestedFormControl, nestedForms = null) {
 
-			return validationService.isRequired(form, nestedFormControl, nestedForms);
-
-		};
-
-		$scope.isRequiredAndSubmittedOrTouched = function(form, nestedFormControl, nestedForms = []) {
-
-		    let required = $scope.isRequired(form, nestedFormControl, nestedForms);
-			let submittedOrTouched = $scope.isSubmittedOrTouched(form, nestedFormControl, nestedForms);
-
-			return required && submittedOrTouched;
+			return ValidationService.isRequired(form, nestedFormControl, nestedForms);
 
 		};
 
+		$scope.isRequiredAndSubmittedOrTouched = function(form, nestedFormControl, nestedForms) {
+
+		    return ValidationService.isRequiredAndSubmittedOrTouched(form, nestedFormControl, nestedForms);
+
+		};
+
+		$scope.hasError = function(form, formControl, nestedForms) {
+			return $scope.isRequiredAndSubmittedOrTouched(form, formControl, nestedForms) ? 'has-error' : '';
+		};
+
+		$scope.constructItemID = function(type, index, connector = '-') {
+			return type + connector + index;
+		};
+
+		$scope.constructEditFormName = function(type, index) {
+			return $scope.constructItemID(type, index, '') + 'EditForm';
+		};
 
 	    $scope.embeddeditemsToBeSent = {
 	        newEmbeddeditem: {}
         };
+
 		$scope.embeddeditemToBeSent = {};
 
 	    var elementWithOpenEditingControls = null;
@@ -101,9 +107,6 @@ define(function() {
 
 			$scope.embeddeditemToBeSent = objectCopy;
 
-			console.log($scope.embeddeditemsToBeSent);
-			console.log($scope.embeddeditemToBeSent);
-
 			showControls(uniqueId);
 
 			$scope.embeddeditemAction = 'Bekräfta ändringar';
@@ -115,6 +118,9 @@ define(function() {
 	
 	    $scope.setPostState = function() {
 	        $scope.embeddeditemToBeSent = {};
+			$scope.embeddeditemsToBeSent = {
+				newEmbeddeditem: {}
+			};
 
 			$scope.embeddeditemAction = 'Lägg till klipp';
 			$scope.heading = 'Lägg till nytt klipp';
@@ -138,26 +144,29 @@ define(function() {
             });
 	    };
 	
-	    $scope.postEmbeddeditem = function() {
+	    $scope.postEmbeddeditem = function(form) {
 
 	        $scope.embeddeditemToBeSent = $scope.embeddeditemsToBeSent['newEmbeddeditem'];
 
 	        SendObjectService.postObject(embeddeditemsEndpoint, $scope.embeddeditemToBeSent, function() {
 	            refreshEmbeddeditems();
-	            //$scope.setPostState();
+
+				$scope.setPostState();
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
-	    $scope.putEmbeddeditem = function() {
+	    $scope.putEmbeddeditem = function(form) {
 	        SendObjectService.putObject(embeddeditemsEndpoint, $scope.embeddeditemToBeSent, function() {
 	            refreshEmbeddeditems();
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
-	    $scope.deleteEmbeddeditem = function() {
+	    $scope.deleteEmbeddeditem = function(form) {
 	        SendObjectService.deleteObject(embeddeditemsEndpoint, $scope.embeddeditemToBeSent, function() {
 	            refreshEmbeddeditems();
-	            //$scope.setPostState();
+				ValidationService.resetForm(form);
 	        });
 	    };
 

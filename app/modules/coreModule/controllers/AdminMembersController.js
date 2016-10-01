@@ -2,8 +2,30 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminMembersController', function($scope, $rootScope, $http, $filter, SendObjectService, MembersService) {
-	
+	app.controller('AdminMembersController', function($scope, $rootScope, $http, $filter, SendObjectService, MembersService, ValidationService) {
+
+		$scope.isSubmittedOrTouched = function(form, formControl) {
+
+			return ValidationService.isSubmittedOrTouched(form, formControl);
+
+		};
+
+		$scope.isRequired = function(form, formControl) {
+
+			return ValidationService.isRequired(form, formControl);
+
+		};
+
+		$scope.isRequiredAndSubmittedOrTouched = function(form, formControl) {
+
+			return ValidationService.isRequiredAndSubmittedOrTouched(form, formControl);
+
+		};
+
+		$scope.hasError = function(form, formControl) {
+			return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
+		};
+
 	    $scope.memberToBeSent = {};
 		var membersEndpoint = $rootScope.serverRoot + 'members';
 
@@ -37,24 +59,29 @@ define(function() {
 	            $scope.members = members;
 	        });
 	    };
-	
-	    $scope.postMember = function() {
+
+	    $scope.postMember = function(form) {
 	        SendObjectService.postObject(membersEndpoint, $scope.memberToBeSent, function() {
 	            refreshMembers();
 	            $scope.setPostState();
+
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
-	    $scope.putMember = function() {
+	    $scope.putMember = function(form) {
 	        SendObjectService.putObject(membersEndpoint, $scope.memberToBeSent, function() {
 	            refreshMembers();
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
-	    $scope.deleteMember = function() {
+	    $scope.deleteMember = function(form) {
 	        SendObjectService.deleteObject(membersEndpoint, $scope.memberToBeSent, function() {
 	            refreshMembers();
 	            $scope.setPostState();
+
+				ValidationService.resetForm(form);
 	        });
 	    };
 

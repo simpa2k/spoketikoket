@@ -24,7 +24,7 @@
             <div class="row">
                 <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
 
-                <div class="form-group {{ ((gigForm.$submitted || gigForm.date.$touched) && gigForm.date.$error.required) ? 'has-error' : '' }}">
+                <div class="form-group" ng-class="hasError(gigForm, 'date')">
                     <label for="gig-form-date-input">Välj datum:</label>
                     <p class="input-group">
                         <input id="gig-form-date-input"
@@ -41,8 +41,8 @@
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="openGigFormDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
-                    <div ng-show="gigForm.$submitted || gigForm.date.$touched">
-                        <label class="help-block" for="gig-form-date-input" ng-show="gigForm.date.$error.required">Ett gig behöver ett datum!</label>
+                    <div ng-show="isSubmittedOrTouched(gigForm, 'date')">
+                        <label class="help-block" for="gig-form-date-input" ng-show="isRequired(gigForm, 'date')">Ett gig behöver ett datum!</label>
                     </div>
                     </p>
 
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group {{ ((gigForm.$submitted || gigForm.venueName.$touched) && gigForm.venueName.$error.required) ? 'has-error' : '' }}">
+                <div class="form-group" ng-class="hasError(gigForm, 'venueName')">
                     <label for="select-venue">Välj spelställe:</label><br>
                     <input type="text"
                            id="select-venue"
@@ -73,8 +73,8 @@
                            placeholder="Spelställets namn"
                            required>
 
-                    <div ng-show="gigForm.$submitted || gigForm.venueName.$touched">
-                        <label class="help-block" for="gig-form-date-input" ng-show="gigForm.venueName.$error.required">Ett gig behöver ett spelställe!</label>
+                    <div ng-show="isSubmittedOrTouched(gigForm, 'venueName')">
+                        <label class="help-block" for="gig-form-date-input" ng-show="isRequired(gigForm, 'venueName')">Ett gig behöver ett spelställe!</label>
                     </div>
 
                 </div>
@@ -83,10 +83,10 @@
                 <input type="text" class="form-control" ng-model="selectedVenue.city" placeholder="Spelställets stad">
                 <input type="text" class="form-control" ng-model="selectedVenue.webpage" placeholder="Spelställets webbsida">
 
-                <button class="btn btn-primary pull-left" ng-click="makeRequest()">{{ gigAction }}</button>
+                <button class="btn btn-primary pull-left" ng-click="makeRequest(gigForm)">{{ gigAction }}</button>
                 <button class="btn btn-primary pull-left" ng-hide="addingNewGig" ng-click="setPostState()">Nytt gig</button>
 
-                <button class="btn btn-danger pull-right" ng-hide="addingNewGig" ng-click="deleteGig()">Ta bort gig</button>
+                <button class="btn btn-danger pull-right" ng-hide="addingNewGig" ng-click="deleteGig(gigForm)">Ta bort gig</button>
             </div>
 
         </form>

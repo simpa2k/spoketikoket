@@ -17,37 +17,37 @@
 
                     <form name="membersForm" novalidate>
 
-                        <div class="form-group {{ ((membersForm.$submitted || membersForm.firstname.$touched) && membersForm.firstname.$error.required) ? 'has-error' : '' }}">
+                        <div class="form-group" ng-class="hasError(membersForm, 'firstname')">
                             <label for="firstname-input">Förnamn:</label>
                             <input type="text" id="firstname-input" class="form-control" name="firstname" ng-model="memberToBeSent.firstname" placeholder="Förnamn" required>
 
-                            <div ng-show="membersForm.$submitted || membersForm.firstname.$touched">
-                                <label class="help-block" for="firstname-input" ng-show="membersForm.firstname.$error.required">En medlem behöver ett förnamn!</label>
+                            <div ng-show="isSubmittedOrTouched(membersForm, 'firstname')">
+                                <label class="help-block" for="firstname-input" ng-show="isRequired(membersForm, 'firstname')">En medlem behöver ett förnamn!</label>
                             </div>
                         </div>
 
-                        <div class="form-group {{ ((membersForm.$submitted || membersForm.lastname.$touched) && membersForm.lastname.$error.required) ? 'has-error' : '' }}">
+                        <div class="form-group" ng-class="hasError(membersForm, 'lastname')">
                             <label for="lastname-input">Efternamn:</label>
                             <input type="text" id="lastname-input" class="form-control" name="lastname" ng-model="memberToBeSent.lastname" placeholder="Efternamn" required>
 
-                            <div ng-show="membersForm.$submitted || membersForm.lastname.$touched">
-                                <label class="help-block" for="lastname-input" ng-show="membersForm.lastname.$error.required">En medlem behöver ett efternamn!</label>
+                            <div ng-show="isSubmittedOrTouched(membersForm, 'lastname')">
+                                <label class="help-block" for="lastname-input" ng-show="isRequired(membersForm, 'lastname')">En medlem behöver ett efternamn!</label>
                             </div>
                         </div>
 
-                        <div class="form-group {{ ((membersForm.$submitted || membersForm.instrument.$touched) && membersForm.instrument.$error.required) ? 'has-error' : '' }}">
+                        <div class="form-group" ng-class="hasError(membersForm, 'instrument')">
                             <label for="instrument-input">Instrument:</label>
                             <input type="text" id="instrument-input" class="form-control" name="instrument" ng-model="memberToBeSent.instrument" placeholder="Instrument" required>
 
-                            <div ng-show="membersForm.$submitted || membersForm.instrument.$touched">
-                                <label class="help-block" for="instrument-input" ng-show="membersForm.instrument.$error.required">En medlem behöver spela något instrument!</label>
+                            <div ng-show="isSubmittedOrTouched(membersForm, 'instrument')">
+                                <label class="help-block" for="instrument-input" ng-show="isRequired(membersForm, 'instrument')">En medlem behöver spela något instrument!</label>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary pull-left" ng-click="sendMember()">{{ memberAction }}</button>
+                        <button class="btn btn-primary pull-left" ng-click="sendMember(membersForm)">{{ memberAction }}</button>
                         <button class="btn btn-primary pull-left" ng-hide="addingNewMember" ng-click="setPostState()">Ny medlem</button>
 
-                        <button class="btn btn-danger pull-right" ng-hide="addingNewMember" ng-click="deleteMember()">Ta bort medlem</button>
+                        <button class="btn btn-danger pull-right" ng-hide="addingNewMember" ng-click="deleteMember(membersForm)">Ta bort medlem</button>
 
                     </form>
 

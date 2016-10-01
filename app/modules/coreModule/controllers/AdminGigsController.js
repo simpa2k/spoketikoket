@@ -2,7 +2,29 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminGigsController', function($scope, $rootScope, $http, $filter, SendObjectService, GigsService, DateService) {
+	app.controller('AdminGigsController', function($scope, $rootScope, $http, $filter, SendObjectService, GigsService, DateService, ValidationService) {
+
+		$scope.isSubmittedOrTouched = function(form, formControl) {
+
+			return ValidationService.isSubmittedOrTouched(form, formControl);
+
+		};
+
+		$scope.isRequired = function(form, formControl) {
+
+			return ValidationService.isRequired(form, formControl);
+
+		};
+
+		$scope.isRequiredAndSubmittedOrTouched = function(form, formControl) {
+
+			return ValidationService.isRequiredAndSubmittedOrTouched(form, formControl);
+
+		};
+
+		$scope.hasError = function(form, formControl) {
+			return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
+		};
 
 		$scope.gigsListDatePopup = {
 			opened: false
@@ -128,32 +150,35 @@ define(function() {
 	        });
 	    };
 
-		$scope.makeRequest = function() {
+		$scope.makeRequest = function(form) {
 
 			$scope.gigToBeSent.datetime = DateService.stringifyDate($scope.gigToBeSent.datetime, 'yyyy-MM-dd HH:mm:00');
-			$scope.sendGig();
+			$scope.sendGig(form);
 
 		};
 
-	    $scope.postGig = function() {
+	    $scope.postGig = function(form) {
 	        sendVenue();
 	        SendObjectService.postObject(gigsEndpoint, $scope.gigToBeSent, function() {
 	            refreshGigs();
 	            $scope.setPostState();
+				ValidationService.resetForm(form)
 	        });
 	    };
 	
-	    $scope.putGig = function() {
+	    $scope.putGig = function(form) {
 	        sendVenue();
 	        SendObjectService.putObject(gigsEndpoint, $scope.gigToBeSent, function() {
 	            refreshGigs();
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
-	    $scope.deleteGig = function() {
+	    $scope.deleteGig = function(form) {
 	        SendObjectService.deleteObject(gigsEndpoint, $scope.gigToBeSent, function() {
 	            refreshGigs();
 	            $scope.setPostState();
+				ValidationService.resetForm(form);
 	        });
 	    };
 	
