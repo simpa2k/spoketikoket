@@ -41,7 +41,6 @@ define(function() {
 			$scope.addingNewMember = false;
 
 	        $scope.sendMember = $scope.putMember;
-			console.log($scope.memberToBeSent);
 	    };
 	
 	    $scope.setPostState = function() {

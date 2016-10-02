@@ -2,7 +2,7 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminGigsController', function($scope, $rootScope, $http, $filter, SendObjectService, GigsService, DateService, ValidationService) {
+	app.controller('AdminGigsController', function($scope, $rootScope, $http, $filter, SendObjectService, GigsService, VenuesService, DateService, ValidationService) {
 
 		$scope.isSubmittedOrTouched = function(form, formControl) {
 
@@ -51,12 +51,11 @@ define(function() {
 		};
 
 	    var getVenues = function() {
-	        $http.get($rootScope.serverRoot + 'venues').then(function(response) {
-	            $scope.venues = {};
-	            angular.forEach(response.data, function(value) {
-	                $scope.venues[value.name] = value;
-	            });
-	        })
+
+	        VenuesService.getVenues().then(function(venues) {
+	        	$scope.venues = venues;
+			});
+
 	    };
 	
 	    $scope.gigToBeSent = {};
@@ -71,18 +70,29 @@ define(function() {
 		 not if a venue wasn't found. This might not be the optimal solution, however.
 		 */
 		var foundVenueRecently = false;
+
 		$scope.searchVenues = function() {
+
 			// Make sure to create a copy of the venue object
 			var venue = jQuery.extend({}, $scope.venues[$scope.gigToBeSent.venue_name]);
+
 			if(venue !== undefined) {
+
 				$scope.selectedVenue = venue;
 				foundVenueRecently = true;
+
 			} else if(foundVenueRecently) {
+
 				$scope.selectedVenue = undefined;
+
 			}
 
 		};
 
+		//Använd den här sen:
+		/*var selectVenue = function(venueName) {
+		 $scope.selectedVenue = jQuery.extend({}, $scope.venues[venueName]);
+		 };*/
 	    var selectVenue = function(venueName) {
 	        angular.forEach($scope.venues, function(value) {
 	            if(value.name == venueName) {
@@ -90,14 +100,26 @@ define(function() {
 	            }
 	        });
 	    };
-	
+
+	    //Använd den här sen:
+		/*var selectVenue = function(venueName) {
+			$scope.selectedVenue = jQuery.extend({}, $scope.venues[venueName]);
+		};*/
+
 	    $scope.setPutState = function(gig) {
-	        $scope.gigToBeSent.datetime = gig.datetime;
+	        /*$scope.gigToBeSent.datetime = gig.datetime;
 	        $scope.gigToBeSent.price = gig.price;
 	        $scope.gigToBeSent.ticketlink = gig.ticketlink;
 	        $scope.gigToBeSent.id = gig.id;
 	        $scope.gigToBeSent.venue_name = gig.venue_name;
-	        $scope.gigToBeSent.info = gig.info;
+	        $scope.gigToBeSent.info = gig.info;*/
+	        $scope.gigToBeSent = angular.copy(gig);
+
+			// Deleting properties of foreign key object
+			delete $scope.gigToBeSent.city;
+			delete $scope.gigToBeSent.address;
+			delete $scope.gigToBeSent.webpage;
+			delete $scope.gigToBeSent.name;
 
 	        selectVenue(gig.venue_name);
 			$scope.sendGig = $scope.putGig;
@@ -117,7 +139,15 @@ define(function() {
 			$scope.gigAction = 'Lägg till gig';
 			$scope.addingNewGig = true;
 	    };
-	
+
+	    var refreshVenues = function() {
+
+			VenuesService.refreshVenues().then(function(venues) {
+				$scope.venues = venues;
+			});
+
+		};
+
 	    var sendVenue = function() {
 
 	        if($scope.selectedVenue) {
@@ -127,7 +157,7 @@ define(function() {
 
 				if (venueForComparison == undefined) {
 					// If there is no venue with the specified name, post the venue (i.e. create it).
-					SendObjectService.postObject(venuesEndpoint, $scope.selectedVenue, function () {
+					SendObjectService.postObject(venuesEndpoint, $scope.selectedVenue, function() {
 						getVenues();
 					});
 				} else if (JSON.stringify($scope.selectedVenue) != JSON.stringify(venueForComparison)) {
@@ -135,19 +165,24 @@ define(function() {
 					 If there is a venue with the specified name, but some of the other fields have been changed,
 					 put the venue (i.e. update it).
 					 */
-					SendObjectService.putObject(venuesEndpoint, $scope.selectedVenue, function () {
+					SendObjectService.putObject(venuesEndpoint, $scope.selectedVenue, function() {
 						getVenues();
 					});
 				}
+
+				refreshVenues();
+
 			}
 		};
 	
 	    var gigsEndpoint = $rootScope.serverRoot + 'gigs';
 	
 	    var refreshGigs = function() {
-	        GigsService.refreshGigs().then(function(gigs){
+
+	        GigsService.refreshGigs().then(function(gigs) {
 	            $scope.gigs = gigs;
 	        });
+
 	    };
 
 		$scope.makeRequest = function(form) {
@@ -168,9 +203,10 @@ define(function() {
 	
 	    $scope.putGig = function(form) {
 	        sendVenue();
+			console.log($scope.gigToBeSent);
 	        SendObjectService.putObject(gigsEndpoint, $scope.gigToBeSent, function() {
 	            refreshGigs();
-				ValidationService.resetForm(form);
+				ValidationService.resetForm(form)
 	        });
 	    };
 	

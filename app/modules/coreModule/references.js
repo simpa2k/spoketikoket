@@ -25,7 +25,8 @@ define(function() {
 		'modules/coreModule/services/validation-service',
 		'modules/coreModule/directives/sticky-navbar/sticky-navbar',
 		'modules/coreModule/directives/gallery',
-		'modules/coreModule/directives/gig'
+		'modules/coreModule/directives/gig',
+		'modules/coreModule/filters/priceFilter'
 	]
 
 });

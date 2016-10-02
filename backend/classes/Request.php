@@ -17,6 +17,8 @@ class Request {
         $this->urlElements = explode('/', $_SERVER['PATH_INFO']);
 
         $this->parseIncomingParams();
+        $this->handleEmptyValues();
+        
         $this->format = 'json';
         if(isset($this->parameters['format'])) {
             $this->format = $this->parameters['format'];
@@ -54,4 +56,16 @@ class Request {
         $this->parameters = $parameters;
     }
 
+    private function handleEmptyValues() {
+
+        foreach ($this->parameters as $parameter => $paramValue) {
+            
+           if(empty($paramValue)) {
+               $this->parameters[$parameter] = null;
+           }
+            
+       } 
+
+    }
+    
 }

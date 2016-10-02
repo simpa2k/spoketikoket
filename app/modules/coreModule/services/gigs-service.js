@@ -15,9 +15,9 @@ define(function() {
 		};
 
 		var handlePriceSetToZero = function(gig) {
-			if( (gig.price == null) || (gig.price == '0') ) {
+			/*if( (gig.price == null) || (gig.price == '0') ) {
 				gig.price = 'Gratis!';
-			}
+			}*/
 		};
 
 		var formatGigs = function(gigs) {

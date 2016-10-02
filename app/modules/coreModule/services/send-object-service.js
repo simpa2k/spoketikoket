@@ -4,31 +4,33 @@ define(function() {
 	
 	app.service('SendObjectService', ['$http', function($http) {
 	    var self = this;
-	
-	    function countNumberOfProperties(object) {
-	        var counter = 0;
-	
-	        angular.forEach(object, function() {
-	            counter++;
-	        });
-	
-	        return counter;
-	    }
-	
+
 	    function constructUriFromObject(object) {
-	        var uri = '';
-	        var numberOfIterations = countNumberOfProperties(object);
-	        var counter = 0;
-	
+
+	        let uri = '';
+			let first = true;
+
 	        angular.forEach(object, function(value, key) {
-	            var encodedValue = encodeURIComponent(value);
-	            uri += key + '=' + encodedValue;
-	            counter++;
-	            if(counter < numberOfIterations) {
-	                uri += '&';
-	            }
+
+				if(first) {
+					first = false;
+				} else {
+					uri += '&';
+				}
+
+				uri += key;
+
+				if(value != null && value.hasOwnProperty('length') && value.length > 0) {
+
+					let encodedValue = encodeURIComponent(value);
+					uri += '=' + encodedValue;
+
+				}
+
 	        });
+
 	        return uri;
+
 	    };
 	
 	    self.appendToUri = function(uri, object) {
@@ -41,6 +43,7 @@ define(function() {
 	    };
 	
 	    self.putObject = function(endpoint, object, callback) {
+	    	console.log(self.createUri(endpoint, object));
 	        $http.put(self.createUri(endpoint, object)).then(function(response) {
 	            callback(response.data);
 	        });

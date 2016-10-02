@@ -9,7 +9,7 @@
     <div class="row">
         <div class="additional-info col-xs-12">
             <p>Tid: <span class="orange-brown">{{ gig.datetime | date:timeFormat }}</span></p>
-            <p>Pris: <span class="orange-brown">{{ gig.price }}</span></p>
+            <p ng-if="gig.price">Pris: <span class="orange-brown">{{ gig.price | priceFilter }}</span></p>
             <p ng-if="gig.address">Plats: <span class="orange-brown">{{ gig.address }}</span></p>
             <p ng-if="gig.webpage">Webbsida: <a href="{{ gig.webpage }}">{{ gig.webpage }}</a></p>
             <p ng-if="gig.ticketlink">Biljetter: <a href="{{ gig.ticketlink }}">{{ gig.ticketlink }}</a></p>

@@ -63,6 +63,7 @@ class GigsController extends BaseController {
         $id = $request->parameters['id'];
         $primaryKey = "id = $id";
         unset($request->parameters['id']);
+        
         $this->getModel()->update($primaryKey, $request->parameters);
     }
 
