@@ -43,7 +43,6 @@ define(function() {
 	    };
 	
 	    self.putObject = function(endpoint, object, callback) {
-	    	console.log(self.createUri(endpoint, object));
 	        $http.put(self.createUri(endpoint, object)).then(function(response) {
 	            callback(response.data);
 	        });

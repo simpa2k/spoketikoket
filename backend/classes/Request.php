@@ -60,7 +60,7 @@ class Request {
 
         foreach ($this->parameters as $parameter => $paramValue) {
             
-           if(empty($paramValue)) {
+           if($paramValue == "") {
                $this->parameters[$parameter] = null;
            }
             

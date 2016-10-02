@@ -14,16 +14,9 @@ define(function() {
 			gig.datetime = new Date(date['year'], date['month'], date['day'], time['hours'], time['minutes'])
 		};
 
-		var handlePriceSetToZero = function(gig) {
-			/*if( (gig.price == null) || (gig.price == '0') ) {
-				gig.price = 'Gratis!';
-			}*/
-		};
-
 		var formatGigs = function(gigs) {
 			for(var i = 0; i < gigs.length; i++) {
 				instantiateGigDate(gigs[i])
-				handlePriceSetToZero(gigs[i])
 			}
 		};
 

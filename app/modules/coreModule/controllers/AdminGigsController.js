@@ -107,12 +107,6 @@ define(function() {
 		};*/
 
 	    $scope.setPutState = function(gig) {
-	        /*$scope.gigToBeSent.datetime = gig.datetime;
-	        $scope.gigToBeSent.price = gig.price;
-	        $scope.gigToBeSent.ticketlink = gig.ticketlink;
-	        $scope.gigToBeSent.id = gig.id;
-	        $scope.gigToBeSent.venue_name = gig.venue_name;
-	        $scope.gigToBeSent.info = gig.info;*/
 	        $scope.gigToBeSent = angular.copy(gig);
 
 			// Deleting properties of foreign key object
