@@ -2,6 +2,7 @@
 @import 'navbar.less';
 @import 'gig.less';
 @import 'gallery.less';
+@import '../bower_components/angular-upload/src/directives/btnUpload.less';
 
 body {
 
@@ -224,7 +225,6 @@ body {
 
     }
 
-
   }
 
 }
@@ -294,8 +294,29 @@ body {
 
 #admin-galleries-section {
 
+  .delete-image {
+    display: none;
+  }
+
   .gallery-item {
+
     display: inline;
+    position: relative;
+
+  }
+
+  .gallery-item:hover > img {
+    opacity: 0.5;
+  }
+
+  .gallery-item:hover > .delete-image {
+
+    display: initial;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
   }
 
 }

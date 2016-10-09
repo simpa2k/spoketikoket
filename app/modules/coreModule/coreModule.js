@@ -1,6 +1,7 @@
 define(['modules/coreModule/runners/authenticationRunner', 'modules/coreModule/runners/rootScopeRunner'], function(authenticationRunner, rootScopeRunner) {
 
-	var coreModule = angular.module('coreModule', ['ui.router',
+	var coreModule = angular.module('coreModule', ['lr.upload',
+												   'ui.router',
 												   'ui.bootstrap',
 												   'ui.tinymce',
 												   'ngSanitize',

@@ -4,7 +4,8 @@ define(function() {
 	
 	app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, SendObjectService, ImagesService, ValidationService) {
 
-		var galleriesEndpoint = $rootScope.serverRoot + 'images/galleries';
+		var imagesEndpoint = $rootScope.serverRoot + 'images';
+		var galleriesEndpoint = imagesEndpoint + '/galleries';
 	    $scope.galleryToBeSent = {};
 
 	    ImagesService.getGalleries().then(function(galleries) {
@@ -33,23 +34,42 @@ define(function() {
 			return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
 		};
 
-	    $scope.setPutState = function(galleryName) {
-	        /*$scope.imageToBeSent.imagepath = image.imagepath;
-	        $scope.imageToBeSent.thumbnailpath = image.thumbnailpath;*/
-	        console.log($scope.galleries[galleryName]);
-			$scope.galleryToBeSent = $scope.galleries[galleryName];
+		$scope.resolveButtonGroup = function() {
+			return $scope.addingNewGallery ? '' : 'btn-group';
+		};
+
+	    $scope.editGallery = function(galleryName) {
+
+	        let selectedGallery = {
+	        	name: galleryName,
+				images: angular.copy($scope.galleries[galleryName])
+			};
+
+	        console.log(selectedGallery);
+			$scope.galleryToBeSent = selectedGallery;
 
 			$scope.heading = 'Redigera ' + galleryName;
-	        $scope.sendImages = $scope.putImages;
+			$scope.galleryAction = 'Bekräfta ändringar';
+			$scope.addingNewGallery = false;
+	        $scope.sendGallery = $scope.putGallery;
 	    };
 	
 	    $scope.setPostState = function() {
-	        $scope.imageToBeSent = {};
+	        $scope.galleryToBeSent = {};
 
 	        $scope.heading = 'Lägg till nytt galleri';
-	        $scope.sendImages = $scope.postImages;
+			$scope.galleryAction = 'Lägg till galleri';
+			$scope.addingNewGallery = true;
+	        $scope.sendGallery= $scope.postGallery;
 	    };
 
+		$scope.deleteImage = function(image) {
+
+		    /*SendObjectService.deleteObject(imagesEndpoint, image, function() {
+		    	refreshImages();
+			});*/
+
+		};
 
 	    var refreshImages = function() {
 	        ImagesService.refreshImages().then(function(images){
@@ -57,20 +77,20 @@ define(function() {
 	        });
 	    };
 	
-	    $scope.postImages = function() {
+	    $scope.postGallery = function() {
 	        SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	            $scope.setPostState();
 	        });
 	    };
 	
-	    $scope.putImages = function() {
+	    $scope.putGallery = function() {
 	        SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	        });
 	    };
 	
-	    $scope.deleteImages = function() {
+	    $scope.deleteGallery = function() {
 	        SendObjectService.deleteObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	            $scope.setPostState();

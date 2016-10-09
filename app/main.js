@@ -6,6 +6,7 @@ require.config({
 		'bootstrap-tabs': '../bower_components/bootstrap/js/tab',
 		'tinymce': '../bower_components/tinymce/tinymce.min',
 		'angular-tinymce': '../bower_components/angular-ui-tinymce/dist/tinymce.min',
+		'angular-upload': '../bower_components/angular-upload/angular-upload.min',
 		'ui-router': '../bower_components/angular-ui-router/release/angular-ui-router.min',
 		'angular-modal-service': '../bower_components/angular-modal-service/dst/angular-modal-service.min',
 		'angular-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls.min',
@@ -26,6 +27,9 @@ require.config({
 		},
 		'angular-tinymce': {
 			deps: ['angular', 'tinymce']
+		},
+		'angular-upload': {
+			deps: ['angular']
 		},
 		'ui-router': {
 			deps: ['angular']
@@ -52,7 +56,8 @@ require.config({
 			deps: ['angular']
 		},
 		'coreModule': {
-			deps: ['ui-router',
+			deps: ['angular-upload',
+				   'ui-router',
 				   'bootstrap-tabs',
 				   'angular-tinymce',
 				   'angular-modal-service',

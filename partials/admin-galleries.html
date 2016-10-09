@@ -7,7 +7,7 @@
             <p class="non-bordered-large-section-heading text-center">Gallerier</p>
 
             <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                <img src="{{ galleryCover[1] }}" ng-click="setPutState(galleryName)">
+                <img src="{{ galleryCover[1] }}" ng-click="editGallery(galleryName)">
                 <p class="smaller-section-heading">{{ galleryName }}</p>
             </div>
 
@@ -17,7 +17,41 @@
 
             <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
 
-            <img ng-repeat="image in galleryToBeSent" class="gallery-item" src="{{ image.thumb }}">
+            <div ng-repeat="image in galleryToBeSent.images" class="gallery-item">
+
+                <img src="{{ image.thumb }}">
+                <button class="btn btn-danger delete-image" ng-click="deleteImage(image)">Ta bort</button>
+
+            </div>
+
+            <form name="galleryForm" ng-hide="addingNewGallery" novalidate>
+
+                <!--<div class="form-group">
+                    <label class="btn btn-default btn-file">
+                        Lägg till ny bild <input type="file" style="display: none">
+                    </label>
+                </div>-->
+                <div class="form-group">
+                    <div class="btn btn-primary btn-upload" upload-button url="{{ serverRoot }}images" multiple="{{ true }}">Lägg till ny(a) bild(er)</div>
+                </div>
+
+                <div class="form-group" ng-class="hasError(galleryForm, 'galleryname')">
+                    <label for="galleryname-input">Galleriets namn:</label>
+                    <input type="text" name="galleryname" id="galleryname-input" class="form-control" ng-model="galleryToBeSent.name" placeholder="Galleriets namn" required>
+
+                    <div ng-show="isSubmittedOrTouched(galleryForm, 'galleryname')">
+                        <label class="help-block" for="galleryname-input" ng-show="isRequired(galleryForm, 'galleryname')">Ett galleri behöver ett namn!</label>
+                    </div>
+                </div>
+
+            </form>
+
+            <div ng-class="resolveButtonGroup()">
+                <button class="btn btn-primary pull-left" ng-click="sendGallery(galleryForm)">{{ galleryAction }}</button>
+                <button class="btn btn-primary pull-left" ng-hide="addingNewGallery" ng-click="setPostState()">Nytt galleri</button>
+            </div>
+
+            <button class="btn btn-danger pull-right" ng-hide="addingNewGallery" ng-click="deleteGallery(galleryForm)">Ta bort galleri</button>
 
         </div>
 
