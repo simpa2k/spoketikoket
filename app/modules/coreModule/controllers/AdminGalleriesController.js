@@ -2,10 +2,14 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminImagesController', function($scope, $rootScope, $http, $filter, SendObjectService, ImagesService, ValidationService) {
+	app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, SendObjectService, ImagesService, ValidationService) {
 
-		var imagesEndpoint = $rootScope.serverRoot + 'images';
-	    $scope.imageToBeSent = {};
+		var galleriesEndpoint = $rootScope.serverRoot + 'images/galleries';
+	    $scope.galleryToBeSent = {};
+
+	    ImagesService.getGalleries().then(function(galleries) {
+	    	$scope.galleries = galleries;
+		});
 
 		$scope.isSubmittedOrTouched = function(form, formControl) {
 
@@ -29,14 +33,20 @@ define(function() {
 			return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
 		};
 
-	    $scope.setPutState = function(image) {
-	        $scope.imageToBeSent.imagepath = image.imagepath;
-	        $scope.imageToBeSent.thumbnailpath = image.thumbnailpath;
+	    $scope.setPutState = function(galleryName) {
+	        /*$scope.imageToBeSent.imagepath = image.imagepath;
+	        $scope.imageToBeSent.thumbnailpath = image.thumbnailpath;*/
+	        console.log($scope.galleries[galleryName]);
+			$scope.galleryToBeSent = $scope.galleries[galleryName];
+
+			$scope.heading = 'Redigera ' + galleryName;
 	        $scope.sendImages = $scope.putImages;
 	    };
 	
 	    $scope.setPostState = function() {
 	        $scope.imageToBeSent = {};
+
+	        $scope.heading = 'Lägg till nytt galleri';
 	        $scope.sendImages = $scope.postImages;
 	    };
 
@@ -48,20 +58,20 @@ define(function() {
 	    };
 	
 	    $scope.postImages = function() {
-	        SendObjectService.postObject(imagesEndpoint, $scope.imageToBeSent, function() {
+	        SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	            $scope.setPostState();
 	        });
 	    };
 	
 	    $scope.putImages = function() {
-	        SendObjectService.putObject(imagesEndpoint, $scope.imageToBeSent, function() {
+	        SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	        });
 	    };
 	
 	    $scope.deleteImages = function() {
-	        SendObjectService.deleteObject(imagesEndpoint, $scope.imageToBeSent, function() {
+	        SendObjectService.deleteObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
 	            $scope.setPostState();
 	        });

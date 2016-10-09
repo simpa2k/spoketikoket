@@ -7145,6 +7145,9 @@ body {
   border-top: 2px solid @deep-blue;
   .section-heading*/
 }
+.large-text {
+  font-size: 14pt;
+}
 #main {
   position: absolute;
   top: 100vh;
@@ -7160,9 +7163,6 @@ body {
 }
 #main h1 {
   color: #123848;
-}
-#main .large-text {
-  font-size: 14pt;
 }
 #main .big-image {
   height: 100vh !important;
@@ -7200,41 +7200,52 @@ body {
   font-size: 12pt;
   letter-spacing: 2px;
 }
-#main #media-section .nav-tabs > .nav-tabs {
+#media-section .nav-tabs > .nav-tabs,
+#admin-galleries-section .nav-tabs > .nav-tabs {
   border-bottom: 1px solid #123848;
   width: 60%;
   letter-spacing: 2px;
   font-size: 14pt;
 }
-#main #media-section .nav-tabs > li > a {
+#media-section .nav-tabs > li > a,
+#admin-galleries-section .nav-tabs > li > a {
   color: #123848;
 }
-#main #media-section .nav-tabs > li.active > a {
+#media-section .nav-tabs > li.active > a,
+#admin-galleries-section .nav-tabs > li.active > a {
   background-color: #DFDBC3 !important;
   border-bottom-color: transparent !important;
   border: 1px solid #123848;
 }
-#main #media-section .nav-tabs > li > a:hover {
+#media-section .nav-tabs > li > a:hover,
+#admin-galleries-section .nav-tabs > li > a:hover {
   background-color: #123848;
   color: #DFDBC3;
   border-bottom: 1px solid #123848;
 }
-#main #media-section .nav-tabs > li.active > a:hover {
+#media-section .nav-tabs > li.active > a:hover,
+#admin-galleries-section .nav-tabs > li.active > a:hover {
   color: #123848;
 }
-#main #media-section .non-cascading-selectable-container {
+#media-section .non-cascading-selectable-container,
+#admin-galleries-section .non-cascading-selectable-container {
   display: inline-block;
 }
-#main #media-section img {
+#media-section img,
+#admin-galleries-section img {
   margin: 1% 1% 1% 0%;
   max-width: 100%;
   -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
   box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
-#main #media-section iframe {
+#media-section iframe,
+#admin-galleries-section iframe {
   max-width: 100%;
   -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
   -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
   box-shadow: 2px 2px 3px 0px #c3bfa7;
+}
+#admin-galleries-section .gallery-item {
+  display: inline;
 }

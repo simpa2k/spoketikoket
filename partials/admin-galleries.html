@@ -1,0 +1,26 @@
+<div id="admin-galleries-section">
+
+    <div class="container-fluid">
+
+        <div class="non-cascading-selectable-container col-md-4">
+
+            <p class="non-bordered-large-section-heading text-center">Gallerier</p>
+
+            <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
+                <img src="{{ galleryCover[1] }}" ng-click="setPutState(galleryName)">
+                <p class="smaller-section-heading">{{ galleryName }}</p>
+            </div>
+
+        </div>
+
+        <div class="col-md-8">
+
+            <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
+
+            <img ng-repeat="image in galleryToBeSent" class="gallery-item" src="{{ image.thumb }}">
+
+        </div>
+
+    </div>
+
+</div>

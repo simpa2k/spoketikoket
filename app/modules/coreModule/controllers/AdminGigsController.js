@@ -91,7 +91,7 @@ define(function() {
 
 		//Använd den här sen:
 		/*var selectVenue = function(venueName) {
-		 $scope.selectedVenue = jQuery.extend({}, $scope.venues[venueName]);
+		 $scope.selectedVenue = angular.copy($scope.venues[venueName]);
 		 };*/
 	    var selectVenue = function(venueName) {
 	        angular.forEach($scope.venues, function(value) {
@@ -100,11 +100,6 @@ define(function() {
 	            }
 	        });
 	    };
-
-	    //Använd den här sen:
-		/*var selectVenue = function(venueName) {
-			$scope.selectedVenue = jQuery.extend({}, $scope.venues[venueName]);
-		};*/
 
 	    $scope.setPutState = function(gig) {
 	        $scope.gigToBeSent = angular.copy(gig);
@@ -197,7 +192,6 @@ define(function() {
 	
 	    $scope.putGig = function(form) {
 	        sendVenue();
-			console.log($scope.gigToBeSent);
 	        SendObjectService.putObject(gigsEndpoint, $scope.gigToBeSent, function() {
 	            refreshGigs();
 				ValidationService.resetForm(form)

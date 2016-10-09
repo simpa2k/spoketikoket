@@ -139,6 +139,12 @@ body {
 
 }
 
+.large-text {
+
+  font-size: 14pt;
+
+}
+
 
 #main {
 
@@ -161,11 +167,6 @@ body {
     color: @deep-blue;
   }
 
-  .large-text {
-
-    font-size: 14pt;
-
-  }
 
   .big-image {
 
@@ -226,67 +227,75 @@ body {
 
   }
 
-  #media-section {
-
-    .nav-tabs > .nav-tabs {
-
-      border-bottom: 1px solid @deep-blue;
-      width: 60%;
-      letter-spacing: 2px;
-      .large-text;
-
-    }
-
-    .nav-tabs > li > a {
-
-      color: @deep-blue;
-
-    }
-
-    .nav-tabs > li.active > a {
-
-      background-color: @background !important;
-      border-bottom-color: transparent !important;
-      border: 1px solid @deep-blue;
-
-    }
-
-    .nav-tabs > li > a:hover {
-
-      //background-color: #EDECDE;
-      background-color: @deep-blue;
-      color: @background;
-      border-bottom: 1px solid @deep-blue;
-
-    }
-
-    .nav-tabs > li.active > a:hover {
-
-      color: @deep-blue;
-
-    }
-
-    .non-cascading-selectable-container {
-
-      display: inline-block;
-
-    }
-
-    img {
-
-      margin: 1% 1% 1% 0%;
-      max-width: 100%;
-      .shadowed;
-
-    }
-
-    iframe {
-
-      max-width: 100%;
-      .shadowed;
-
-    }
-
-  }
 }
 
+#media-section, #admin-galleries-section {
+
+  .nav-tabs > .nav-tabs {
+
+    border-bottom: 1px solid @deep-blue;
+    width: 60%;
+    letter-spacing: 2px;
+    .large-text;
+
+  }
+
+  .nav-tabs > li > a {
+
+    color: @deep-blue;
+
+  }
+
+  .nav-tabs > li.active > a {
+
+    background-color: @background !important;
+    border-bottom-color: transparent !important;
+    border: 1px solid @deep-blue;
+
+  }
+
+  .nav-tabs > li > a:hover {
+
+    //background-color: #EDECDE;
+    background-color: @deep-blue;
+    color: @background;
+    border-bottom: 1px solid @deep-blue;
+
+  }
+
+  .nav-tabs > li.active > a:hover {
+
+    color: @deep-blue;
+
+  }
+
+  .non-cascading-selectable-container {
+
+    display: inline-block;
+
+  }
+
+  img {
+
+    margin: 1% 1% 1% 0%;
+    max-width: 100%;
+    .shadowed;
+
+  }
+
+  iframe {
+
+    max-width: 100%;
+    .shadowed;
+
+  }
+
+}
+
+#admin-galleries-section {
+
+  .gallery-item {
+    display: inline;
+  }
+
+}

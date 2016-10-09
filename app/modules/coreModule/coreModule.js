@@ -84,10 +84,10 @@ define(['modules/coreModule/runners/authenticationRunner', 'modules/coreModule/r
 				controller: 'AdminMembersController'
 			})
 
-			.state('admin.images', {
-				url: '/images',
-				templateUrl: 'partials/admin-images.html',
-				controller: 'AdminImagesController'
+			.state('admin.galleries', {
+				url: '/galleries',
+				templateUrl: 'partials/admin-galleries.html',
+				controller: 'AdminGalleriesController'
 			})
 
 			.state('admin.embeddeditems', {

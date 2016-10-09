@@ -64,7 +64,6 @@
                             <p class="small-section-heading">Redigera existerande klipp</p>
                             <form name="videoEditForm" novalidate>
 
-                                <!--<div ng-repeat="video in videos" id="{{ video.type }}-{{ $index }}">-->
                                 <div ng-repeat="video in videos" id="{{ constructItemID(video.type, $index) }}">
                                     <iframe class="selectable admin-item"
                                             width="560"

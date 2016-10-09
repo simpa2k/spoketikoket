@@ -10,6 +10,7 @@ define(function() {
 		'modules/coreModule/controllers/AdminDescriptionController',
 		'modules/coreModule/controllers/AdminGigsController',
 		'modules/coreModule/controllers/AdminImagesController',
+		'modules/coreModule/controllers/AdminGalleriesController',
 		'modules/coreModule/controllers/AdminEmbeddeditemsController',
 		'modules/coreModule/controllers/AdminMembersController',
 		'modules/coreModule/services/append-credentials-service',
