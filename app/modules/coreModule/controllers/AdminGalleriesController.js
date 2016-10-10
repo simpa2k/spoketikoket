@@ -41,7 +41,7 @@ define(function() {
 	    $scope.editGallery = function(galleryName) {
 
 	        let selectedGallery = {
-	        	name: galleryName,
+	        	galleryname: galleryName,
 				images: angular.copy($scope.galleries[galleryName])
 			};
 
@@ -69,6 +69,13 @@ define(function() {
 		    	refreshImages();
 			});*/
 
+		};
+
+		$scope.constructImageUploadUrl = function() {
+			let galleryWithoutExistingImages = angular.copy($scope.galleryToBeSent);
+			delete galleryWithoutExistingImages.images;
+
+			return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
 		};
 
 	    var refreshImages = function() {

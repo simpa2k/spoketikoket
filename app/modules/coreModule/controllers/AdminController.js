@@ -11,7 +11,7 @@ define(function() {
                 'MEDLEMMAR': 'admin.members'
             },
             {
-                'BILDER': 'admin.images',
+                'BILDER': 'admin.galleries',
                 'VIDEO/LJUD': 'admin.embeddeditems',
                 'KONTAKT': 'admin.contact'
             }

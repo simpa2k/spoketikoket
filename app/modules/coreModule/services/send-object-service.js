@@ -5,7 +5,7 @@ define(function() {
 	app.service('SendObjectService', ['$http', function($http) {
 	    var self = this;
 
-	    function constructUriFromObject(object) {
+	    var constructUriFromObject = function(object) {
 
 	        let uri = '';
 			let first = true;

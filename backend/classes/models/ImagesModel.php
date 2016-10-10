@@ -191,8 +191,25 @@ class ImagesModel extends BaseModel {
      *
      */
 
-    public function insert($fields) {
-        return $this->getDB()->insert('image', $fields);
+    public function insert($parameters) {
+    
+        $galleryName = isset($parameters['galleryname']) ? $parameters['galleryname'] . '/' : '';
+        
+        foreach($parameters['files'] as $file) {
+            
+           if(empty($galleryName)) {
+               //Move to images/
+           } else {
+               
+               $filename = $this->galleryPath . $galleryName . basename($file['name']);
+               //$succeeded = move_uploaded_file($file['tmp_name'], $filename);
+               $debug = fopen('debug.txt', 'a');
+               fwrite($debug, "\n" . var_export(move_uploaded_file($file['tmp_name'], $filename), true));
+               fclose($debug);
+           }
+            
+        }
+        
     }
 
     /**

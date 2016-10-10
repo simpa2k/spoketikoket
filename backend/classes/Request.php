@@ -33,6 +33,10 @@ class Request {
         if(isset($_SERVER['QUERY_STRING'])) {
             parse_str($_SERVER['QUERY_STRING'], $parameters);
         }
+        
+        if(isset($_FILES['file'])) {
+            $parameters['files'] = $_FILES['file'];
+        }
 
         $body = file_get_contents("php://input");
         $contentType = false;

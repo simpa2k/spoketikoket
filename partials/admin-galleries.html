@@ -32,12 +32,12 @@
                     </label>
                 </div>-->
                 <div class="form-group">
-                    <div class="btn btn-primary btn-upload" upload-button url="{{ serverRoot }}images" multiple="{{ true }}">Lägg till ny(a) bild(er)</div>
+                    <div class="btn btn-primary btn-upload" upload-button url="{{ constructImageUploadUrl() }}" multiple="{{ true }}">Lägg till ny(a) bild(er)</div>
                 </div>
 
                 <div class="form-group" ng-class="hasError(galleryForm, 'galleryname')">
                     <label for="galleryname-input">Galleriets namn:</label>
-                    <input type="text" name="galleryname" id="galleryname-input" class="form-control" ng-model="galleryToBeSent.name" placeholder="Galleriets namn" required>
+                    <input type="text" name="galleryname" id="galleryname-input" class="form-control" ng-model="galleryToBeSent.galleryname" placeholder="Galleriets namn" required>
 
                     <div ng-show="isSubmittedOrTouched(galleryForm, 'galleryname')">
                         <label class="help-block" for="galleryname-input" ng-show="isRequired(galleryForm, 'galleryname')">Ett galleri behöver ett namn!</label>

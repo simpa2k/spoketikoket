@@ -10,10 +10,6 @@ require_once 'core/init.php';
 
 $request = new Request();
 
-$debug = fopen('debug.txt', 'a');
-fwrite($debug, var_export($request->parameters, true));
-fclose($debug);
-
 $prefix = ucfirst($request->urlElements[1]);
 $controllerName = $prefix . 'Controller';
 $modelName = $prefix . 'Model';

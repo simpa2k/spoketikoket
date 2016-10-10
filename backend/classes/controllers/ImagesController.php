@@ -41,6 +41,39 @@ class ImagesController extends BaseController {
     }
 
     /**
+     * 
+     * Method for organising incoming files in a neater format.
+     * 
+     * @param $files An array of file metadata, in the format of $_FILES['file'].
+     * @return $parsedFiles An array of file metadata, organised file by file.
+     * 
+     */
+    
+    private function parseIncomingFiles($files) {
+
+        $parsedFiles = array();
+        
+        foreach ($files as $property => $fileSpecificInfo) {
+
+            if(is_array(($fileSpecificInfo))) {
+                
+                foreach ($fileSpecificInfo as $index => $info) {
+
+                    $parsedFiles[$index][$property] = $info;
+
+                }
+                
+            } else {
+                $parsedFiles[0][$property] = $fileSpecificInfo;
+            }
+            
+        }
+        
+        return $parsedFiles;
+        
+    }
+    
+    /**
      *
      * Method for handling POST requests.
      *
@@ -49,7 +82,12 @@ class ImagesController extends BaseController {
      */
 
     public function post($request) {
+       
+        $files = $request->parameters['files'];
+        $request->parameters['files'] = $this->parseIncomingFiles($files);
+
         $this->getModel()->insert($request->parameters);
+        
     }
 
     /**
