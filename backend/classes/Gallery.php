@@ -38,8 +38,36 @@ class Gallery {
         
         return (count($images)) ? $images : false;
     }
-    
-    public function createThumbnail( $pathToImages, $pathToThumbs, $thumbWidth ) {
+
+    public function createThumbnail($imagePath, $pathToThumbs, $thumbWidth) {
+
+        $fname = basename($imagePath);
+        
+        $debug = fopen('debug.txt', 'w');
+        fwrite($debug, var_export("{$pathToThumbs}{$fname}", true));
+        fclose($debug);
+        
+        // load image and get image size
+        $img = imagecreatefromjpeg( "{$imagePath}" );
+        $width = imagesx( $img );
+        $height = imagesy( $img );
+
+        // calculate thumbnail size
+        $new_width = $thumbWidth;
+        $new_height = floor( $height * ( $thumbWidth / $width ) );
+
+        // create a new temporary image
+        $tmp_img = imagecreatetruecolor( $new_width, $new_height );
+
+        // copy and resize old image into new image
+        imagecopyresampled( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+
+        // save thumbnail into a file
+        imagejpeg( $tmp_img, "{$pathToThumbs}{$fname}" );
+
+    }
+
+    public function createThumbnails($pathToImages, $pathToThumbs, $thumbWidth ) {
         
         //open the directory
         $dir = opendir( $pathToImages );
@@ -51,25 +79,26 @@ class Gallery {
             
             // continue only if this is a JPEG image
             if ( (strtolower($info['extension']) == 'jpg') ) {
-                //echo "Creating thumbnail for {$fname} <br />";
+                
+                $this->createThumbnail($pathToImages . $fname, $pathToThumbs, $thumbWidth);
 
                 // load image and get image size
-                $img = imagecreatefromjpeg( "{$pathToImages}{$fname}" );
+                /*$img = imagecreatefromjpeg( "{$pathToImages}{$fname}" );
                 $width = imagesx( $img );
-                $height = imagesy( $img );
-                
+                $height = imagesy( $img );*/
+
                 // calculate thumbnail size
-                $new_width = $thumbWidth;
-                $new_height = floor( $height * ( $thumbWidth / $width ) );
-                
+                /*$new_width = $thumbWidth;
+                $new_height = floor( $height * ( $thumbWidth / $width ) );*/
+
                 // create a new temporary image
-                $tmp_img = imagecreatetruecolor( $new_width, $new_height );
-                
+                //$tmp_img = imagecreatetruecolor( $new_width, $new_height );
+
                 // copy and resize olf image into new image
-                imagecopyresampled( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-                
+                //imagecopyresampled( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
+
                 // save thumbnail into a file
-                imagejpeg( $tmp_img, "{$pathToThumbs}{$fname}" );
+                //imagejpeg( $tmp_img, "{$pathToThumbs}{$fname}" );
             }
         }
         // close the directory

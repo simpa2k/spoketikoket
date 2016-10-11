@@ -14,7 +14,7 @@ require_once('core/init.php');
 class ImagesModel extends BaseModel {
 
     private $gallery,
-            $galleryPath;
+            $galleriesPath;
 
     public function __construct() {
 
@@ -22,7 +22,7 @@ class ImagesModel extends BaseModel {
 
         $this->gallery = new Gallery();
         $this->gallery->setPath("../images/");
-        $this->galleryPath = "../images/galleries/";
+        $this->galleriesPath = "../images/galleries/";
 
     }
 
@@ -96,7 +96,6 @@ class ImagesModel extends BaseModel {
 
         $data = json_decode($data);
 
-
         return $data;
 
     }
@@ -130,23 +129,22 @@ class ImagesModel extends BaseModel {
     
     public function getGalleries($where) {
         
-        $galleries = $this->getFilePathsConditionally($this->galleryPath, $where);
+        $galleries = $this->getFilePathsConditionally($this->galleriesPath, $where);
         return $galleries;
         
     }
 
-    
     public function getAllGalleries() {
 
         $galleries = array();
 
-        foreach(scandir($this->galleryPath) as $gallery) {
+        foreach(scandir($this->galleriesPath) as $gallery) {
             
             if($this->shouldBeIgnored($gallery)){
                 continue;
             }
             
-            $this->gallery->setPath($this->galleryPath . $gallery);
+            $this->gallery->setPath($this->galleriesPath . $gallery);
             $images = $this->gallery->getImages();
             
             $galleries[$gallery] = $images;
@@ -159,7 +157,7 @@ class ImagesModel extends BaseModel {
     
     public function getGallerycovers($where) {
         
-        $galleryCovers = $this->getFilePathsConditionally($this->galleryPath, $where, '/gallerycover');
+        $galleryCovers = $this->getFilePathsConditionally($this->galleriesPath, $where, '/gallerycover');
         return $galleryCovers;
         
     }
@@ -168,13 +166,13 @@ class ImagesModel extends BaseModel {
         
         $galleryCovers = array();
         
-        foreach(scandir($this->galleryPath) as $gallery) {
+        foreach(scandir($this->galleriesPath) as $gallery) {
 
             if($this->shouldBeIgnored($gallery)) {
                 continue;
             }
             
-            $pathToGalleryCovers = $this->galleryPath . $gallery . '/gallerycover';
+            $pathToGalleryCovers = $this->galleriesPath . $gallery . '/gallerycover';
             $galleryCovers[$gallery] = $this->readDirectoryContents($pathToGalleryCovers);
             
         }
@@ -185,29 +183,33 @@ class ImagesModel extends BaseModel {
 
     /**
      *
-     * Method for inserting data into image.
+     * Method for adding a new image and creating a thumbnail to go with it.
+     * Currently, only images that belong to the same gallery can be uploaded simultaneously.
      *
-     * @param mixed[] $fields Array containing the values to be inserted.
+     * @param mixed[] $filesAndGalleryName Array containing an array with the paths to the images
+     * being uploaded and their names. Optionally, if the images are part of a gallery, the field
+     * 'galleryname' can be set with a string containing the name of the gallery.
      *
      */
 
-    public function insert($parameters) {
-    
-        $galleryName = isset($parameters['galleryname']) ? $parameters['galleryname'] . '/' : '';
-        
-        foreach($parameters['files'] as $file) {
-            
-           if(empty($galleryName)) {
-               //Move to images/
-           } else {
-               
-               $filename = $this->galleryPath . $galleryName . basename($file['name']);
-               //$succeeded = move_uploaded_file($file['tmp_name'], $filename);
-               $debug = fopen('debug.txt', 'a');
-               fwrite($debug, "\n" . var_export(move_uploaded_file($file['tmp_name'], $filename), true));
-               fclose($debug);
-           }
-            
+    public function insert($filesAndGalleryName) {
+
+        $galleryName = isset($filesAndGalleryName['galleryname']) ? $filesAndGalleryName['galleryname'] . '/' : '';
+
+        foreach($filesAndGalleryName['files'] as $file) {
+
+            if(empty($galleryName)) {
+                //Move to images/
+            } else {
+
+                $galleryPath = $this->galleriesPath . $galleryName;
+                $filename = $galleryPath . basename($file['name']);
+                
+                move_uploaded_file($file['tmp_name'], $filename);
+                $this->gallery->createThumbnail($filename, $galleryPath . 'thumbnails/', 256);
+
+            }
+
         }
         
     }
@@ -233,16 +235,31 @@ class ImagesModel extends BaseModel {
 
     /**
      *
-     * Method for deleting database rows.
+     * Method for deleting images.
+     * Currently, only a single image can be deleted at a time. This is a
+     * safety measure to ensure that a whole group of images are not deleted
+     * mistakenly.
      *
-     * @param mixed[] $where An array of sub-arrays specifying
-     * the database row to be deleted, where sub-array[0] contains a database
-     * column name, sub-array[1] contains an operator and
-     * sub-array[3] contains the value to be matched.
+     * @param string[] $image An associative array specifying
+     * different versions of the image and where they are located, like so:
+     * 'full' => 'path/to/full',
+     * 'thumb' => 'path/to/thumbnail'
      *
      */
 
-    public function delete($where) {
-        return $this->getDB()->delete('image', $where);
+    public function delete($image) {
+
+        /*
+         * The reason a for loop is used here is that
+         * images both come in a full version and a thumbnail version.
+         * I didn't want to hard code the names of these, or limit
+         * different images file sizes to these two, so a for loop seemed reasonable.
+         */
+        foreach($image as $imageVariant) {
+            
+            unlink($imageVariant);
+            
+        }  
+        
     }
 }

@@ -65,9 +65,9 @@ define(function() {
 
 		$scope.deleteImage = function(image) {
 
-		    /*SendObjectService.deleteObject(imagesEndpoint, image, function() {
+		    SendObjectService.deleteObject(imagesEndpoint, image, function() {
 		    	refreshImages();
-			});*/
+			});
 
 		};
 

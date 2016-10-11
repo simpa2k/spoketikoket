@@ -44,7 +44,7 @@ class ImagesController extends BaseController {
      * 
      * Method for organising incoming files in a neater format.
      * 
-     * @param $files An array of file metadata, in the format of $_FILES['file'].
+     * @param $files An array of file metadata, in the same format as $_FILES['file'].
      * @return $parsedFiles An array of file metadata, organised file by file.
      * 
      */
@@ -116,8 +116,7 @@ class ImagesController extends BaseController {
      */
 
     public function delete($request) {
-        $primaryKey = $this->filterParameters(array('imagepath', 'thumbnailpath'), $request->parameters);
-        $this->getModel()->delete($this->formatParameters($primaryKey));
+        $this->getModel()->delete($request->parameters);
     }
 
 }
