@@ -5,6 +5,7 @@ define(function() {
 		'modules/coreModule/controllers/LoginController',
 		'modules/coreModule/controllers/HomeController',
 		'modules/coreModule/controllers/GalleryController',
+		'modules/coreModule/controllers/DeleteModalController',
 		'modules/coreModule/controllers/AdminContactpersonsController',
 		'modules/coreModule/controllers/AdminController',
 		'modules/coreModule/controllers/AdminDescriptionController',

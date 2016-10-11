@@ -32,7 +32,7 @@
                     </label>
                 </div>-->
                 <div class="form-group">
-                    <div class="btn btn-primary btn-upload" upload-button url="{{ constructImageUploadUrl() }}" multiple="{{ true }}">Lägg till ny(a) bild(er)</div>
+                    <div class="btn btn-primary btn-upload" upload-button url="{{ constructImageUploadUrl() }}" multiple="{{ true }}" on-complete="refreshGalleriesWithReload()">Lägg till ny(a) bild(er)</div>
                 </div>
 
                 <div class="form-group" ng-class="hasError(galleryForm, 'galleryname')">

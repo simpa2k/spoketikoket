@@ -189,6 +189,8 @@ class ImagesModel extends BaseModel {
      * @param mixed[] $filesAndGalleryName Array containing an array with the paths to the images
      * being uploaded and their names. Optionally, if the images are part of a gallery, the field
      * 'galleryname' can be set with a string containing the name of the gallery.
+     * 
+     * @return $success Whether the image move was successful or not.
      *
      */
 
@@ -196,6 +198,7 @@ class ImagesModel extends BaseModel {
 
         $galleryName = isset($filesAndGalleryName['galleryname']) ? $filesAndGalleryName['galleryname'] . '/' : '';
 
+        $success = false;
         foreach($filesAndGalleryName['files'] as $file) {
 
             if(empty($galleryName)) {
@@ -205,12 +208,14 @@ class ImagesModel extends BaseModel {
                 $galleryPath = $this->galleriesPath . $galleryName;
                 $filename = $galleryPath . basename($file['name']);
                 
-                move_uploaded_file($file['tmp_name'], $filename);
+                $success = move_uploaded_file($file['tmp_name'], $filename);
                 $this->gallery->createThumbnail($filename, $galleryPath . 'thumbnails/', 256);
 
             }
 
         }
+        
+        return $success;
         
     }
 

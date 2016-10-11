@@ -86,7 +86,7 @@ class ImagesController extends BaseController {
         $files = $request->parameters['files'];
         $request->parameters['files'] = $this->parseIncomingFiles($files);
 
-        $this->getModel()->insert($request->parameters);
+        return $this->getModel()->insert($request->parameters);
         
     }
 

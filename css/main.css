@@ -7290,3 +7290,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#delete-modal {
+  background-color: #123848;
+  color: #d0d7da;
+  padding: 2% 2% 2% 2%;
+  clear: both;
+}

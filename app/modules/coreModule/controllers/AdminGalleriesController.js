@@ -2,7 +2,7 @@ define(function() {
 
 	var app = angular.module('coreModule');
 	
-	app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, SendObjectService, ImagesService, ValidationService) {
+	app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, $uibModal, SendObjectService, ImagesService, ValidationService) {
 
 		var imagesEndpoint = $rootScope.serverRoot + 'images';
 		var galleriesEndpoint = imagesEndpoint + '/galleries';
@@ -45,7 +45,6 @@ define(function() {
 				images: angular.copy($scope.galleries[galleryName])
 			};
 
-	        console.log(selectedGallery);
 			$scope.galleryToBeSent = selectedGallery;
 
 			$scope.heading = 'Redigera ' + galleryName;
@@ -63,11 +62,35 @@ define(function() {
 	        $scope.sendGallery= $scope.postGallery;
 	    };
 
+		var refreshGalleries = function() {
+			ImagesService.refreshGalleries().then(function(galleries) {
+				$scope.galleries = galleries;
+			});
+		};
+
+	    var reloadSelectedGallery = function() {
+			$scope.editGallery($scope.galleryToBeSent.galleryname);
+		};
+
+		$scope.refreshGalleriesWithReload = function() {
+		    ImagesService.refreshGalleries().then(function(galleries) {
+				$scope.galleries = galleries;
+				reloadSelectedGallery();
+			});
+		};
+
 		$scope.deleteImage = function(image) {
 
-		    SendObjectService.deleteObject(imagesEndpoint, image, function() {
-		    	refreshImages();
-			});
+            let modalInstance = $uibModal.open({
+                templateUrl: '../../partials/delete-modal.html',
+                controller: 'DeleteModalController'
+            });
+
+            modalInstance.result.then(function() {
+				SendObjectService.deleteObject(imagesEndpoint, image, function() {
+				    $scope.refreshGalleriesWithReload();
+				});
+			})
 
 		};
 
@@ -78,12 +101,13 @@ define(function() {
 			return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
 		};
 
+
 	    var refreshImages = function() {
 	        ImagesService.refreshImages().then(function(images){
 	            $scope.images = images;
 	        });
 	    };
-	
+
 	    $scope.postGallery = function() {
 	        SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
 	            refreshImages();
