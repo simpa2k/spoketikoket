@@ -17,22 +17,44 @@
 
             <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
 
-            <div ng-repeat="image in galleryToBeSent.images" class="gallery-item">
+            <ng-repeat ng-repeat="image in galleryToBeSent.images track by $index">
 
-                <img src="{{ image.thumb }}">
-                <button class="btn btn-danger delete-image" ng-click="deleteImage(image)">Ta bort</button>
+                <!-- All images that come from the server will have a path to a thumbnail -->
+                <div class="gallery-item">
 
-            </div>
+                    <img src="{{ image.thumb }}">
+                    <button class="btn btn-danger delete-image" ng-click="deleteImage(image)">Ta bort</button>
 
-            <form name="galleryForm" ng-hide="addingNewGallery" novalidate>
+                </div>
 
-                <!--<div class="form-group">
-                    <label class="btn btn-default btn-file">
-                        Lägg till ny bild <input type="file" style="display: none">
-                    </label>
-                </div>-->
+            </ng-repeat>
+            <ng-repeat ng-repeat="image in imagesToBeSent[galleryToBeSent.galleryname] track by $index">
+
+                <!-- This is used for images that aren't actually on the server, but are instead awaiting confirmation to be sent -->
+                <div class="gallery-item">
+
+                    <img src="{{ image }}" width="256">
+                    <button class="btn btn-danger delete-image" ng-click="deleteTemporaryImage(galleryToBeSent.galleryname, $index)">Ta bort</button>
+
+                </div>
+
+            </ng-repeat>
+
+            <form name="galleryForm" novalidate>
+
                 <div class="form-group">
-                    <div class="btn btn-primary btn-upload" upload-button url="{{ constructImageUploadUrl() }}" multiple="{{ true }}" on-complete="refreshGalleriesWithReload()">Lägg till ny(a) bild(er)</div>
+                    <!--<div class="btn btn-primary btn-upload" upload-button url="{{ constructImageUploadUrl() }}" multiple="{{ true }}" on-complete="refreshGalleriesWithReload()">Lägg till ny(a) bild(er)</div>-->
+                    <label class="btn btn-primary btn-file">
+                        Lägg till ny(a) bild(er)
+                        <input type="file"
+                               file-model="imagesToBeSent[galleryToBeSent.galleryname]"
+                               ng-model="imagesToBeSent[galleryToBeSent.galleryname]"
+                               valid-file
+                               name="images"
+                               style="display: none"
+                               multiple
+                               required>
+                    </label>
                 </div>
 
                 <div class="form-group" ng-class="hasError(galleryForm, 'galleryname')">
@@ -47,8 +69,8 @@
             </form>
 
             <div ng-class="resolveButtonGroup()">
-                <button class="btn btn-primary pull-left" ng-click="sendGallery(galleryForm)">{{ galleryAction }}</button>
-                <button class="btn btn-primary pull-left" ng-hide="addingNewGallery" ng-click="setPostState()">Nytt galleri</button>
+                <button class="btn btn-primary pull-left" ng-show="!addingNewGallery || galleryForm.$valid" ng-click="sendGallery(galleryForm)">{{ galleryAction }}</button>
+                <button class="btn btn-primary pull-left" ng-hide="addingNewGallery" ng-click="setPostState(galleryForm)">Nytt galleri</button>
             </div>
 
             <button class="btn btn-danger pull-right" ng-hide="addingNewGallery" ng-click="deleteGallery(galleryForm)">Ta bort galleri</button>

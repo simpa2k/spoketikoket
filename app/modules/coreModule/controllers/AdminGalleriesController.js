@@ -1,85 +1,99 @@
 define(function() {
 
-	var app = angular.module('coreModule');
-	
-	app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, $uibModal, SendObjectService, ImagesService, ValidationService) {
+    var app = angular.module('coreModule');
 
-		var imagesEndpoint = $rootScope.serverRoot + 'images';
-		var galleriesEndpoint = imagesEndpoint + '/galleries';
-	    $scope.galleryToBeSent = {};
+    app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, $uibModal, SendObjectService, ImagesService, ValidationService) {
 
-	    ImagesService.getGalleries().then(function(galleries) {
-	    	$scope.galleries = galleries;
-		});
+        var imagesEndpoint = $rootScope.serverRoot + 'images';
+        var galleriesEndpoint = imagesEndpoint + '/galleries';
+        $scope.galleryToBeSent = {};
+        $scope.imagesToBeSent = {};
 
-		$scope.isSubmittedOrTouched = function(form, formControl) {
+        ImagesService.getGalleries().then(function(galleries) {
 
-			return ValidationService.isSubmittedOrTouched(form, formControl);
+            // Converting an object of objects to array
+            angular.forEach(galleries, function (value, key) {
 
-		};
+                galleries[key] = $.map(value, function(pathsObject) {
+                    return [pathsObject];
+                });
 
-		$scope.isRequired = function(form, formControl) {
+            });
+            $scope.galleries = galleries;
+        });
 
-			return ValidationService.isRequired(form, formControl);
+        $scope.isSubmittedOrTouched = function(form, formControl) {
 
-		};
+            return ValidationService.isSubmittedOrTouched(form, formControl);
 
-		$scope.isRequiredAndSubmittedOrTouched = function(form, formControl) {
+        };
 
-			return ValidationService.isRequiredAndSubmittedOrTouched(form, formControl);
+        $scope.isRequired = function(form, formControl) {
 
-		};
+            return ValidationService.isRequired(form, formControl);
 
-		$scope.hasError = function(form, formControl) {
-			return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
-		};
+        };
 
-		$scope.resolveButtonGroup = function() {
-			return $scope.addingNewGallery ? '' : 'btn-group';
-		};
+        $scope.isRequiredAndSubmittedOrTouched = function(form, formControl) {
 
-	    $scope.editGallery = function(galleryName) {
+            return ValidationService.isRequiredAndSubmittedOrTouched(form, formControl);
 
-	        let selectedGallery = {
-	        	galleryname: galleryName,
-				images: angular.copy($scope.galleries[galleryName])
-			};
+        };
 
-			$scope.galleryToBeSent = selectedGallery;
+        $scope.hasError = function(form, formControl) {
+            return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
+        };
 
-			$scope.heading = 'Redigera ' + galleryName;
-			$scope.galleryAction = 'Bekräfta ändringar';
-			$scope.addingNewGallery = false;
-	        $scope.sendGallery = $scope.putGallery;
-	    };
-	
-	    $scope.setPostState = function() {
-	        $scope.galleryToBeSent = {};
+        $scope.resolveButtonGroup = function() {
+            return $scope.addingNewGallery ? '' : 'btn-group';
+        };
 
-	        $scope.heading = 'Lägg till nytt galleri';
-			$scope.galleryAction = 'Lägg till galleri';
-			$scope.addingNewGallery = true;
-	        $scope.sendGallery= $scope.postGallery;
-	    };
+        $scope.editGallery = function(galleryName) {
 
-		var refreshGalleries = function() {
-			ImagesService.refreshGalleries().then(function(galleries) {
-				$scope.galleries = galleries;
-			});
-		};
+            let selectedGallery = {
+                galleryname: galleryName,
+                images: $scope.galleries[galleryName]
+            };
 
-	    var reloadSelectedGallery = function() {
-			$scope.editGallery($scope.galleryToBeSent.galleryname);
-		};
+            $scope.galleryToBeSent = selectedGallery;
 
-		$scope.refreshGalleriesWithReload = function() {
-		    ImagesService.refreshGalleries().then(function(galleries) {
-				$scope.galleries = galleries;
-				reloadSelectedGallery();
-			});
-		};
+            $scope.heading = 'Redigera ' + galleryName;
+            $scope.galleryAction = 'Bekräfta ändringar';
+            $scope.addingNewGallery = false;
+            $scope.sendGallery = $scope.putGallery;
+        };
 
-		$scope.deleteImage = function(image) {
+        $scope.setPostState = function(form) {
+            $scope.galleryToBeSent = {};
+
+            $scope.heading = 'Lägg till nytt galleri';
+            $scope.galleryAction = 'Lägg till galleri';
+            $scope.addingNewGallery = true;
+            $scope.sendGallery= $scope.postGallery;
+
+            if(typeof(form) != 'undefined') {
+                ValidationService.resetForm(form);
+            }
+        };
+
+        var refreshGalleries = function() {
+            ImagesService.refreshGalleries().then(function(galleries) {
+                $scope.galleries = galleries;
+            });
+        };
+
+        var reloadSelectedGallery = function() {
+            $scope.editGallery($scope.galleryToBeSent.galleryname);
+        };
+
+        $scope.refreshGalleriesWithReload = function() {
+            ImagesService.refreshGalleries().then(function(galleries) {
+                $scope.galleries = galleries;
+                reloadSelectedGallery();
+            });
+        };
+
+        $scope.deleteImage = function(image) {
 
             let modalInstance = $uibModal.open({
                 templateUrl: '../../partials/delete-modal.html',
@@ -87,49 +101,54 @@ define(function() {
             });
 
             modalInstance.result.then(function() {
-				SendObjectService.deleteObject(imagesEndpoint, image, function() {
-				    $scope.refreshGalleriesWithReload();
-				});
-			})
+                SendObjectService.deleteObject(imagesEndpoint, image, function() {
+                    $scope.refreshGalleriesWithReload();
+                });
+            })
 
-		};
+        };
 
-		$scope.constructImageUploadUrl = function() {
-			let galleryWithoutExistingImages = angular.copy($scope.galleryToBeSent);
-			delete galleryWithoutExistingImages.images;
+        $scope.deleteTemporaryImage = function(galleryname, imageIndex) {
+            $scope.imagesToBeSent[galleryname].splice(imageIndex, 1);
+        };
 
-			return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
-		};
+        $scope.constructImageUploadUrl = function() {
+            let galleryWithoutExistingImages = angular.copy($scope.galleryToBeSent);
+            delete galleryWithoutExistingImages.images;
 
+            return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
+        };
 
-	    var refreshImages = function() {
-	        ImagesService.refreshImages().then(function(images){
-	            $scope.images = images;
-	        });
-	    };
+        var refreshImages = function() {
+            ImagesService.refreshImages().then(function(images){
+                $scope.images = images;
+            });
+        };
 
-	    $scope.postGallery = function() {
-	        SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-	            refreshImages();
-	            $scope.setPostState();
-	        });
-	    };
-	
-	    $scope.putGallery = function() {
-	        SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-	            refreshImages();
-	        });
-	    };
-	
-	    $scope.deleteGallery = function() {
-	        SendObjectService.deleteObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-	            refreshImages();
-	            $scope.setPostState();
-	        });
-	    };
+        $scope.postGallery = function(form) {
+            console.log($scope.imagesToBeSent);
+            /*SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
+                refreshImages();
+                $scope.setPostState();
+            });*/
+        };
 
-	    $scope.setPostState();
-	
-	});
+        $scope.putGallery = function() {
+            console.log($scope.imagesToBeSent);
+            /*SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
+                refreshImages();
+            });*/
+        };
+
+        $scope.deleteGallery = function() {
+            SendObjectService.deleteObject(galleriesEndpoint, $scope.imageToBeSent, function() {
+                refreshImages();
+                $scope.setPostState();
+            });
+        };
+
+        $scope.setPostState();
+
+    });
 
 });

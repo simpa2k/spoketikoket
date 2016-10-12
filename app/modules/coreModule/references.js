@@ -28,6 +28,8 @@ define(function() {
 		'modules/coreModule/directives/sticky-navbar/sticky-navbar',
 		'modules/coreModule/directives/gallery',
 		'modules/coreModule/directives/gig',
+		'modules/coreModule/directives/file-model',
+		'modules/coreModule/directives/valid-file',
 		'modules/coreModule/filters/priceFilter'
 	]
 
