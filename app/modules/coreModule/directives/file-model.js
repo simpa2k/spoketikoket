@@ -18,24 +18,27 @@ define(function() {
 
                 element.bind('change', function() {
 
-                    let urls = [];
+					let filesWithUrls = [];
 
-                    var readAndPushFileUrl = function(event) {
+                    var readAndPushFileAndUrl = function(event, file) {
 
-                        let url = event.target.result;
-                        urls.push(url);
+						let fileWithUrl = {
+							url: event.target.result,
+							file: file 
+						}	
+                        filesWithUrls.push(fileWithUrl);
 
                         scope.$apply(function() {
-                            modelSetter(scope, urls);
+                            modelSetter(scope, filesWithUrls);
                         });
 
                     };
 
-                    angular.forEach(element[0].files, function (value) {
+                    angular.forEach(element[0].files, function(value) {
 
                         let reader = new FileReader();
                         reader.onload = function(event) {
-                            readAndPushFileUrl(event);
+                            readAndPushFileAndUrl(event, value);
                         };
 
                         reader.readAsDataURL(value);

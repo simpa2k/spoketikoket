@@ -33,7 +33,7 @@
                 <!-- This is used for images that aren't actually on the server, but are instead awaiting confirmation to be sent -->
                 <div class="gallery-item">
 
-                    <img src="{{ image }}" width="256">
+                    <img src="{{ image.url }}" width="256">
                     <button class="btn btn-danger delete-image" ng-click="deleteTemporaryImage(galleryToBeSent.galleryname, $index)">Ta bort</button>
 
                 </div>

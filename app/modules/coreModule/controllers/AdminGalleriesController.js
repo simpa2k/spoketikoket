@@ -140,11 +140,32 @@ define(function() {
                 $scope.setPostState();
             });*/
         };
+		
+		var extractImageFiles = function(galleryName) {
+
+			let imageFiles = [];
+
+			angular.forEach($scope.imagesToBeSent[galleryName], function(value) {
+
+				imageFiles.push(value.file);
+
+			});
+
+			return imageFiles;
+
+		};
 
         $scope.putGallery = function() {
-            console.log($scope.constructImageUploadUrl(), $scope.imagesToBeSent[$scope.galleryToBeSent.galleryname]);
-            fileUpload.uploadFileToUrl($scope.imagesToBeSent[$scope.galleryToBeSent.galleryname],
-                                        $scope.constructImageUploadUrl());
+
+			let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
+            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+
+			if(success) {
+				//Show confirmation
+			} else {
+				//Show error message
+			}
+
             /*SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
                 refreshImages();
             });*/

@@ -83,10 +83,6 @@ class ImagesController extends BaseController {
 
     public function post($request) {
         
-        $debug = fopen('debug.txt', 'w');
-        fwrite($debug, var_export($request, true));
-        fclose($debug);
-       
         $files = $request->parameters['files'];
         $request->parameters['files'] = $this->parseIncomingFiles($files);
 

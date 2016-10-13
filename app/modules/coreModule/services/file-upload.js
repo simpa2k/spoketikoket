@@ -10,7 +10,6 @@ define(function() {
 
             var formData = new FormData();
 
-            console.log(files);
             angular.forEach(files, function (value) {
                 formData.append('file', value);
             });
@@ -20,7 +19,11 @@ define(function() {
                 headers: {'Content-Type': undefined}
             }).success(function() {
 
+				return true;
+
             }).error(function() {
+
+				return false;
 
             });
         };
