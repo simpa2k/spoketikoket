@@ -35,7 +35,7 @@ class ImagesModel extends BaseModel {
             $galleryPath = $this->galleriesPath . $galleryName;
 
             if(is_dir($galleryPath) && !($this->shouldBeIgnored($galleryName))) {
-                $galleries[] = new Gallery($galleryPath);
+                $galleries[$galleryName] = new Gallery($galleryPath, null);
             }
             
         }
@@ -108,6 +108,7 @@ class ImagesModel extends BaseModel {
      * ToDo: This double loop is ridiculous. The queries really need to be using keys for this sort of thing.
      * Eg. instead of array([0] => 'galleryname', [1] => '=', [2] => 'Folk at Heart - 15')
      * they should look something like array('property' => 'galleryname', 'operator' => '=', 'value' => 'Folk at Heart - 15')
+     * In addition to this, when nothing matches the query everything is returned. That isn't right.
      * Also, add support for other operators than '='.
      */
 
@@ -136,7 +137,7 @@ class ImagesModel extends BaseModel {
         
         $galleries = array();
 
-        foreach($this->galleries as $gallery) {
+        foreach($this->galleries as $galleryName => $gallery) {
 
             $metaData = $gallery->getMetaData();
 
@@ -154,8 +155,8 @@ class ImagesModel extends BaseModel {
 
         $galleries = array();
 
-        foreach ($this->galleries as $gallery) {
-            $galleries[$gallery->getName()] = $gallery->getImages();
+        foreach ($this->galleries as $galleryName => $gallery) {
+            $galleries[$galleryName] = $gallery->getImages();
         }
 
         return $galleries;
@@ -204,7 +205,7 @@ class ImagesModel extends BaseModel {
     }
 
     /*
-     * This has to actually do something
+     * ToDo: This has to actually do something
      */
 
     private function validatePath($path) {
@@ -242,7 +243,7 @@ class ImagesModel extends BaseModel {
 
     public function insert($filesAndGalleryName) {
 
-        $galleryName = isset($filesAndGalleryName['galleryname']) ? $filesAndGalleryName['galleryname'] . '/' : '';
+        $galleryName = isset($filesAndGalleryName['galleryname']) ? $filesAndGalleryName['galleryname'] : '';
 
         $success = false;
         foreach($filesAndGalleryName['files'] as $file) {
@@ -252,19 +253,28 @@ class ImagesModel extends BaseModel {
             } else {
 
                 $galleryPath = $this->galleriesPath . $galleryName;
+                $gallery = $this->galleries[$galleryName];
 
-                if(!file_exists($galleryPath)) {
+                //if(!file_exists($galleryPath)) {
+                //if(!in_array($galleryName, $this->galleries)) {
+                if($gallery == null) {
+
                     $galleryMetaData = $filesAndGalleryName;
                     unset($galleryMetaData['files']);
 
-                    $this->createGallery($galleryPath, $galleryMetaData);
+                    $gallery = new Gallery($galleryPath, $galleryMetaData, true);
+
+                    //$this->createGallery($galleryPath, $galleryMetaData);
 
                 }
 
-                $filename = $galleryPath . basename($file['name']);
+                //$filename = $galleryPath . basename($file['name']);
                 
-                $success = move_uploaded_file($file['tmp_name'], $filename);
-                $this->gallery->createThumbnail($filename, $galleryPath . 'thumbnails/', 256);
+                /*$success = move_uploaded_file($file['tmp_name'], $filename);
+                $this->gallery->createThumbnail($filename, 256);*/
+
+                $gallery->addImage($file['tmp_name'], basename($file['name']));
+
 
             }
 
