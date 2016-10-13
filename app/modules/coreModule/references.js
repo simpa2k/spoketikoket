@@ -25,6 +25,7 @@ define(function() {
 		'modules/coreModule/services/users-service',
 		'modules/coreModule/services/venues-service',
 		'modules/coreModule/services/validation-service',
+		'modules/coreModule/services/file-upload',
 		'modules/coreModule/directives/sticky-navbar/sticky-navbar',
 		'modules/coreModule/directives/gallery',
 		'modules/coreModule/directives/gig',

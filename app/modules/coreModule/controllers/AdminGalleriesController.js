@@ -2,7 +2,15 @@ define(function() {
 
     var app = angular.module('coreModule');
 
-    app.controller('AdminGalleriesController', function($scope, $rootScope, $http, $filter, $uibModal, SendObjectService, ImagesService, ValidationService) {
+    app.controller('AdminGalleriesController', function($scope,
+                                                        $rootScope,
+                                                        $http,
+                                                        $filter,
+                                                        $uibModal,
+                                                        SendObjectService,
+                                                        ImagesService,
+                                                        ValidationService,
+                                                        fileUpload) {
 
         var imagesEndpoint = $rootScope.serverRoot + 'images';
         var galleriesEndpoint = imagesEndpoint + '/galleries';
@@ -134,7 +142,9 @@ define(function() {
         };
 
         $scope.putGallery = function() {
-            console.log($scope.imagesToBeSent);
+            console.log($scope.constructImageUploadUrl(), $scope.imagesToBeSent[$scope.galleryToBeSent.galleryname]);
+            fileUpload.uploadFileToUrl($scope.imagesToBeSent[$scope.galleryToBeSent.galleryname],
+                                        $scope.constructImageUploadUrl());
             /*SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
                 refreshImages();
             });*/
