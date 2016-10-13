@@ -134,37 +134,44 @@ define(function() {
         };
 
         $scope.postGallery = function(form) {
-            console.log($scope.imagesToBeSent);
+            let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
+            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+
+            if(success) {
+                //Show confirmation
+            } else {
+                //Show error message
+            }
             /*SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
                 refreshImages();
                 $scope.setPostState();
             });*/
         };
 		
-		var extractImageFiles = function(galleryName) {
+        var extractImageFiles = function(galleryName) {
 
-			let imageFiles = [];
+            let imageFiles = [];
 
-			angular.forEach($scope.imagesToBeSent[galleryName], function(value) {
+            angular.forEach($scope.imagesToBeSent[galleryName], function(value) {
 
-				imageFiles.push(value.file);
+                imageFiles.push(value.file);
 
-			});
+            });
 
-			return imageFiles;
+            return imageFiles;
 
-		};
+        };
 
         $scope.putGallery = function() {
 
-			let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
+            let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
             let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
 
-			if(success) {
-				//Show confirmation
-			} else {
-				//Show error message
-			}
+            if(success) {
+                //Show confirmation
+            } else {
+                //Show error message
+            }
 
             /*SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
                 refreshImages();

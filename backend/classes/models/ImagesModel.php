@@ -181,6 +181,45 @@ class ImagesModel extends BaseModel {
         
     }
 
+    private function writeGalleryMetaData($galleryPath, $galleryData) {
+        
+        $metaDataPath = $galleryPath . 'metadata.json';
+        $jsonData = json_encode(galleryData);
+
+        $success = file_put_contents($metaDataPath, $jsonData);
+
+        if($success === FALSE) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    /*
+     * This has to actually do something
+     */
+
+    private function validatePath($path) {
+
+        return true;
+
+    }
+
+    private function createGallery($galleryPath, $galleryMetaData) {
+
+        if($this->validatePath($galleryPath)) {
+
+            $thumbnailPath = $galleryPath . 'thumbnails';
+            mkdir($galleryPath);
+            mkdir($thumbnailPath);
+
+            $this->writeGalleryMetaData($galleryPath, $galleryMetaData);
+
+        }
+        
+    }
+
     /**
      *
      * Method for adding a new image and creating a thumbnail to go with it.
@@ -206,6 +245,15 @@ class ImagesModel extends BaseModel {
             } else {
 
                 $galleryPath = $this->galleriesPath . $galleryName;
+
+                if(!file_exists($galleryPath)) {
+                    $galleryMetaData = $filesAndGalleryName;
+                    unset($galleryMetaData['files']);
+
+                    $this->createGallery($galleryPath, $galleryMetaData);
+
+                }
+
                 $filename = $galleryPath . basename($file['name']);
                 
                 $success = move_uploaded_file($file['tmp_name'], $filename);
