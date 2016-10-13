@@ -1,9 +1,13 @@
 <?php
 class Gallery {
-    public $path;
+
+    private $path,
+            $galleryName;
     
-    public function __construct() {
-        $this->path = __DIR__ . '/images';
+    public function __construct($path) {
+        //$this->path = __DIR__ . '/images';
+        $this->path = $path;
+        $this->galleryName = basename($path);
     }
     
     public function setPath($path) {
@@ -17,6 +21,11 @@ class Gallery {
     
     private function getDirectory($path) {
         return scandir($path);
+    }
+
+    public function getName()
+    {
+        return $this->galleryName;
     }
     
     public function getImages($extensions = array('jpg', 'png')) {
@@ -37,6 +46,10 @@ class Gallery {
         }
         
         return (count($images)) ? $images : false;
+    }
+
+    public function getMetadata() {
+        return json_decode(file_get_contents($this->path . '/metadata.json'));
     }
 
     public function createThumbnail($imagePath, $pathToThumbs, $thumbWidth) {
@@ -79,26 +92,7 @@ class Gallery {
             
             // continue only if this is a JPEG image
             if ( (strtolower($info['extension']) == 'jpg') ) {
-                
                 $this->createThumbnail($pathToImages . $fname, $pathToThumbs, $thumbWidth);
-
-                // load image and get image size
-                /*$img = imagecreatefromjpeg( "{$pathToImages}{$fname}" );
-                $width = imagesx( $img );
-                $height = imagesy( $img );*/
-
-                // calculate thumbnail size
-                /*$new_width = $thumbWidth;
-                $new_height = floor( $height * ( $thumbWidth / $width ) );*/
-
-                // create a new temporary image
-                //$tmp_img = imagecreatetruecolor( $new_width, $new_height );
-
-                // copy and resize olf image into new image
-                //imagecopyresampled( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
-
-                // save thumbnail into a file
-                //imagejpeg( $tmp_img, "{$pathToThumbs}{$fname}" );
             }
         }
         // close the directory

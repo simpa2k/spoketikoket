@@ -20,9 +20,27 @@ class ImagesModel extends BaseModel {
 
         parent::__construct();
 
-        $this->gallery = new Gallery();
-        $this->gallery->setPath("../images/");
         $this->galleriesPath = "../images/galleries/";
+        $this->galleries = $this->readGalleries();
+
+    }
+
+    private function readGalleries() {
+
+        $galleries = array();
+        $galleriesDir = opendir($this->galleriesPath);
+
+        while(($galleryName = readdir($galleriesDir)) !== false) {
+
+            $galleryPath = $this->galleriesPath . $galleryName;
+
+            if(is_dir($galleryPath) && !($this->shouldBeIgnored($galleryName))) {
+                $galleries[] = new Gallery($galleryPath);
+            }
+            
+        }
+
+        return $galleries;
 
     }
 
@@ -85,51 +103,49 @@ class ImagesModel extends BaseModel {
         return $contents;
 
     }
-
-    private function readDirectoryMetaData($directory) {
-
-        $metadataFilePath = $directory . '/metadata.json';
-
-        $metadata = fopen($metadataFilePath, 'r');
-        $data = fread($metadata, filesize($metadataFilePath));
-        fclose($metadata);
-
-        $data = json_decode($data);
-
-        return $data;
-
-    }
-
-    private function getFilePathsConditionally($parentDirectory, $where, $fileDirectory = "") {
-
-        $results = array();
-
-        foreach(scandir($parentDirectory) as $directory) {
-
-            if($this->shouldBeIgnored($directory)) {
-                continue;
-            }
-
-            $data = $this->readDirectoryMetaData($parentDirectory . $directory);
-
-            foreach($where as $queryParameter) {
-                if(!(isset($data->$queryParameter[0])) || $data->$queryParameter[0] != $queryParameter[2]) {
-                    continue 2;
-                }
-            }
-
-            $fileDirectory = $parentDirectory . $directory . $fileDirectory;
-            $this->gallery->setPath($fileDirectory);
-            $results[$directory] = $this->gallery->getImages();
-
-        }
-        return $results;
-
-    }
     
+    /*
+     * ToDo: This double loop is ridiculous. The queries really need to be using keys for this sort of thing.
+     * Eg. instead of array([0] => 'galleryname', [1] => '=', [2] => 'Folk at Heart - 15')
+     * they should look something like array('property' => 'galleryname', 'operator' => '=', 'value' => 'Folk at Heart - 15')
+     * Also, add support for other operators than '='.
+     */
+
+    private function compareMetaDataToQuery($metaData, $queryParameters) {
+
+        foreach($queryParameters as $queryParameter) {
+
+            foreach($metaData as $property => $value) {
+
+                /* 
+                 * $queryParameter[0] is the key, for example galleryname,
+                 * while $queryParameter[2] is the value, for example 'Folk at Heart - 15'.
+                 * As of now, $queryParameter[1], the operator, is assumed to be '=',
+                 * this might need fixing though.
+                 */
+                if($property == $queryParameter[0] && $queryParameter[2] != $value) {
+
+                    return false;
+                }
+                return true;
+            }
+        }
+    }
+
     public function getGalleries($where) {
         
-        $galleries = $this->getFilePathsConditionally($this->galleriesPath, $where);
+        $galleries = array();
+
+        foreach($this->galleries as $gallery) {
+
+            $metaData = $gallery->getMetaData();
+
+            if($this->compareMetaDataToQuery($metaData, $where)) {
+                $galleries[$gallery->getName()] = $gallery->getImages();
+            }
+
+        }
+
         return $galleries;
         
     }
@@ -138,17 +154,8 @@ class ImagesModel extends BaseModel {
 
         $galleries = array();
 
-        foreach(scandir($this->galleriesPath) as $gallery) {
-            
-            if($this->shouldBeIgnored($gallery)){
-                continue;
-            }
-            
-            $this->gallery->setPath($this->galleriesPath . $gallery);
-            $images = $this->gallery->getImages();
-            
-            $galleries[$gallery] = $images;
-
+        foreach ($this->galleries as $gallery) {
+            $galleries[$gallery->getName()] = $gallery->getImages();
         }
 
         return $galleries;
