@@ -165,7 +165,13 @@ class ImagesModel extends BaseModel {
     
     public function getGallerycovers($where) {
         
-        $galleryCovers = $this->getFilePathsConditionally($this->galleriesPath, $where, '/gallerycover');
+        //$galleryCovers = $this->getFilePathsConditionally($this->galleriesPath, $where, '/gallerycover');
+        $galleryCovers = array();
+
+        foreach($this->galleries as $galleryName => $gallery) {
+            $galleryCovers[$galleryName] = $gallery->getGalleryCover();    
+        }
+
         return $galleryCovers;
         
     }
@@ -173,8 +179,12 @@ class ImagesModel extends BaseModel {
     public function getAllGallerycovers() {
         
         $galleryCovers = array();
+
+        foreach($this->galleries as $galleryName => $gallery) {
+            $galleryCovers[$galleryName] = $gallery->getGalleryCover();    
+        }
         
-        foreach(scandir($this->galleriesPath) as $gallery) {
+        /*foreach(scandir($this->galleriesPath) as $gallery) {
 
             if($this->shouldBeIgnored($gallery)) {
                 continue;
@@ -183,7 +193,7 @@ class ImagesModel extends BaseModel {
             $pathToGalleryCovers = $this->galleriesPath . $gallery . '/gallerycover';
             $galleryCovers[$gallery] = $this->readDirectoryContents($pathToGalleryCovers);
             
-        }
+        }*/
         
         return $galleryCovers;
         
@@ -231,7 +241,7 @@ class ImagesModel extends BaseModel {
     /**
      *
      * Method for adding a new image and creating a thumbnail to go with it.
-     * Currently, only images that belong to the same gallery can be uploaded simultaneously.
+     * ToDo: Currently, only images that belong to the same gallery can be uploaded simultaneously.
      *
      * @param mixed[] $filesAndGalleryName Array containing an array with the paths to the images
      * being uploaded and their names. Optionally, if the images are part of a gallery, the field
@@ -255,8 +265,6 @@ class ImagesModel extends BaseModel {
                 $galleryPath = $this->galleriesPath . $galleryName;
                 $gallery = $this->galleries[$galleryName];
 
-                //if(!file_exists($galleryPath)) {
-                //if(!in_array($galleryName, $this->galleries)) {
                 if($gallery == null) {
 
                     $galleryMetaData = $filesAndGalleryName;
@@ -264,17 +272,9 @@ class ImagesModel extends BaseModel {
 
                     $gallery = new Gallery($galleryPath, $galleryMetaData, true);
 
-                    //$this->createGallery($galleryPath, $galleryMetaData);
-
                 }
 
-                //$filename = $galleryPath . basename($file['name']);
-                
-                /*$success = move_uploaded_file($file['tmp_name'], $filename);
-                $this->gallery->createThumbnail($filename, 256);*/
-
                 $gallery->addImage($file['tmp_name'], basename($file['name']));
-
 
             }
 
@@ -306,9 +306,9 @@ class ImagesModel extends BaseModel {
     /**
      *
      * Method for deleting images.
-     * Currently, only a single image can be deleted at a time. This is a
-     * safety measure to ensure that a whole group of images are not deleted
-     * mistakenly.
+     * ToDo: Currently, only a single image can be deleted at a time. This adds 
+     * a measure of safety in that a whole group of images can not be deleted
+     * mistakenly at once, but might need reconsidering.
      *
      * @param string[] $image An associative array specifying
      * different versions of the image and where they are located, like so:

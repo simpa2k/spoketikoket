@@ -28,7 +28,7 @@
                                     <p class="smaller-section-heading">{{ galleryName }}</p>
                                 </div>-->
                                 <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                                    <img src="{{ galleryCover[1] }}" ng-click="openGallery(galleryName)">
+                                    <img src="{{ galleryCover }}" ng-click="openGallery(galleryName)">
                                     <p class="smaller-section-heading">{{ galleryName }}</p>
                                 </div>
 

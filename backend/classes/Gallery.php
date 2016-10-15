@@ -8,12 +8,14 @@ class Gallery {
             $metaDataPath;
 
     private static $thumbWidth = 256;
+    private static $galleryCoverWidth = 540;
+    private static $acceptedFormats = array('jpg');
     
     public function __construct($path, $metadata, $createDirectoryStructure = false) {
-        //$this->path = __DIR__ . '/images';
         $this->path = $path;
         $this->galleryName = basename($path);
         $this->thumbnailPath = $path . '/thumbnails/';
+        $this->galleryCoverPath = $path . '/gallerycover/';
         $this->metaDataPath = $path . '/metadata.json';
 
         if($createDirectoryStructure && !file_exists($this->path)) {
@@ -25,11 +27,13 @@ class Gallery {
     private function createGallery($metaData) {
         mkdir($this->path);
         mkdir($this->thumbnailPath); 
+        mkdir($this->galleryCoverPath); 
 
         if($metaData != null) {
             $this->setMetaData($metaData);
         }
     }
+
     
     public function setPath($path) {
         
@@ -45,20 +49,69 @@ class Gallery {
         self::$thumbWidth = $width;
 
     }
-    
-    private function getDirectory($path) {
-        return scandir($path);
+
+    public function setGalleryCoverWidth($width) {
+
+        self::$galleryCoverWidth = $width;
+
     }
 
-    public function getName()
-    {
-        return $this->galleryName;
+    private function shouldBeIgnored($filename) {
+
+        switch($filename) {
+            case ".":
+            case "..":
+            case "metadata.json":
+                return true;
+            default:
+                return false;
+        }
+
     }
     
+    private function getDirectory($path) {
+
+        $contents = array();
+
+        foreach (scandir($path) as $filename) {
+
+            if($this->shouldBeIgnored($filename)) {
+                continue;
+            }
+
+            $filePath = $path . $filename;
+            $contents[] = $filePath;
+
+        }
+
+        return $contents;
+    }
+
+    private function isEmptyDirectory($directoryPath) {
+
+        if(!is_readable($directoryPath)) {
+            return NULL;
+        }
+
+        $directory = opendir($directoryPath);
+
+        while(($filename == readdir($directory)) !== false) {
+            if($filename != "." && $filename != "..") {
+                return FALSE;
+            }
+        }
+        return TRUE;
+
+    }
+
+    public function getName() {
+        return $this->galleryName;
+    }
+
     public function addImage($filePath, $filename = null) {
 
         /* 
-         * If the filename is not specified we will assume that
+         * If the filename is not specified, assume that
          * it is possible to derive it from the file path given.
          */
 
@@ -67,15 +120,21 @@ class Gallery {
         }
 
         $filename = $this->path . '/' . $filename;
-        file_put_contents('debug.txt', var_export($filename, true), FILE_APPEND);
         
         $success = move_uploaded_file($filePath, $filename);
-        $this->createThumbnail($filename, self::$thumbWidth);
+        $this->createThumbnail($filename);
+
+        if($this->isEmptyDirectory($this->galleryCoverPath)) {
+            $this->setGalleryCover($filename);
+        }
+
+        return $success;
 
     }
 
     public function getImages($extensions = array('jpg', 'png')) {
-        $images = $this->getDirectory($this->path);
+        //$images = $this->getDirectory($this->path);
+        $images = scandir($this->path);
         
         foreach($images as $index => $image) {
             $exploded_image = explode('.', $image);
@@ -87,7 +146,7 @@ class Gallery {
                 $images[$index] = array(
                     'full' => $this->path . '/' . $image,
                     //'thumb' => $this->path . '/thumbnails/' . $image
-                    'thumb' => $this->path . $this->thumbnailPath . $image
+                    'thumb' => $this->thumbnailPath . $image
                 );
             }
         }
@@ -116,8 +175,7 @@ class Gallery {
 
     }
 
-    //public function createThumbnail($imagePath, $pathToThumbs, $thumbWidth) {
-    public function createThumbnail($imagePath, $thumbWidth) {
+    private function createResizedImageCopy($imagePath, $widthOfCopy, $outputPath) {
 
         $fname = basename($imagePath);
         
@@ -126,9 +184,9 @@ class Gallery {
         $width = imagesx( $img );
         $height = imagesy( $img );
 
-        // calculate thumbnail size
-        $new_width = $thumbWidth;
-        $new_height = floor( $height * ( $thumbWidth / $width ) );
+        // calculate new size
+        $new_width = $widthOfCopy;
+        $new_height = floor( $height * ( $widthOfCopy / $width ) );
 
         // create a new temporary image
         $tmp_img = imagecreatetruecolor( $new_width, $new_height );
@@ -136,30 +194,78 @@ class Gallery {
         // copy and resize old image into new image
         imagecopyresampled( $tmp_img, $img, 0, 0, 0, 0, $new_width, $new_height, $width, $height );
 
-        // save thumbnail into a file
-        imagejpeg( $tmp_img, "{$this->thumbnailPath}{$fname}" );
+        // save resized image to file
+        $success = imagejpeg( $tmp_img, "{$outputPath}{$fname}" );
+
+        imagedestroy($tmp_img);
+        
+    }
+
+    private function performOnDirectoryContents($directoryPath, $acceptedExtensions, $callback) {
+
+        $dir = opendir($directoryPath);
+
+        while(($filename = readdir($dir)) !== false) {
+
+            $filePath = $directoryPath . $filename;
+            
+            $info = pathinfo($filePath);
+            $extension = $info['extension'];
+
+            if(in_array($extension, $acceptedExtensions)) {
+
+                $callback($filePath);
+
+            }
+        }
+        closedir($dir);
+    }
+
+    public function setGalleryCover($imagePath) {
+
+        $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) {
+            
+           unlink($existingGalleryCover); 
+
+        });
+
+        $this->createResizedImageCopy($imagePath, self::$galleryCoverWidth, $this->galleryCoverPath);
+        
+    }
+
+    public function getGalleryCover() {
+        return $this->getDirectory($this->galleryCoverPath)[0];
+    }
+
+    public function createThumbnail($imagePath) {
+
+        $this->createResizedImageCopy($imagePath, self::$thumbWidth, $this->thumbnailPath);
 
     }
 
-    //public function createThumbnails($pathToImages, $pathToThumbs, $thumbWidth ) {
-    public function createThumbnails($pathToImages, $thumbWidth ) {
+    public function createThumbnails($pathToImages) {
         
+        $this->performOnDirectoryContents($pathToImages, self::$acceptedFormats, function($fullSizedImage) {
+
+            $this->createThumbnail($fullSizedImage);
+
+        });
+
         //open the directory
-        $dir = opendir( $pathToImages );
+        //$dir = opendir( $pathToImages );
         
         // loop through it, looking for any/all JPG files:
-        while (false !== ($fname = readdir( $dir ))) {
+        //while (false !== ($fname = readdir( $dir ))) {
             // parse path for the extension
-            $info = pathinfo( $pathToImages . $fname );
+            //$info = pathinfo( $pathToImages . $fname );
             
             // continue only if this is a JPEG image
-            if ( (strtolower($info['extension']) == 'jpg') ) {
-                //$this->createThumbnail($pathToImages . $fname, $pathToThumbs, $thumbWidth);
-                $this->createThumbnail($pathToImages . $fname, $thumbWidth);
-            }
-        }
+            //if ( (strtolower($info['extension']) == 'jpg') ) {
+                //$this->createThumbnail($pathToImages . $fname);
+            //}
+        //}
         // close the directory
-        closedir( $dir );
+        //closedir( $dir );
     }
     
     public function getPosition($files = array()) {

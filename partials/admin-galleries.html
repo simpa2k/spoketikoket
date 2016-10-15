@@ -7,7 +7,7 @@
             <p class="non-bordered-large-section-heading text-center">Gallerier</p>
 
             <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                <img src="{{ galleryCover[1] }}" ng-click="editGallery(galleryName)">
+                <img src="{{ galleryCover }}" ng-click="editGallery(galleryName)">
                 <p class="smaller-section-heading">{{ galleryName }}</p>
             </div>
 
