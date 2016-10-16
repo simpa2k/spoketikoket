@@ -28,7 +28,7 @@
                 </div>
 
             </ng-repeat>
-            <ng-repeat ng-repeat="image in imagesToBeSent[galleryToBeSent.galleryname] track by $index">
+            <ng-repeat ng-repeat="image in imagesToBeSent[galleryToBeSentID] track by $index">
 
                 <!-- This is used for images that aren't actually on the server, but are instead awaiting confirmation to be sent -->
                 <div class="gallery-item">
@@ -47,8 +47,8 @@
                     <label class="btn btn-primary btn-file">
                         Lägg till ny(a) bild(er)
                         <input type="file"
-                               file-model="imagesToBeSent[galleryToBeSent.galleryname]"
-                               ng-model="imagesToBeSent[galleryToBeSent.galleryname]"
+                               file-model="imagesToBeSent[galleryToBeSentID]"
+                               ng-model="imagesToBeSent[galleryToBeSentID]"
                                valid-file
                                name="images"
                                style="display: none"

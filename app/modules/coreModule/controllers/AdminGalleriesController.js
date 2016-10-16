@@ -65,6 +65,14 @@ define(function() {
 
             $scope.galleryToBeSent = selectedGallery;
 
+            /*
+             * The fact that a separate ID variable is used
+             * counteracts the problem of changing the galleries name.
+             * The old name will still be used as the id, despite the fact that the
+             * actual name being used might change.
+             */
+            $scope.galleryToBeSentID = $scope.galleryToBeSent.galleryname;
+
             $scope.heading = 'Redigera ' + galleryName;
             $scope.galleryAction = 'Bekräfta ändringar';
             $scope.addingNewGallery = false;
@@ -73,6 +81,15 @@ define(function() {
 
         $scope.setPostState = function(form) {
             $scope.galleryToBeSent = {};
+
+            /* 
+             * Had the name of the new gallery been used,
+             * a new key in $scope.imagesToBeSent had been generated each time the
+             * name was updated, thus hiding all images
+             * associated with the previous name. A fixed id for the 
+             * new gallery counteracts this.
+             */
+            $scope.galleryToBeSentID = 'newGallery';
 
             $scope.heading = 'Lägg till nytt galleri';
             $scope.galleryAction = 'Lägg till galleri';
