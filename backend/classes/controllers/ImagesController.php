@@ -5,9 +5,8 @@ require_once('core/init.php');
 /**
  *
  * Class for performing preparations
- * on a RESTful request for data from the
- * image table before it is
- * passed on to a model.
+ * on a RESTful request for images or galleries
+ * before it is passed on to a model.
  *
  */
 
