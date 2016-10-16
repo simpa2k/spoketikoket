@@ -199,45 +199,6 @@ class ImagesModel extends BaseModel {
         
     }
 
-    private function writeGalleryMetaData($galleryPath, $galleryData) {
-        
-        $metaDataPath = $galleryPath . 'metadata.json';
-        $jsonData = json_encode(galleryData);
-
-        $success = file_put_contents($metaDataPath, $jsonData);
-
-        if($success === FALSE) {
-            return false;
-        } else {
-            return true;
-        }
-
-    }
-
-    /*
-     * ToDo: This has to actually do something
-     */
-
-    private function validatePath($path) {
-
-        return true;
-
-    }
-
-    private function createGallery($galleryPath, $galleryMetaData) {
-
-        if($this->validatePath($galleryPath)) {
-
-            $thumbnailPath = $galleryPath . 'thumbnails';
-            mkdir($galleryPath);
-            mkdir($thumbnailPath);
-
-            $this->writeGalleryMetaData($galleryPath, $galleryMetaData);
-
-        }
-        
-    }
-
     /**
      *
      * Method for adding a new image and creating a thumbnail to go with it.
@@ -321,10 +282,13 @@ class ImagesModel extends BaseModel {
 
         /*
          * The reason a for loop is used here is that
-         * images both come in a full version and a thumbnail version.
+         * most images both come in a full version and a thumbnail version, while
+         * the ones that are used as gallery covers have an additional path to
+         * that version of the images specified.
          * I didn't want to hard code the names of these, or limit
-         * different images file sizes to these two, so a for loop seemed reasonable.
+         * different images file sizes to these two or three, so a for loop seemed reasonable.
          */
+
         foreach($image as $imageVariant) {
             
             unlink($imageVariant);

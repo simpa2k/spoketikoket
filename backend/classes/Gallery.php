@@ -96,11 +96,11 @@ class Gallery {
         $directory = opendir($directoryPath);
 
         while(($filename == readdir($directory)) !== false) {
-            if($filename != "." && $filename != "..") {
-                return FALSE;
+            if( ($filename != ".") && ($filename != "..") ) {
+                return false;
             }
         }
-        return TRUE;
+        return true;
 
     }
 
@@ -133,8 +133,12 @@ class Gallery {
     }
 
     public function getImages($extensions = array('jpg', 'png')) {
-        //$images = $this->getDirectory($this->path);
+
         $images = scandir($this->path);
+
+        $galleryCover = $this->getGalleryCover();
+        $galleryCoverName = basename($galleryCover);
+        $galleryCoverFound = false;
         
         foreach($images as $index => $image) {
             $exploded_image = explode('.', $image);
@@ -148,6 +152,11 @@ class Gallery {
                     //'thumb' => $this->path . '/thumbnails/' . $image
                     'thumb' => $this->thumbnailPath . $image
                 );
+
+                if( (!$galleryCoverFound) && ($image == $galleryCoverName) ) {
+                    $images[$index]['gallerycover'] = $galleryCover;
+                    $galleryCoverFound = true;
+                } 
             }
         }
         
@@ -160,7 +169,6 @@ class Gallery {
          * Encoding and decoding json like this might be inefficient
          * but at least it always guarantees the correct format
          */
-        file_put_contents(json_encode($metaData), $this->metaDataPath);
         $this->metaData = json_decode($metaData);
 
     }

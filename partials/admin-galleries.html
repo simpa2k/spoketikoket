@@ -6,9 +6,10 @@
 
             <p class="non-bordered-large-section-heading text-center">Gallerier</p>
 
-            <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                <img src="{{ galleryCover }}" ng-click="editGallery(galleryName)">
+            <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers" ng-click="editGallery(galleryName)">
+                <img src="{{ galleryCover }}">
                 <p class="smaller-section-heading">{{ galleryName }}</p>
+                <p ng-if="galleryCover == null" class="large-text"> Inget galleriomslag valt.</p>
             </div>
 
         </div>
