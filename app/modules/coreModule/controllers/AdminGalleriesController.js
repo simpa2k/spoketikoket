@@ -227,6 +227,12 @@ define(function() {
 
         $scope.deleteGallery = function(form) {
 
+            /*
+             * ToDo: make sure there is much more information
+             * presented when deleting a gallery, such as a list
+             * of all images that will be permanently deleted.
+             */
+
             openDeleteModal(function() {
 
                 let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
