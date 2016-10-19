@@ -54,13 +54,17 @@ abstract class BaseController {
     }
 
     /**
-     *
-     * Method for determining if
-     * a request should be routed to
-     * a model's get() or getAll() method.
-     *
-     * @param Request $request A request object.
-     *
+     * Method for routing a request
+     * to the correct method in the model.
+     * 
+     * @param Request $request A request object
+     * @param string $qualifiedAction An optional parameter
+     * which can be useful for handling extra url elements.
+     * For example, if a request was made to /images/galleries and
+     * the second url element, galleries, was specified as a 
+     * qualified action the model method called would be
+     * getGalleries() or getAllGalleries() instead of just get()
+     * or getAll()
      */
 
     public function handleQuery($request, $qualifiedAction = "") {
@@ -71,16 +75,19 @@ abstract class BaseController {
 
         }
 
+        $lowerCaseVerb = strtolower($request->verb);
         if($request->parameters) {
 
-            $method = "get" . $qualifiedAction;
+            //$method = "get" . $qualifiedAction;
+            $method = $lowerCaseVerb . $qualifiedAction;
 
             $results = $this->model->$method($this->formatParameters($request->parameters));
             return $results;
 
         } else {
 
-            $method = "getAll" . $qualifiedAction;
+            //$method = "getAll" . $qualifiedAction;
+            $method = $lowerCaseVerb . "All" . $qualifiedAction;
 
             return $this->model->$method();
 

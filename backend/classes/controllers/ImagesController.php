@@ -17,10 +17,28 @@ class ImagesController extends BaseController {
     }
 
     /**
+     * Method for picking out
+     * an extra url element, if there is one.
+     *
+     * @param Request $request A request object to be handled
+     * @return string $urlElement A url element
+     */
+
+    private function getUrlElement($request, $index) {
+
+        if(isset($request->urlElements[$index])) {
+            return $request->urlElements[$index];
+        } else {
+            return null;
+        }
+
+    }
+
+    /**
      *
      * Method for handling GET
      * requests. Currently does not handle
-     * more than one url element.
+     * more than two url elements.
      *
      * @param Request $request An object representing a request to be handled.
      *
@@ -28,14 +46,15 @@ class ImagesController extends BaseController {
 
     public function getAction($request) {
         
-        if (isset($request->urlElements[2])) {
+        /*if (isset($request->urlElements[2])) {
 
             $qualifiedAction = ucfirst($request->urlElements[2]);
             return $this->handleQuery($request, $qualifiedAction);
             
         } else {
             return $this->handleQuery($request);
-        }
+        }*/
+        return $this->handleQuery($request, $this->getUrlElement($request, 2));
         
     }
 
@@ -115,7 +134,8 @@ class ImagesController extends BaseController {
      */
 
     public function delete($request) {
-        $this->getModel()->delete($request->parameters);
+        //$this->getModel()->delete($request->parameters);
+        return $this->handleQuery($request, $this->getUrlElement($request, 2));
     }
 
 }

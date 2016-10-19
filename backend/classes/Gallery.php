@@ -11,7 +11,7 @@ class Gallery {
     private static $galleryCoverWidth = 540;
     private static $acceptedFormats = array('jpg');
     
-    public function __construct($path, $metadata, $createDirectoryStructure = false) {
+    public function __construct($path, $metaData, $createDirectoryStructure = false) {
         $this->path = $path;
         $this->galleryName = basename($path);
         $this->thumbnailPath = $path . '/thumbnails/';
@@ -169,11 +169,14 @@ class Gallery {
          * Encoding and decoding json like this might be inefficient
          * but at least it always guarantees the correct format
          */
-        $this->metaData = json_decode($metaData);
+        $encodedMetaData = json_encode($metaData);
+
+        file_put_contents($this->metaDataPath, $encodedMetaData);
+        $this->metaData = $metaData;
 
     }
 
-    public function getMetadata() {
+    public function getMetaData() {
 
         if($this->metaData == null) {
             $this->metaData = json_decode(file_get_contents($this->metaDataPath));
@@ -274,6 +277,24 @@ class Gallery {
         //}
         // close the directory
         //closedir( $dir );
+    }
+
+    private function deleteRecursively($path) {
+
+        $files = array_diff(scandir($path), array('.', '..'));
+
+        foreach ($files as $file) {
+           is_dir("$path/$file") ? $this->deleteRecursively("$path/$file") : unlink("$path/$file"); 
+        }
+
+        return rmdir($path);
+
+    }
+
+    public function delete() {
+
+        return $this->deleteRecursively($this->path);
+
     }
     
     public function getPosition($files = array()) {

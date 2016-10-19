@@ -184,17 +184,6 @@ class ImagesModel extends BaseModel {
             $galleryCovers[$galleryName] = $gallery->getGalleryCover();    
         }
         
-        /*foreach(scandir($this->galleriesPath) as $gallery) {
-
-            if($this->shouldBeIgnored($gallery)) {
-                continue;
-            }
-            
-            $pathToGalleryCovers = $this->galleriesPath . $gallery . '/gallerycover';
-            $galleryCovers[$gallery] = $this->readDirectoryContents($pathToGalleryCovers);
-            
-        }*/
-        
         return $galleryCovers;
         
     }
@@ -235,13 +224,15 @@ class ImagesModel extends BaseModel {
 
                 }
 
-                $gallery->addImage($file['tmp_name'], basename($file['name']));
+                if($gallery->addImage($file['tmp_name'], basename($file['name']))) {
+                    // Signal success
+                } else {
+                    // Signal failure
+                }
 
             }
 
         }
-        
-        return $success;
         
     }
 
@@ -269,7 +260,10 @@ class ImagesModel extends BaseModel {
      * Method for deleting images.
      * ToDo: Currently, only a single image can be deleted at a time. This adds 
      * a measure of safety in that a whole group of images can not be deleted
-     * mistakenly at once, but might need reconsidering.
+     * mistakenly at once, but might need reconsidering. Also, as mentioned
+     * above, the parameters passed to these functions really need to
+     * be using keys instead of cryptic indices. See the example in
+     * the comment for $this->compareMetaDataToQuery().
      *
      * @param string[] $image An associative array specifying
      * different versions of the image and where they are located, like so:
@@ -289,11 +283,38 @@ class ImagesModel extends BaseModel {
          * different images file sizes to these two or three, so a for loop seemed reasonable.
          */
 
+        file_put_contents('debug.txt', var_export($image, true), FILE_APPEND);
         foreach($image as $imageVariant) {
             
-            unlink($imageVariant);
+            /*
+             * $imageVariant[2] is the actual path to the image.
+             */
+            unlink($imageVariant[2]);
             
         }  
         
+    }
+
+    public function deleteGalleries($where) {
+
+        foreach($this->galleries as $galleryname => $gallery) {
+
+            if($this->compareMetaDataToQuery($gallery->getMetaData(), $where)) {
+                if($gallery->delete()) {
+
+                    /* 
+                     * Not strictly necessary to remove the gallery
+                     * from the array, as the gallery won't get loaded the next
+                     * time a request is made anyway, but you never know.
+                     */
+                    unset($this->galleries[$gallery->getName()]);
+
+                    // Signal success
+                    
+                } else {
+                    // Signal failure
+                }
+            }
+        }
     }
 }

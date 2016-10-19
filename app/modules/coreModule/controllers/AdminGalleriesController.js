@@ -101,10 +101,22 @@ define(function() {
             }
         };
 
+        var refreshImages = function() {
+            ImagesService.refreshImages().then(function(images){
+                $scope.images = images;
+            });
+        };
+
         var refreshGalleries = function() {
+
             ImagesService.refreshGalleries().then(function(galleries) {
                 $scope.galleries = galleries;
             });
+
+            ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
+                $scope.galleryCovers = galleryCovers;
+            });
+
         };
 
         var reloadSelectedGallery = function() {
@@ -118,7 +130,7 @@ define(function() {
             });
         };
 
-        $scope.deleteImage = function(image) {
+        var openDeleteModal = function(callback) {
 
             let modalInstance = $uibModal.open({
                 templateUrl: '../../partials/delete-modal.html',
@@ -126,10 +138,18 @@ define(function() {
             });
 
             modalInstance.result.then(function() {
+                callback();
+            });
+            
+        };
+
+        $scope.deleteImage = function(image) {
+
+            openDeleteModal(function() {
                 SendObjectService.deleteObject(imagesEndpoint, image, function() {
                     $scope.refreshGalleriesWithReload();
                 });
-            })
+            });
 
         };
 
@@ -137,22 +157,29 @@ define(function() {
             $scope.imagesToBeSent[galleryname].splice(imageIndex, 1);
         };
 
+        var removeImagesFromObject = function(object)  {
+
+            let objectWithoutExistingImages = angular.copy(object);
+            delete objectWithoutExistingImages.images;
+
+            return objectWithoutExistingImages;
+
+        }
+
         $scope.constructImageUploadUrl = function() {
-            let galleryWithoutExistingImages = angular.copy($scope.galleryToBeSent);
-            delete galleryWithoutExistingImages.images;
+
+            let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
 
             return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
         };
 
-        var refreshImages = function() {
-            ImagesService.refreshImages().then(function(images){
-                $scope.images = images;
-            });
-        };
 
         $scope.postGallery = function(form) {
-            let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
+            let filesToBeSent = extractImageFiles('newGallery');
             let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+
+            refreshImages();
+            refreshGalleries();
 
             if(success) {
                 //Show confirmation
@@ -184,6 +211,9 @@ define(function() {
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
             let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
 
+            refreshImages();
+            refreshGalleries();
+
             if(success) {
                 //Show confirmation
             } else {
@@ -195,10 +225,17 @@ define(function() {
             });*/
         };
 
-        $scope.deleteGallery = function() {
-            SendObjectService.deleteObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-                refreshImages();
-                $scope.setPostState();
+        $scope.deleteGallery = function(form) {
+
+            openDeleteModal(function() {
+
+                let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
+
+                SendObjectService.deleteObject(galleriesEndpoint, galleryWithoutExistingImages, function() {
+                    refreshGalleries();
+                    $scope.setPostState();
+                });
+                
             });
         };
 
