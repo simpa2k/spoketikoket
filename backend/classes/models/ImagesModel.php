@@ -68,9 +68,9 @@ class ImagesModel extends BaseModel {
      *
      */
 
-	public function getAll() {
+    public function getAll() {
 
-        return $this->gallery->getImages();
+        /* Not implemented */
 
     }
     
@@ -283,7 +283,6 @@ class ImagesModel extends BaseModel {
          * different images file sizes to these two or three, so a for loop seemed reasonable.
          */
 
-        file_put_contents('debug.txt', var_export($image, true), FILE_APPEND);
         foreach($image as $imageVariant) {
             
             /*

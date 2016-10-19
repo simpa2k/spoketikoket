@@ -4,6 +4,7 @@ class Gallery {
     private $path,
             $galleryName,
             $thumbnailPath,
+            $galleryCoverPath,
             $metaData,
             $metaDataPath;
 
@@ -90,12 +91,12 @@ class Gallery {
     private function isEmptyDirectory($directoryPath) {
 
         if(!is_readable($directoryPath)) {
-            return NULL;
+            return null;
         }
 
         $directory = opendir($directoryPath);
 
-        while(($filename == readdir($directory)) !== false) {
+        while(($filename = readdir($directory)) !== false) {
             if( ($filename != ".") && ($filename != "..") ) {
                 return false;
             }

@@ -111,11 +111,13 @@ define(function() {
 
             ImagesService.refreshGalleries().then(function(galleries) {
                 $scope.galleries = galleries;
+
+                ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
+                    $scope.galleryCovers = galleryCovers;
+                });
+
             });
 
-            ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
-                $scope.galleryCovers = galleryCovers;
-            });
 
         };
 
@@ -181,6 +183,11 @@ define(function() {
             refreshImages();
             refreshGalleries();
 
+            $scope.imagesToBeSent = {};
+            $scope.setPostState();
+
+            ValidationService.resetForm(form);
+
             if(success) {
                 //Show confirmation
             } else {
@@ -205,6 +212,10 @@ define(function() {
             return imageFiles;
 
         };
+
+        /*
+         * ToDo: Not possible to upload more than one image at a time
+         */
 
         $scope.putGallery = function() {
 
