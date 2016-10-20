@@ -297,7 +297,6 @@ class ImagesModel extends BaseModel {
     public function deleteGalleries($where) {
 
         foreach($this->galleries as $galleryname => $gallery) {
-            file_put_contents('debug.txt', var_export($gallery->getName(), true), FILE_APPEND);
 
             if($this->compareMetaDataToQuery($gallery->getMetaData(), $where)) {
                 if($gallery->delete()) {

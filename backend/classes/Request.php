@@ -34,8 +34,10 @@ class Request {
             parse_str($_SERVER['QUERY_STRING'], $parameters);
         }
         
-        if(isset($_FILES['file'])) {
-            $parameters['files'] = $_FILES['file'];
+        if(!empty($_FILES)) {
+            foreach ($_FILES as $key => $value) {
+                $parameters[$key] = $value;
+            }
         }
 
         $body = file_get_contents("php://input");

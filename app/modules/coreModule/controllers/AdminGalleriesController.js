@@ -166,7 +166,6 @@ define(function() {
         $scope.postGallery = function(form) {
 
             let filesToBeSent = extractImageFiles('newGallery');
-            console.log(filesToBeSent);
             let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
 
             refreshImages();

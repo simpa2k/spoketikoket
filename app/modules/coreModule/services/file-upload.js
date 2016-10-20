@@ -11,7 +11,7 @@ define(function() {
             var formData = new FormData();
 
             angular.forEach(files, function (value) {
-                formData.append('file', value);
+                formData.append('files[]', value);
             });
 
             $http.post(uploadUrl, formData, {

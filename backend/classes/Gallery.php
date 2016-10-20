@@ -150,7 +150,6 @@ class Gallery {
             } else {
                 $images[$index] = array(
                     'full' => $this->path . '/' . $image,
-                    //'thumb' => $this->path . '/thumbnails/' . $image
                     'thumb' => $this->thumbnailPath . $image
                 );
 
