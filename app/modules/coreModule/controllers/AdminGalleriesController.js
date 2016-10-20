@@ -30,18 +30,6 @@ define(function() {
             return $scope.addingNewGallery ? '' : 'btn-group';
         };
 
-        ImagesService.getGalleries().then(function(galleries) {
-
-            // Converting an object of objects to array
-            angular.forEach(galleries, function (value, key) {
-
-                galleries[key] = $.map(value, function(pathsObject) {
-                    return [pathsObject];
-                });
-
-            });
-            $scope.galleries = galleries;
-        });
 
         $scope.editGallery = function(galleryName) {
 
@@ -104,8 +92,6 @@ define(function() {
                 });
 
             });
-
-
         };
 
         var reloadSelectedGallery = function() {
@@ -162,28 +148,6 @@ define(function() {
             return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
         };
 
-
-        $scope.postGallery = function(form) {
-
-            let filesToBeSent = extractImageFiles('newGallery');
-            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
-
-            refreshImages();
-            refreshGalleries();
-
-            $scope.imagesToBeSent = {};
-            $scope.setPostState();
-
-            ValidationService.resetForm(form);
-
-            if(success) {
-                //Show confirmation
-            } else {
-                //Show error message
-            }
-
-        };
-		
         var extractImageFiles = function(galleryName) {
 
             let imageFiles = [];
@@ -198,6 +162,27 @@ define(function() {
 
         };
 
+        $scope.postGallery = function(form) {
+
+            let filesToBeSent = extractImageFiles('newGallery');
+            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+
+            refreshImages();
+            refreshGalleries();
+
+            $scope.imagesToBeSent = {};
+            $scope.refreshGalleriesWithReload();
+
+            ValidationService.resetForm(form);
+
+            if(success) {
+                //Show confirmation
+            } else {
+                //Show error message
+            }
+
+        };
+		
         $scope.putGallery = function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
@@ -233,6 +218,19 @@ define(function() {
                 
             });
         };
+
+        ImagesService.getGalleries().then(function(galleries) {
+
+            // Converting an object of objects to array
+            angular.forEach(galleries, function (value, key) {
+
+                galleries[key] = $.map(value, function(pathsObject) {
+                    return [pathsObject];
+                });
+
+            });
+            $scope.galleries = galleries;
+        });
 
         $scope.setPostState();
 

@@ -45,17 +45,7 @@ class ImagesController extends BaseController {
      */
 
     public function getAction($request) {
-        
-        /*if (isset($request->urlElements[2])) {
-
-            $qualifiedAction = ucfirst($request->urlElements[2]);
-            return $this->handleQuery($request, $qualifiedAction);
-            
-        } else {
-            return $this->handleQuery($request);
-        }*/
         return $this->handleQuery($request, $this->getUrlElement($request, 2));
-        
     }
 
     /**
@@ -134,7 +124,7 @@ class ImagesController extends BaseController {
      */
 
     public function delete($request) {
-        return $this->handleQuery($request, $this->getUrlElement($request, 2));
+        $this->handleQuery($request, $this->getUrlElement($request, 2));
     }
 
 }
