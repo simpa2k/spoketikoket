@@ -14,8 +14,21 @@ define(function() {
 
         var imagesEndpoint = $rootScope.serverRoot + 'images';
         var galleriesEndpoint = imagesEndpoint + '/galleries';
+
         $scope.galleryToBeSent = {};
         $scope.imagesToBeSent = {};
+
+        $scope.isSubmittedOrTouched = ValidationService.isSubmittedOrTouched;
+        $scope.isRequired = ValidationService.isRequired;                                                            
+        $scope.isRequiredAndSubmittedOrTouched = ValidationService.isRequiredAndSubmittedOrTouched;                                                            
+
+        $scope.hasError = function(form, formControl) {
+            return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
+        };
+
+        $scope.resolveButtonGroup = function() {
+            return $scope.addingNewGallery ? '' : 'btn-group';
+        };
 
         ImagesService.getGalleries().then(function(galleries) {
 
@@ -29,32 +42,6 @@ define(function() {
             });
             $scope.galleries = galleries;
         });
-
-        $scope.isSubmittedOrTouched = function(form, formControl) {
-
-            return ValidationService.isSubmittedOrTouched(form, formControl);
-
-        };
-
-        $scope.isRequired = function(form, formControl) {
-
-            return ValidationService.isRequired(form, formControl);
-
-        };
-
-        $scope.isRequiredAndSubmittedOrTouched = function(form, formControl) {
-
-            return ValidationService.isRequiredAndSubmittedOrTouched(form, formControl);
-
-        };
-
-        $scope.hasError = function(form, formControl) {
-            return $scope.isRequiredAndSubmittedOrTouched(form, formControl) ? 'has-error' : '';
-        };
-
-        $scope.resolveButtonGroup = function() {
-            return $scope.addingNewGallery ? '' : 'btn-group';
-        };
 
         $scope.editGallery = function(galleryName) {
 
