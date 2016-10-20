@@ -14,15 +14,11 @@ define(function() {
                 formData.append('files[]', value);
             });
 
-            $http.post(uploadUrl, formData, {
+            return $http.post(uploadUrl, formData, {
 
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
 
-            }).success(function() {
-                return true;
-            }).error(function() {
-                return false;
             });
         };
 

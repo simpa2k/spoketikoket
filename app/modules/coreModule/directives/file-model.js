@@ -1,6 +1,5 @@
 define(function() {
 
-
     /*
      * This code is the result of merging an example from https://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
      * and one from https://scotch.io/tutorials/use-the-html5-file-api-to-work-with-files-locally-in-the-browser
@@ -23,8 +22,8 @@ define(function() {
                     var readAndPushFileAndUrl = function(event, file) {
 
                         let fileWithUrl = {
-                                url: event.target.result,
-                                file: file 
+                            url: event.target.result,
+                            file: file 
                         }	
 
                         filesWithUrls.push(fileWithUrl);

@@ -224,15 +224,12 @@ class ImagesModel extends BaseModel {
 
                 }
 
-                if($gallery->addImage($file['tmp_name'], basename($file['name']))) {
-                    // Signal success
-                } else {
-                    // Signal failure
-                }
+                $success = $gallery->addImage($file['tmp_name'], basename($file['name']));
 
             }
 
         }
+        return $success;
         
     }
 

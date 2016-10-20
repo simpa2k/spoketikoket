@@ -18,6 +18,16 @@ define(function() {
         $scope.galleryToBeSent = {};
         $scope.imagesToBeSent = {};
 
+        /*
+         * To be used as a key into $scope.imagesToBeSent
+         * for new galleries, the names of which
+         * will change so much that something else is needed
+         * to identify them.
+         * The reason it's specified here is purely for
+         * maintenance reasons as it can be easily changed.
+         */                                                        
+        var newGalleryKey = 'newGallery';                                                            
+
         $scope.isSubmittedOrTouched = ValidationService.isSubmittedOrTouched;
         $scope.isRequired = ValidationService.isRequired;                                                            
         $scope.isRequiredAndSubmittedOrTouched = ValidationService.isRequiredAndSubmittedOrTouched;                                                            
@@ -55,6 +65,7 @@ define(function() {
         };
 
         $scope.setPostState = function(form) {
+
             $scope.galleryToBeSent = {};
 
             /* 
@@ -64,7 +75,7 @@ define(function() {
              * associated with the previous name. A fixed id for the 
              * new gallery counteracts this.
              */
-            $scope.galleryToBeSentID = 'newGallery';
+            $scope.galleryToBeSentID = newGalleryKey;
 
             $scope.heading = 'Lägg till nytt galleri';
             $scope.galleryAction = 'Lägg till galleri';
@@ -74,6 +85,7 @@ define(function() {
             if(typeof(form) != 'undefined') {
                 ValidationService.resetForm(form);
             }
+
         };
 
         var refreshImages = function() {
@@ -99,10 +111,19 @@ define(function() {
         };
 
         $scope.refreshGalleriesWithReload = function() {
+
             ImagesService.refreshGalleries().then(function(galleries) {
                 $scope.galleries = galleries;
-                reloadSelectedGallery();
+
+                ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
+
+                    $scope.galleryCovers = galleryCovers;
+                    reloadSelectedGallery();
+
+                });
+
             });
+
         };
 
         var openDeleteModal = function(callback) {
@@ -129,7 +150,10 @@ define(function() {
         };
 
         $scope.deleteTemporaryImage = function(galleryname, imageIndex) {
-            $scope.imagesToBeSent[galleryname].splice(imageIndex, 1);
+
+            imageKey = $scope.addingNewGallery ? newGalleryKey : galleryname;
+            $scope.imagesToBeSent[imageKey].splice(imageIndex, 1);
+
         };
 
         var removeImagesFromObject = function(object)  {
@@ -139,7 +163,7 @@ define(function() {
 
             return objectWithoutExistingImages;
 
-        }
+        };
 
         $scope.constructImageUploadUrl = function() {
 
@@ -164,38 +188,39 @@ define(function() {
 
         $scope.postGallery = function(form) {
 
-            let filesToBeSent = extractImageFiles('newGallery');
-            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+            let filesToBeSent = extractImageFiles(newGalleryKey);
 
-            refreshImages();
-            refreshGalleries();
+            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+                .success(function() {
 
-            $scope.imagesToBeSent = {};
-            $scope.refreshGalleriesWithReload();
+                    refreshImages();
 
-            ValidationService.resetForm(form);
+                    $scope.imagesToBeSent = {};
+                    $scope.refreshGalleriesWithReload();
 
-            if(success) {
-                //Show confirmation
-            } else {
-                //Show error message
-            }
+                    ValidationService.resetForm(form);
+                    
+                })
+                .error(function() {
+                    
+                });
 
         };
 		
         $scope.putGallery = function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
-            let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
 
-            refreshImages();
-            refreshGalleries();
+            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+                .success(function() {
 
-            if(success) {
-                //Show confirmation
-            } else {
-                //Show error message
-            }
+                    refreshImages();
+                    refreshGalleries();
+
+                })
+                .error(function() {
+
+                });
 
         };
 
