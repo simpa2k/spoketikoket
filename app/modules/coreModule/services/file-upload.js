@@ -4,11 +4,11 @@ define(function() {
 
     app.service('fileUpload', ['$http', function($http) {
 
-        var self = this;
+         let self = this;
 
         self.uploadFileToUrl = function(files, uploadUrl) {
 
-            var formData = new FormData();
+            let formData = new FormData();
 
             angular.forEach(files, function (value) {
                 formData.append('files[]', value);

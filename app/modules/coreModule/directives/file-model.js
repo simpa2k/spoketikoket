@@ -13,19 +13,20 @@ define(function() {
         return {
             restrict: 'A',
             link: function(scope, element, attrs) {
+
                 let model = $parse(attrs.fileModel);
                 let modelSetter = model.assign;
+                let filesWithUrls = [];
 
                 element.bind('change', function() {
 
-					let filesWithUrls = [];
-
                     var readAndPushFileAndUrl = function(event, file) {
 
-						let fileWithUrl = {
-							url: event.target.result,
-							file: file 
-						}	
+                        let fileWithUrl = {
+                                url: event.target.result,
+                                file: file 
+                        }	
+
                         filesWithUrls.push(fileWithUrl);
 
                         scope.$apply(function() {

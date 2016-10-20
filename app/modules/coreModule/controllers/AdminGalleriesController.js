@@ -198,10 +198,6 @@ define(function() {
 
         };
 
-        /*
-         * ToDo: Not possible to upload more than one image at a time
-         */
-
         $scope.putGallery = function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
