@@ -101,8 +101,10 @@ class ImagesController extends BaseController {
 
     public function post($request) {
         
+        //file_put_contents('debug.txt', var_export($request->parameters['files'], true), FILE_APPEND);
         $files = $request->parameters['files'];
         $request->parameters['files'] = $this->parseIncomingFiles($files);
+        //file_put_contents('debug.txt', var_export($request->parameters['files'], true), FILE_APPEND);
 
         return $this->getModel()->insert($request->parameters);
         
@@ -134,7 +136,6 @@ class ImagesController extends BaseController {
      */
 
     public function delete($request) {
-        //$this->getModel()->delete($request->parameters);
         return $this->handleQuery($request, $this->getUrlElement($request, 2));
     }
 

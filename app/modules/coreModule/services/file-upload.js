@@ -15,16 +15,14 @@ define(function() {
             });
 
             $http.post(uploadUrl, formData, {
+
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
+
             }).success(function() {
-
-				return true;
-
+                return true;
             }).error(function() {
-
-				return false;
-
+                return false;
             });
         };
 

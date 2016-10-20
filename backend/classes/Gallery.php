@@ -171,8 +171,6 @@ class Gallery {
          * but at least it always guarantees the correct format
          */
         $encodedMetaData = json_encode($metaData);
-
-        file_put_contents($this->metaDataPath, $encodedMetaData);
         $this->metaData = $metaData;
 
     }

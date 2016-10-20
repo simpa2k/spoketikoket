@@ -164,7 +164,9 @@ define(function() {
 
 
         $scope.postGallery = function(form) {
+
             let filesToBeSent = extractImageFiles('newGallery');
+            console.log(filesToBeSent);
             let success = fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
 
             refreshImages();
@@ -180,10 +182,7 @@ define(function() {
             } else {
                 //Show error message
             }
-            /*SendObjectService.postObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-                refreshImages();
-                $scope.setPostState();
-            });*/
+
         };
 		
         var extractImageFiles = function(galleryName) {
@@ -218,9 +217,6 @@ define(function() {
                 //Show error message
             }
 
-            /*SendObjectService.putObject(galleriesEndpoint, $scope.imageToBeSent, function() {
-                refreshImages();
-            });*/
         };
 
         $scope.deleteGallery = function(form) {
