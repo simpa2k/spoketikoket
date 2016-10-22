@@ -17,6 +17,9 @@ define(function() {
 
         $scope.galleryToBeSent = {};
         $scope.imagesToBeSent = {};
+        $scope.fileModel = {
+            file: {}
+        };
 
         /*
          * To be used as a key into $scope.imagesToBeSent
@@ -58,6 +61,11 @@ define(function() {
              */
             $scope.galleryToBeSentID = $scope.galleryToBeSent.galleryname;
 
+            let newImages = $scope.imagesToBeSent.galleryToBeSentID;
+            if(typeof(newImages) == 'undefined' || newImages == null || newImages.hasOwnProperty.length && length == 0) {
+                $scope.imagesToBeSent[$scope.galleryToBeSentID] = [];
+            }
+
             $scope.heading = 'Redigera ' + galleryName;
             $scope.galleryAction = 'Bekräfta ändringar';
             $scope.addingNewGallery = false;
@@ -76,6 +84,7 @@ define(function() {
              * new gallery counteracts this.
              */
             $scope.galleryToBeSentID = newGalleryKey;
+            $scope.imagesToBeSent[$scope.galleryToBeSentID] = [];
 
             $scope.heading = 'Lägg till nytt galleri';
             $scope.galleryAction = 'Lägg till galleri';

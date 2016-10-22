@@ -4,7 +4,7 @@ define(function() {
 
     app.service('fileUpload', ['$http', function($http) {
 
-         let self = this;
+        let self = this;
 
         self.uploadFileToUrl = function(files, uploadUrl) {
 

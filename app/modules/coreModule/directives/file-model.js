@@ -11,11 +11,28 @@ define(function() {
 
         return {
             restrict: 'A',
-            link: function(scope, element, attrs) {
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModel) {
 
                 let model = $parse(attrs.fileModel);
                 let modelSetter = model.assign;
                 let filesWithUrls = [];
+
+                /*
+                 * Setting the value property to null
+                 * is necessary to enable the user to
+                 * add an image after it was removed.
+                 * Unless this is done, the input will have
+                 * cached the image and won't let the user add it again.
+                 * A side effect of this is that a single image
+                 * can be uploaded several times even if it was
+                 * not removed in between these times.
+                 */
+                element.bind('click', function() {
+
+                    element[0].value = null;
+
+                });
 
                 element.bind('change', function() {
 
@@ -39,6 +56,7 @@ define(function() {
                         let reader = new FileReader();
                         reader.onload = function(event) {
                             readAndPushFileAndUrl(event, value);
+                            value = null;
                         };
 
                         reader.readAsDataURL(value);

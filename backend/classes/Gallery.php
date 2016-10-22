@@ -244,7 +244,15 @@ class Gallery {
     }
 
     public function getGalleryCover() {
-        return $this->getDirectory($this->galleryCoverPath)[0];
+
+        $galleryCover = $this->getDirectory($this->galleryCoverPath);
+
+        if(empty($galleryCover)) {
+            return null;
+        } else {
+            return $galleryCover[0];
+        }
+
     }
 
     public function createThumbnail($imagePath) {
