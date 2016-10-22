@@ -48,7 +48,8 @@ define(function() {
 
             let selectedGallery = {
                 galleryname: galleryName,
-                images: $scope.galleries[galleryName]
+                images: $scope.galleries[galleryName].images,
+                gallerycover: $scope.galleries[galleryName].gallerycover
             };
 
             $scope.galleryToBeSent = selectedGallery;
@@ -165,6 +166,24 @@ define(function() {
 
         };
 
+        $scope.isGallerycover = function(image, galleryname) {
+
+            let filename = image.full.substring(image.full.lastIndexOf('/') + 1);
+
+            gallerycoverPath = $scope.galleryToBeSent.gallerycover;
+            let gallerycoverFilename = gallerycoverPath.substring(gallerycoverPath.lastIndexOf('/') + 1);
+
+            return filename == gallerycoverFilename;
+
+        };
+
+        $scope.setGalleryCover = function(image) {
+
+            $scope.galleryToBeSent.gallerycover = image.full;
+            console.log($scope.galleryToBeSent);
+
+        };
+
         var removeImagesFromObject = function(object)  {
 
             let objectWithoutExistingImages = angular.copy(object);
@@ -177,8 +196,8 @@ define(function() {
         $scope.constructImageUploadUrl = function() {
 
             let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
-
             return SendObjectService.createUri(imagesEndpoint, galleryWithoutExistingImages);
+
         };
 
         var extractImageFiles = function(galleryName) {
@@ -256,13 +275,24 @@ define(function() {
         ImagesService.getGalleries().then(function(galleries) {
 
             // Converting an object of objects to array
-            angular.forEach(galleries, function (value, key) {
+            /*angular.forEach(galleries, function (value, key) {
 
                 galleries[key] = $.map(value, function(pathsObject) {
                     return [pathsObject];
                 });
 
+            });*/
+            angular.forEach(galleries, function(gallery) {
+
+                let images = [];
+
+                angular.forEach(gallery.images, function(imagePaths) {
+                    images.push(imagePaths);
+                });
+
+                gallery.images = images;
             });
+
             $scope.galleries = galleries;
         });
 

@@ -27,6 +27,10 @@ define(function() {
                  * A side effect of this is that a single image
                  * can be uploaded several times even if it was
                  * not removed in between these times.
+                 *
+                 * ToDo: Add a check that makes it impossible
+                 * to add the same image several times if it is already
+                 * present in the model.
                  */
                 element.bind('click', function() {
 

@@ -294,7 +294,7 @@ body {
 
 #admin-galleries-section {
 
-  .delete-image {
+  .edit-image {
     display: none;
   }
 
@@ -309,7 +309,7 @@ body {
     opacity: 0.5;
   }
 
-  .gallery-item:hover > .delete-image {
+  .gallery-item:hover > .edit-image {
 
     display: initial;
     position: absolute;
@@ -317,6 +317,12 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 
+  }
+
+  .active {
+      .box-shadow(2px 2px 3px 0px @deep-blue);
+      border: 1px solid @deep-blue;
+      border-radius: 3px;
   }
 
 }

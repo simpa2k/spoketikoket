@@ -6,10 +6,15 @@
 
             <p class="non-bordered-large-section-heading text-center">Gallerier</p>
 
-            <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers" ng-click="editGallery(galleryName)">
+            <!--<div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers" ng-click="editGallery(galleryName)">
                 <img src="{{ galleryCover }}">
                 <p class="smaller-section-heading">{{ galleryName }}</p>
                 <p ng-if="galleryCover == null" class="large-text"> Inget galleriomslag valt.</p>
+            </div>-->
+            <div class="selectable" ng-repeat="(galleryName, paths) in galleries" ng-click="editGallery(galleryName)">
+                <img src="{{ paths.gallerycover }}">
+                <p class="smaller-section-heading">{{ galleryName }}</p>
+                <p ng-if="paths.gallerycover == null" class="large-text"> Inget galleriomslag valt.</p>
             </div>
 
         </div>
@@ -23,8 +28,11 @@
                 <!-- All images that come from the server will have a path to a thumbnail -->
                 <div class="gallery-item">
 
-                    <img src="{{ image.thumb }}">
-                    <button class="btn btn-danger delete-image" ng-click="deleteImage(image)">Ta bort</button>
+                    <img src="{{ image.thumb }}" ng-class="isGallerycover(image, galleryToBeSent.galleryname) ? 'active' : ''">
+                    <div ng-class="isGallerycover(image, galleryToBeSent.galleryname) ? 'edit-image' : 'btn-group-vertical edit-image'">
+                        <button class="btn btn-danger" ng-click="deleteImage(image)">Ta bort</button>
+                        <button ng-hide="isGallerycover(image, galleryToBeSent.galleryname)" class="btn btn-primary" ng-click="setGalleryCover(image)">Använd som omslag</button>
+                    </div>
 
                 </div>
 
@@ -35,7 +43,7 @@
                 <div class="gallery-item">
 
                     <img src="{{ image.url }}" width="256">
-                    <button class="btn btn-danger delete-image" ng-click="deleteTemporaryImage(galleryToBeSent.galleryname, $index)">Ta bort</button>
+                    <button class="btn btn-danger delete-image edit-image" ng-click="deleteTemporaryImage(galleryToBeSent.galleryname, $index)">Ta bort</button>
 
                 </div>
 

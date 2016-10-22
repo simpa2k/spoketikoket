@@ -142,7 +142,8 @@ class ImagesModel extends BaseModel {
             $metaData = $gallery->getMetaData();
 
             if($this->compareMetaDataToQuery($metaData, $where)) {
-                $galleries[$gallery->getName()] = $gallery->getImages();
+                $galleries[$galleryName]['images'] = $gallery->getImages();
+                $galleries[$galleryName]['gallerycover'] = $gallery->getGalleryCover();
             }
 
         }
@@ -156,8 +157,10 @@ class ImagesModel extends BaseModel {
         $galleries = array();
 
         foreach ($this->galleries as $galleryName => $gallery) {
-            $galleries[$galleryName] = $gallery->getImages();
+            $galleries[$galleryName]['images'] = $gallery->getImages();
+            $galleries[$galleryName]['gallerycover'] = $gallery->getGalleryCover();
         }
+
 
         return $galleries;
 

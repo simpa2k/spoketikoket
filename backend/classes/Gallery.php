@@ -26,6 +26,7 @@ class Gallery {
     }
 
     private function createGallery($metaData) {
+
         mkdir($this->path);
         mkdir($this->thumbnailPath); 
         mkdir($this->galleryCoverPath); 
@@ -33,6 +34,7 @@ class Gallery {
         if($metaData != null) {
             $this->setMetaData($metaData);
         }
+
     }
 
     
@@ -153,10 +155,10 @@ class Gallery {
                     'thumb' => $this->thumbnailPath . $image
                 );
 
-                if( (!$galleryCoverFound) && ($image == $galleryCoverName) ) {
+                /*if( (!$galleryCoverFound) && ($image == $galleryCoverName) ) {
                     $images[$index]['gallerycover'] = $galleryCover;
                     $galleryCoverFound = true;
-                } 
+                }*/
             }
         }
         
