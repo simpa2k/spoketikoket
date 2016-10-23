@@ -49,7 +49,7 @@ define(function() {
             let selectedGallery = {
                 galleryname: galleryName,
                 images: $scope.galleries[galleryName].images,
-                gallerycover: $scope.galleries[galleryName].gallerycover
+                galleryCover: $scope.galleries[galleryName].galleryCover
             };
 
             $scope.galleryToBeSent = selectedGallery;
@@ -170,12 +170,12 @@ define(function() {
 
             let filename = image.full.substring(image.full.lastIndexOf('/') + 1);
 
-            gallerycoverPath = $scope.galleryToBeSent.gallerycover;
+            galleryCoverPath = $scope.galleryToBeSent.galleryCover;
             
-            if(gallerycoverPath != null) {
+            if(galleryCoverPath != null) {
 
-                let gallerycoverFilename = gallerycoverPath.substring(gallerycoverPath.lastIndexOf('/') + 1);
-                return filename == gallerycoverFilename;
+                let galleryCoverFilename = galleryCoverPath.substring(galleryCoverPath.lastIndexOf('/') + 1);
+                return filename == galleryCoverFilename;
 
             }
 
@@ -184,7 +184,7 @@ define(function() {
 
         $scope.setGalleryCover = function(image) {
 
-            $scope.galleryToBeSent.gallerycover = image.full;
+            $scope.galleryToBeSent.galleryCover = image.full;
             console.log($scope.galleryToBeSent);
 
         };

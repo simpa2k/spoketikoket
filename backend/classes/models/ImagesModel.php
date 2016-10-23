@@ -143,7 +143,7 @@ class ImagesModel extends BaseModel {
 
             if($this->compareMetaDataToQuery($metaData, $where)) {
                 $galleries[$galleryName]['images'] = $gallery->getImages();
-                $galleries[$galleryName]['gallerycover'] = $gallery->getGalleryCover();
+                $galleries[$galleryName]['galleryCover'] = $gallery->getGalleryCover();
             }
 
         }
@@ -158,7 +158,7 @@ class ImagesModel extends BaseModel {
 
         foreach ($this->galleries as $galleryName => $gallery) {
             $galleries[$galleryName]['images'] = $gallery->getImages();
-            $galleries[$galleryName]['gallerycover'] = $gallery->getGalleryCover();
+            $galleries[$galleryName]['galleryCover'] = $gallery->getGalleryCover();
         }
 
 
@@ -168,7 +168,7 @@ class ImagesModel extends BaseModel {
     
     public function getGallerycovers($where) {
         
-        //$galleryCovers = $this->getFilePathsConditionally($this->galleriesPath, $where, '/gallerycover');
+        //$galleryCovers = $this->getFilePathsConditionally($this->galleriesPath, $where, '/galleryCover');
         $galleryCovers = array();
 
         foreach($this->galleries as $galleryName => $gallery) {
@@ -238,23 +238,32 @@ class ImagesModel extends BaseModel {
 
     /**
      *
-     * Method for updating fields in the
-     * database table image.
+     * Method for updating galleries.
+     * ToDo: Due to problems with redirecting
+     * the request, the update method of the images model
+     * is operating on galleries. This is semantically confusing
+     * and does not allow updating of images. 
      *
-     * @param string $primaryKey A string providing the primary key
-     * column/value pairs that identify the row to be updated in the database.
+     * @param string $galleryName The name of the gallery to be updated.
      *
-     * @param mixed[] $fields An array of sub-arrays
-     * where each sub-array represents a database column. Sub-array[0] contains
-     * a database column name, sub-array[1] contains an operator (should always be '=') and
-     * sub-array[3] contains the new column value.
+     * @param mixed[] $fields An array of key value/pairs, with the key being
+     * the name of the field to be updated and the value being the new value to be set.
      *
      */
 
-    public function update($fields) {
+    public function update($galleryName, $fields) {
 
-        $gallery = $this->galleries[$fields['galleryname']];
-        $gallery->setGalleryCover($fields['gallerycover']);
+        $gallery = $this->galleries[$galleryName];
+        file_put_contents('debug.txt', var_export($fields, true), FILE_APPEND);
+
+        foreach ($fields as $fieldName => $fieldValue) {
+
+            $uppercaseFieldName = ucfirst($fieldName);
+            $galleryMethod = 'set' . $uppercaseFieldName;
+
+            $gallery->$galleryMethod($fieldValue);
+
+        }
 
     }
 

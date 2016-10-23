@@ -16,7 +16,7 @@ class Gallery {
         $this->path = $path;
         $this->galleryName = basename($path);
         $this->thumbnailPath = $path . '/thumbnails/';
-        $this->galleryCoverPath = $path . '/gallerycover/';
+        $this->galleryCoverPath = $path . '/galleryCover/';
         $this->metaDataPath = $path . '/metadata.json';
 
         if($createDirectoryStructure && !file_exists($this->path)) {
@@ -156,7 +156,7 @@ class Gallery {
                 );
 
                 /*if( (!$galleryCoverFound) && ($image == $galleryCoverName) ) {
-                    $images[$index]['gallerycover'] = $galleryCover;
+                    $images[$index]['galleryCover'] = $galleryCover;
                     $galleryCoverFound = true;
                 }*/
             }
@@ -215,22 +215,27 @@ class Gallery {
 
     private function performOnDirectoryContents($directoryPath, $acceptedExtensions, $callback) {
 
-        $dir = opendir($directoryPath);
+        if(isdir($directoryPath)) {
 
-        while(($filename = readdir($dir)) !== false) {
+            if($dir = opendir($directoryPath)) {
 
-            $filePath = $directoryPath . $filename;
-            
-            $info = pathinfo($filePath);
-            $extension = $info['extension'];
+                while(($filename = readdir($dir)) !== false) {
 
-            if(in_array($extension, $acceptedExtensions)) {
+                    $filePath = $directoryPath . $filename;
+                    
+                    $info = pathinfo($filePath);
+                    $extension = $info['extension'];
 
-                $callback($filePath);
+                    if(in_array($extension, $acceptedExtensions)) {
+
+                        $callback($filePath);
+
+                    }
+                }
+                closedir($dir);
 
             }
         }
-        closedir($dir);
     }
 
     public function setGalleryCover($imagePath) {
