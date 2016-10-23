@@ -109,12 +109,18 @@ class ImagesController extends BaseController {
      */
 
     public function put($request) {
-        $imagepath = $request->parameters['imagepath'];
+        /*$imagepath = $request->parameters['imagepath'];
         $thumbnailpath = $request->parameters['thumbnailpath'];
         $primaryKey = "imagepath = $imagepath, thumbnailpath = $thumbnailpath";
         unset($request->parameters['imagepath']);
         unset($request->parameters['thumbnailpath']);
-        $this->getModel()->update($primaryKey, $request->parameters);
+        $this->getModel()->update($primaryKey, $request->parameters);*/
+        $files = $request->parameters['files'];
+        $request->parameters['files'] = $this->parseIncomingFiles($files);
+
+        if($this->getModel()->update($request->parameters)) {
+            http_response_code(200);   
+        }
     }
 
     /**

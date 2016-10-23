@@ -251,8 +251,9 @@ class ImagesModel extends BaseModel {
      *
      */
 
-    public function update($primaryKey, $fields) {
-        return $this->getDB()->update('image', $primaryKey, $fields);
+    public function update($fields) {
+        //return $this->getDB()->update('image', $primaryKey, $fields);
+        file_put_contents('debug.txt', var_export($fields, true), FILE_APPEND);
     }
 
     /**

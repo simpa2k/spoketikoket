@@ -218,7 +218,8 @@ define(function() {
 
             let filesToBeSent = extractImageFiles(newGalleryKey);
 
-            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+            fileUpload.postFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+
                 .success(function() {
 
                     refreshImages();
@@ -239,7 +240,8 @@ define(function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
 
-            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+            fileUpload.putFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+
                 .success(function() {
 
                     refreshImages();
