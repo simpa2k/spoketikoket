@@ -5,12 +5,8 @@ define(function() {
     app.service('fileUpload', ['$http', function($http) {
 
         let self = this;
-        let requestObject = { 
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        };
 
-        var createFormData = function(files) {
+        self.uploadFileToUrl = function(files, uploadUrl) {
 
             let formData = new FormData();
 
@@ -18,21 +14,12 @@ define(function() {
                 formData.append('files[]', value);
             });
 
-            return formData;
+            return $http.post(uploadUrl, formData, {
 
-        };
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
 
-        self.postFileToUrl = function(files, uploadUrl) {
-
-            let formData = createFormData(files);
-            return $http.post(uploadUrl, formData, requestObject);
-        };
-
-        self.putFileToUrl = function(files, uploadUrl) {
-
-            let formData = createFormData(files);
-            return $http.put(uploadUrl, formData, requestObject);
-            
+            });
         };
 
     }]);

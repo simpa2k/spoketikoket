@@ -60,7 +60,6 @@ define(function() {
                         let reader = new FileReader();
                         reader.onload = function(event) {
                             readAndPushFileAndUrl(event, value);
-                            value = null;
                         };
 
                         reader.readAsDataURL(value);

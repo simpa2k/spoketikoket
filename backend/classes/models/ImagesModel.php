@@ -252,8 +252,10 @@ class ImagesModel extends BaseModel {
      */
 
     public function update($fields) {
-        //return $this->getDB()->update('image', $primaryKey, $fields);
-        file_put_contents('debug.txt', var_export($fields, true), FILE_APPEND);
+
+        $gallery = $this->galleries[$fields['galleryname']];
+        $gallery->setGalleryCover($fields['gallerycover']);
+
     }
 
     /**

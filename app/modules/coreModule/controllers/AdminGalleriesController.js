@@ -171,9 +171,14 @@ define(function() {
             let filename = image.full.substring(image.full.lastIndexOf('/') + 1);
 
             gallerycoverPath = $scope.galleryToBeSent.gallerycover;
-            let gallerycoverFilename = gallerycoverPath.substring(gallerycoverPath.lastIndexOf('/') + 1);
+            
+            if(gallerycoverPath != null) {
 
-            return filename == gallerycoverFilename;
+                let gallerycoverFilename = gallerycoverPath.substring(gallerycoverPath.lastIndexOf('/') + 1);
+                return filename == gallerycoverFilename;
+
+            }
+
 
         };
 
@@ -218,7 +223,7 @@ define(function() {
 
             let filesToBeSent = extractImageFiles(newGalleryKey);
 
-            fileUpload.postFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
 
                 .success(function() {
 
@@ -240,7 +245,7 @@ define(function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
 
-            fileUpload.putFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
 
                 .success(function() {
 
@@ -251,6 +256,13 @@ define(function() {
                 .error(function() {
 
                 });
+
+            let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
+
+            console.log(galleryWithoutExistingImages);
+            SendObjectService.putObject(galleriesEndpoint, galleryWithoutExistingImages, function() {
+                refreshGalleries(); 
+            });
 
         };
 
