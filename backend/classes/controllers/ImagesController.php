@@ -103,6 +103,7 @@ class ImagesController extends BaseController {
     /**
      *
      * Method for handling PUT requests.
+     * ToDo: Make sure this can handle changes to the gallery name.
      *
      * @param Request $request An object representing a request to be handled.
      *

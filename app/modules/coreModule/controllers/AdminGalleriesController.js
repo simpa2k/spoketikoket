@@ -287,14 +287,6 @@ define(function() {
 
         ImagesService.getGalleries().then(function(galleries) {
 
-            // Converting an object of objects to array
-            /*angular.forEach(galleries, function (value, key) {
-
-                galleries[key] = $.map(value, function(pathsObject) {
-                    return [pathsObject];
-                });
-
-            });*/
             angular.forEach(galleries, function(gallery) {
 
                 let images = [];
