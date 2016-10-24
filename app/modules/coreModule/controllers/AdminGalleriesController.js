@@ -185,7 +185,6 @@ define(function() {
         $scope.setGalleryCover = function(image) {
 
             $scope.galleryToBeSent.galleryCover = image.full;
-            console.log($scope.galleryToBeSent);
 
         };
 

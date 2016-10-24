@@ -254,7 +254,6 @@ class ImagesModel extends BaseModel {
     public function update($galleryName, $fields) {
 
         $gallery = $this->galleries[$galleryName];
-        file_put_contents('debug.txt', var_export($fields, true), FILE_APPEND);
 
         foreach ($fields as $fieldName => $fieldValue) {
 

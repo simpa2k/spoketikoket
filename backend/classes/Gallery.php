@@ -215,7 +215,7 @@ class Gallery {
 
     private function performOnDirectoryContents($directoryPath, $acceptedExtensions, $callback) {
 
-        if(isdir($directoryPath)) {
+        if(is_dir($directoryPath)) {
 
             if($dir = opendir($directoryPath)) {
 
@@ -240,11 +240,17 @@ class Gallery {
 
     public function setGalleryCover($imagePath) {
 
-        $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) {
-            
-           unlink($existingGalleryCover); 
+        if(is_dir($this->galleryCoverPath)) {
 
-        });
+           $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) {
+
+               unlink($existingGalleryCover); 
+
+            });
+
+        } else {
+            mkdir($this->galleryCoverPath);
+        }
 
         $this->createResizedImageCopy($imagePath, self::$galleryCoverWidth, $this->galleryCoverPath);
         
