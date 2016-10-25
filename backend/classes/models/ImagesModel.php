@@ -242,7 +242,8 @@ class ImagesModel extends BaseModel {
      * ToDo: Due to problems with redirecting
      * the request, the update method of the images model
      * is operating on galleries. This is semantically confusing
-     * and does not allow updating of images. 
+     * and does not allow updating of images. Also, make sure
+     * this method can handle updating of gallery names.
      *
      * @param string $galleryName The name of the gallery to be updated.
      *

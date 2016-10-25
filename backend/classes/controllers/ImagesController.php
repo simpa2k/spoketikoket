@@ -103,7 +103,6 @@ class ImagesController extends BaseController {
     /**
      *
      * Method for handling PUT requests.
-     * ToDo: Make sure this can handle changes to the gallery name.
      *
      * @param Request $request An object representing a request to be handled.
      *
@@ -111,10 +110,24 @@ class ImagesController extends BaseController {
 
     public function put($request) {
 
-        $primaryKey = $request->parameters['galleryname'];
-        unset($request->parameters['galleryname']);
+        $parameters = $request->parameters;
+        $primaryKey = null;
 
-        $this->getModel()->update($primaryKey, $request->parameters);
+        if(isset($parameters['oldName']) && isset($parameters['newName'])) {
+            $primaryKey = $parameters['oldName'];
+            $parameters['name'] = $parameters['newName'];
+
+            unset($parameters['oldName']);
+            unset($parameters['newName']);
+
+        } else {
+
+            $primaryKey = $parameters['galleryname'];
+            unset($parameters['galleryname']);
+
+        }
+
+        $this->getModel()->update($primaryKey, $parameters);
 
     }
 

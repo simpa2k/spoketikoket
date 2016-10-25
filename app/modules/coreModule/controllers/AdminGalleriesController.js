@@ -240,6 +240,19 @@ define(function() {
 
         };
 		
+        var handleUpdatedGalleryName = function(gallery) {
+               
+            let modifiedGallery = angular.copy(gallery);
+
+            modifiedGallery.oldName = $scope.galleryToBeSentID;
+            modifiedGallery.newName = gallery.galleryname;
+
+            delete modifiedGallery.galleryname;
+
+            return modifiedGallery;
+
+        }
+
         $scope.putGallery = function() {
 
             let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
@@ -257,6 +270,10 @@ define(function() {
                 });
 
             let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
+
+            if($scope.galleryToBeSentID != galleryWithoutExistingImages.galleryname) {
+                galleryWithoutExistingImages = handleUpdatedGalleryName(galleryWithoutExistingImages);
+            }
 
             console.log(galleryWithoutExistingImages);
             SendObjectService.putObject(galleriesEndpoint, galleryWithoutExistingImages, function() {

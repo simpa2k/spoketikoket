@@ -282,21 +282,6 @@ class Gallery {
 
         });
 
-        //open the directory
-        //$dir = opendir( $pathToImages );
-        
-        // loop through it, looking for any/all JPG files:
-        //while (false !== ($fname = readdir( $dir ))) {
-            // parse path for the extension
-            //$info = pathinfo( $pathToImages . $fname );
-            
-            // continue only if this is a JPEG image
-            //if ( (strtolower($info['extension']) == 'jpg') ) {
-                //$this->createThumbnail($pathToImages . $fname);
-            //}
-        //}
-        // close the directory
-        //closedir( $dir );
     }
 
     private function deleteRecursively($path) {
