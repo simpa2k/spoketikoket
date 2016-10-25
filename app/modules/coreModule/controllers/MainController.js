@@ -33,12 +33,15 @@ define(function() {
         ContactpersonsService.getContactpersons().then(function(contactpersons) {
             $scope.contactpersons = contactpersons;
         });
+
         DescriptionService.getDescription().then(function(description) {
             $scope.description = description;
         });
+
         VenuesService.getVenues().then(function(venues) {
             $scope.venues = venues;
         });
+
         GigsService.getGigs().then(function(gigs) {
             $scope.gigs = gigs;
         });
@@ -50,6 +53,7 @@ define(function() {
         MembersService.getMembers().then(function(members) {
             $scope.members = members;
         });
+
         UsersService.getUsers().then(function(users) {
             $scope.users = users;
         });
@@ -76,7 +80,6 @@ define(function() {
 
             ImagesService.getGalleryWhere('galleryname=' + $scope.name, function(images) {
                 $scope.images = images[$scope.name].images;
-                console.log($scope.images);
             });
 
             var modalInstance = $uibModal.open({
