@@ -325,18 +325,6 @@ define(function() {
         };
 
         ImagesService.getGalleries().then(function(galleries) {
-
-            angular.forEach(galleries, function(gallery) {
-
-                let images = [];
-
-                angular.forEach(gallery.images, function(imagePaths) {
-                    images.push(imagePaths);
-                });
-
-                gallery.images = images;
-            });
-
             $scope.galleries = galleries;
         });
 

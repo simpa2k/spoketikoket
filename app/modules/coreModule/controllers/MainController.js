@@ -67,6 +67,7 @@ define(function() {
         };
 
         $scope.openGallery = function(galleryName) {
+
             $scope.name = galleryName;
 
             $scope.selectedImage = {
@@ -74,7 +75,8 @@ define(function() {
             };
 
             ImagesService.getGalleryWhere('galleryname=' + $scope.name, function(images) {
-                $scope.images = images[$scope.name];
+                $scope.images = images[$scope.name].images;
+                console.log($scope.images);
             });
 
             var modalInstance = $uibModal.open({
@@ -83,6 +85,7 @@ define(function() {
                 windowClass: 'modal-window',
                 scope: $scope
             });
+
         };
 
         $scope.membersColors = ['blue', 'red', 'green'];
