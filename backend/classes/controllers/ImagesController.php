@@ -120,10 +120,15 @@ class ImagesController extends BaseController {
             unset($parameters['oldName']);
             unset($parameters['newName']);
 
-        } else {
+        } else if(isset($parameters['galleryname'])) {
 
             $primaryKey = $parameters['galleryname'];
             unset($parameters['galleryname']);
+
+        } else {
+            
+            // Set response code accordingly
+            return;
 
         }
 
