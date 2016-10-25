@@ -13,16 +13,23 @@ class Gallery {
     private static $acceptedFormats = array('jpg');
     
     public function __construct($path, $metaData, $createDirectoryStructure = false) {
-        $this->path = $path;
-        $this->galleryName = basename($path);
-        $this->thumbnailPath = $path . '/thumbnails/';
-        $this->galleryCoverPath = $path . '/galleryCover/';
-        $this->metaDataPath = $path . '/metadata.json';
+
+        $this->setPaths($path);
 
         if($createDirectoryStructure && !file_exists($this->path)) {
             $this->createGallery($metaData);
         }
 
+    }
+
+    private function setPaths($path) {
+
+        $this->path = $path;
+        $this->galleryName = basename($path);
+        $this->thumbnailPath = $path . '/thumbnails/';
+        $this->galleryCoverPath = $path . '/galleryCover/';
+        $this->metaDataPath = $path . '/metadata.json';
+        
     }
 
     private function createGallery($metaData) {
@@ -105,6 +112,24 @@ class Gallery {
         }
         return true;
 
+    }
+
+    public function setName($newName) {
+
+        $metaData = $this->getMetaData();
+        $metaData->galleryname = $newName;
+
+        $this->setMetaData($metaData);
+
+        $pathInfo = pathinfo($this->path);
+        $parentDir = $pathInfo['dirname'];
+
+        $newDir = $parentDir . '/' . $newName;
+
+        rename($this->path, $newDir);
+
+        $this->setPaths($newDir);
+        
     }
 
     public function getName() {
@@ -242,9 +267,11 @@ class Gallery {
 
         if(is_dir($this->galleryCoverPath)) {
 
-           $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) {
+            $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) use($imagePath) {
 
-               unlink($existingGalleryCover); 
+               if(basename($imagePath) != basename($existingGalleryCover)) {
+                   unlink($existingGalleryCover); 
+               }
 
             });
 

@@ -26,11 +26,9 @@ define(function() {
                  * cached the image and won't let the user add it again.
                  * A side effect of this is that a single image
                  * can be uploaded several times even if it was
-                 * not removed in between these times.
-                 *
-                 * ToDo: Add a check that makes it impossible
-                 * to add the same image several times if it is already
-                 * present in the model.
+                 * not removed in between these times, thus
+                 * the loop checking the array for existing
+                 * instances of the image is neeeded.
                  */
                 element.bind('click', function() {
 
@@ -45,9 +43,23 @@ define(function() {
                         let fileWithUrl = {
                             url: event.target.result,
                             file: file 
-                        }	
+                        };	
 
-                        filesWithUrls.push(fileWithUrl);
+                        let alreadyAdded = false;
+                        angular.forEach(filesWithUrls, function(existingFileWithUrl) {
+
+                            if(angular.equals(fileWithUrl, existingFileWithUrl)) {
+
+                                alreadyAdded = true;
+                                return;
+
+                            }
+
+                        });
+
+                        if(!alreadyAdded) {
+                            filesWithUrls.push(fileWithUrl);
+                        }
 
                         scope.$apply(function() {
                             modelSetter(scope, filesWithUrls);

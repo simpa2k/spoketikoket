@@ -258,10 +258,16 @@ class ImagesModel extends BaseModel {
 
         foreach ($fields as $fieldName => $fieldValue) {
 
-            $uppercaseFieldName = ucfirst($fieldName);
-            $galleryMethod = 'set' . $uppercaseFieldName;
+            if($fieldValue != null) {
 
-            $gallery->$galleryMethod($fieldValue);
+                $uppercaseFieldName = ucfirst($fieldName);
+                $galleryMethod = 'set' . $uppercaseFieldName;
+
+                //file_put_contents('debug.txt', var_export($galleryMethod, true) . "\n" . var_export($fieldValue, true), FILE_APPEND);
+
+                $gallery->$galleryMethod($fieldValue);
+
+            }
 
         }
 

@@ -17,9 +17,6 @@ define(function() {
 
         $scope.galleryToBeSent = {};
         $scope.imagesToBeSent = {};
-        $scope.fileModel = {
-            file: {}
-        };
 
         /*
          * To be used as a key into $scope.imagesToBeSent
@@ -228,7 +225,14 @@ define(function() {
 
                     refreshImages();
 
-                    $scope.imagesToBeSent = {};
+                    /*
+                     * Splice is used here as only setting the array to [] will not
+                     * affect references to the array, such as file-model using it as
+                     * model. By using splice, every reference to the array will
+                     * also be emptied, this prevents old images showing up again
+                     * after a gallery has been deleted, for example.
+                     */
+                    $scope.imagesToBeSent[$scope.galleryToBeSentID].splice(0, $scope.imagesToBeSent[$scope.galleryToBeSentID].length);
                     $scope.refreshGalleriesWithReload();
 
                     ValidationService.resetForm(form);
@@ -263,6 +267,7 @@ define(function() {
 
                     refreshImages();
                     refreshGalleries();
+                    ValidationService.resetForm(form);
 
                 })
                 .error(function() {
@@ -275,9 +280,11 @@ define(function() {
                 galleryWithoutExistingImages = handleUpdatedGalleryName(galleryWithoutExistingImages);
             }
 
-            console.log(galleryWithoutExistingImages);
             SendObjectService.putObject(galleriesEndpoint, galleryWithoutExistingImages, function() {
+
                 refreshGalleries(); 
+                ValidationService.resetForm(form);
+
             });
 
         };
@@ -295,11 +302,21 @@ define(function() {
                 let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
 
                 SendObjectService.deleteObject(galleriesEndpoint, galleryWithoutExistingImages, function() {
+
+                    $scope.imagesToBeSent[$scope.galleryToBeSentID].splice(0, $scope.imagesToBeSent[$scope.galleryToBeSentID].length);
+                    delete $scope.imagesToBeSent[$scope.galleryToBeSent.galleryname] 
+
                     refreshGalleries();
+                    ValidationService.resetForm(form);
                     $scope.setPostState();
+
                 });
                 
             });
+        };
+
+        $scope.debugImagesToBeSent = function() {
+            console.log($scope.imagesToBeSent);
         };
 
         ImagesService.getGalleries().then(function(galleries) {

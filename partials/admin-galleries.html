@@ -56,7 +56,7 @@
                         Lägg till ny(a) bild(er)
                         <input type="file"
                                file-model="imagesToBeSent[galleryToBeSentID]"
-                               ng-model="fileModel.file"
+                               ng-model="imagesToBeSent[galleryToBeSentID]"
                                valid-file
                                name="images"
                                style="display: none"
@@ -78,6 +78,7 @@
 
             <div ng-class="resolveButtonGroup()">
                 <button class="btn btn-primary pull-left" ng-show="!addingNewGallery || galleryForm.$valid" ng-click="sendGallery(galleryForm)">{{ galleryAction }}</button>
+                <button class="btn btn-primary pull-left" ng-click="debugImagesToBeSent()">Debug</button>
                 <button class="btn btn-primary pull-left" ng-hide="addingNewGallery" ng-click="setPostState(galleryForm)">Nytt galleri</button>
             </div>
 
