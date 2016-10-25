@@ -55,7 +55,10 @@ define(function() {
              * The fact that a separate ID variable is used
              * counteracts the problem of changing the galleries name.
              * The old name will still be used as the id, despite the fact that the
-             * actual name being used might change.
+             * actual name being used might change. This also simplifies
+             * the process of changing the galleries name, as the original
+             * name of the gallery has to be provided to the server. In this way,
+             * the original name is saved.
              */
             $scope.galleryToBeSentID = $scope.galleryToBeSent.galleryname;
 
@@ -96,14 +99,17 @@ define(function() {
         };
 
         var refreshImages = function() {
+
             ImagesService.refreshImages().then(function(images){
                 $scope.images = images;
             });
+
         };
 
         var refreshGalleries = function() {
 
             ImagesService.refreshGalleries().then(function(galleries) {
+
                 $scope.galleries = galleries;
 
                 ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
@@ -120,6 +126,7 @@ define(function() {
         $scope.refreshGalleriesWithReload = function() {
 
             ImagesService.refreshGalleries().then(function(galleries) {
+
                 $scope.galleries = galleries;
 
                 ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
@@ -149,9 +156,11 @@ define(function() {
         $scope.deleteImage = function(image) {
 
             openDeleteModal(function() {
+
                 SendObjectService.deleteObject(imagesEndpoint, image, function() {
                     $scope.refreshGalleriesWithReload();
                 });
+
             });
 
         };
@@ -175,7 +184,6 @@ define(function() {
                 return filename == galleryCoverFilename;
 
             }
-
 
         };
 
@@ -229,7 +237,7 @@ define(function() {
                      * Splice is used here as only setting the array to [] will not
                      * affect references to the array, such as file-model using it as
                      * model. By using splice, every reference to the array will
-                     * also be emptied, this prevents old images showing up again
+                     * also be emptied, which prevents old images from showing up again
                      * after a gallery has been deleted, for example.
                      */
                     $scope.imagesToBeSent[$scope.galleryToBeSentID].splice(0, $scope.imagesToBeSent[$scope.galleryToBeSentID].length);
@@ -239,7 +247,7 @@ define(function() {
                     
                 })
                 .error(function() {
-                    
+                   // Add error message 
                 });
 
         };
@@ -271,11 +279,12 @@ define(function() {
 
                 })
                 .error(function() {
-
+                    // Add error message
                 });
 
             let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
 
+            // If the gallery name has been changed.
             if($scope.galleryToBeSentID != galleryWithoutExistingImages.galleryname) {
                 galleryWithoutExistingImages = handleUpdatedGalleryName(galleryWithoutExistingImages);
             }
@@ -313,10 +322,6 @@ define(function() {
                 });
                 
             });
-        };
-
-        $scope.debugImagesToBeSent = function() {
-            console.log($scope.imagesToBeSent);
         };
 
         ImagesService.getGalleries().then(function(galleries) {
