@@ -109,13 +109,7 @@ define(function() {
         var refreshGalleries = function() {
 
             ImagesService.refreshGalleries().then(function(galleries) {
-
                 $scope.galleries = galleries;
-
-                ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
-                    $scope.galleryCovers = galleryCovers;
-                });
-
             });
         };
 
@@ -128,13 +122,7 @@ define(function() {
             ImagesService.refreshGalleries().then(function(galleries) {
 
                 $scope.galleries = galleries;
-
-                ImagesService.refreshGalleryCovers().then(function(galleryCovers) {
-
-                    $scope.galleryCovers = galleryCovers;
-                    reloadSelectedGallery();
-
-                });
+                reloadSelectedGallery();
 
             });
 

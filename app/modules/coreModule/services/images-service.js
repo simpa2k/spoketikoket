@@ -6,10 +6,9 @@ define(function() {
     
         var imagesEndpoint = $rootScope.serverRoot + 'images';
         var galleriesEndpoint = imagesEndpoint  + '/galleries';
-        var galleryCoversEndpoint = imagesEndpoint  + '/gallerycovers';
+
         var imagesPromise;
         var galleriesPromise;
-        var galleryCoversPromise;
 
         var formatGalleryResponse = function(galleries) {
 
@@ -71,34 +70,6 @@ define(function() {
 
                 });
                 return galleriesPromise;
-            },
-            getGalleryWhere: function(queryParameters, callback) {
-
-                $http.get(galleriesEndpoint + '?' + queryParameters).then(function(response) {
-
-                    galleries = formatGalleryResponse(response.data);
-                    callback(galleries);
-
-                });
-
-            },
-            getGalleryCovers: function() {
-
-                if(!galleryCoversPromise) {
-
-                    galleryCoversPromise = $http.get(galleryCoversEndpoint).then(function(response) {
-                        return response.data
-                    });
-                } 
-                return galleryCoversPromise;
-            },
-            refreshGalleryCovers: function() {
-
-                galleryCoversPromise = $http.get(galleryCoversEndpoint).then(function(response) {
-                    return response.data
-                });
-
-                return galleryCoversPromise;
             }
         };
 
