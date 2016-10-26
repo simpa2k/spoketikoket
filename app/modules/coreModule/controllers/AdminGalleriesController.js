@@ -324,10 +324,6 @@ define(function() {
             });
         };
 
-        ImagesService.getGalleries().then(function(galleries) {
-            $scope.galleries = galleries;
-        });
-
         $scope.setPostState();
 
     });

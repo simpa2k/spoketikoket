@@ -23,12 +23,9 @@
 
                                 <p class="small-section-heading">Spöket på bild:</p>
 
-                                <!--<div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                                    <a ui-sref="galleries( { name: '{{ galleryName }}' } )"><img src="{{ galleryCover[1] }}"></a>
-                                    <p class="smaller-section-heading">{{ galleryName }}</p>
-                                </div>-->
-                                <div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">
-                                    <img src="{{ galleryCover }}" ng-click="openGallery(galleryName)">
+                                <!--<div class="selectable" ng-repeat="(galleryName, galleryCover) in galleryCovers">-->
+                                <div class="selectable" ng-repeat="(galleryName, paths) in galleries">
+                                    <img src="{{ paths.galleryCover }}" ng-click="openGallery(galleryName)">
                                     <p class="smaller-section-heading">{{ galleryName }}</p>
                                 </div>
 

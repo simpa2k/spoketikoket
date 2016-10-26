@@ -46,8 +46,8 @@ define(function() {
             $scope.gigs = gigs;
         });
 
-        ImagesService.getGalleryCovers().then(function(galleryCovers) {
-            $scope.galleryCovers = galleryCovers;
+        ImagesService.getGalleries().then(function(galleries) {
+            $scope.galleries = galleries;
         });
 
         MembersService.getMembers().then(function(members) {
@@ -73,14 +73,11 @@ define(function() {
         $scope.openGallery = function(galleryName) {
 
             $scope.name = galleryName;
+            $scope.images = $scope.galleries[$scope.name].images;
 
             $scope.selectedImage = {
                 image: null
             };
-
-            ImagesService.getGalleryWhere('galleryname=' + $scope.name, function(images) {
-                $scope.images = images[$scope.name].images;
-            });
 
             var modalInstance = $uibModal.open({
                 template: '<gallery name="{{ name }}" images="images" selected-image="selectedImage" close-modal="closeModal()"></gallery>',
@@ -94,8 +91,8 @@ define(function() {
         $scope.membersColors = ['blue', 'red', 'green'];
         $scope.gigsColors = ['blue', 'red', 'green'];
 
-        $scope.getColorClass = function($index, colorsArray) {
-            return colorsArray[$index % colorsArray.length];
+        $scope.getColorClass = function(index, colorsArray) {
+            return colorsArray[index % colorsArray.length];
         };
 
     });
