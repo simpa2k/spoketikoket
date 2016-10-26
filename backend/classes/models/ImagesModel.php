@@ -87,23 +87,6 @@ class ImagesModel extends BaseModel {
 
     }
     
-    private function readDirectoryContents($directory) {
-
-        $contents = array();
-
-        foreach(scandir($directory) as $file) {
-
-            if($this->shouldBeIgnored($file)) {
-                continue;
-            }
-
-            $contents[] = $directory . '/' . $file;
-
-        }
-        return $contents;
-
-    }
-    
     /*
      * ToDo: This double loop is ridiculous. The queries really need to be using keys for this sort of thing.
      * Eg. instead of array([0] => 'galleryname', [1] => '=', [2] => 'Folk at Heart - 15')
@@ -242,8 +225,7 @@ class ImagesModel extends BaseModel {
      * ToDo: Due to problems with redirecting
      * the request, the update method of the images model
      * is operating on galleries. This is semantically confusing
-     * and does not allow updating of images. Also, make sure
-     * this method can handle updating of gallery names.
+     * and does not allow updating of images. 
      *
      * @param string $galleryName The name of the gallery to be updated.
      *
@@ -262,8 +244,6 @@ class ImagesModel extends BaseModel {
 
                 $uppercaseFieldName = ucfirst($fieldName);
                 $galleryMethod = 'set' . $uppercaseFieldName;
-
-                //file_put_contents('debug.txt', var_export($galleryMethod, true) . "\n" . var_export($fieldValue, true), FILE_APPEND);
 
                 $gallery->$galleryMethod($fieldValue);
 

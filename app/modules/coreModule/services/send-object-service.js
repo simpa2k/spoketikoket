@@ -3,29 +3,30 @@ define(function() {
 	var app = angular.module('coreModule');
 	
 	app.service('SendObjectService', ['$http', function($http) {
+
 	    var self = this;
 
 	    var constructUriFromObject = function(object) {
 
 	        let uri = '';
-			let first = true;
+                let first = true;
 
 	        angular.forEach(object, function(value, key) {
 
-				if(first) {
-					first = false;
-				} else {
-					uri += '&';
-				}
+                    if(first) {
+                        first = false;
+                    } else {
+                        uri += '&';
+                    }
 
-				uri += key;
+                    uri += key;
 
-				if(value != null && value.hasOwnProperty('length') && value.length > 0) {
+                    if(value != null && value.hasOwnProperty('length') && value.length > 0) {
 
-					let encodedValue = encodeURIComponent(value);
-					uri += '=' + encodedValue;
+                        let encodedValue = encodeURIComponent(value);
+                        uri += '=' + encodedValue;
 
-				}
+                    }
 
 	        });
 

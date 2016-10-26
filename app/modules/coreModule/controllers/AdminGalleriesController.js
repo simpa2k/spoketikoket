@@ -211,14 +211,20 @@ define(function() {
 
         };
 
+        var postImages = function(galleryID) {
+
+            let filesToBeSent = extractImageFiles(galleryID);
+
+            if(filesToBeSent.length > 0) {
+                return fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl());
+            }
+        };
+
         $scope.postGallery = function(form) {
 
-            let filesToBeSent = extractImageFiles(newGalleryKey);
-
-            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+           postImages(newGalleryKey)
 
                 .success(function() {
-
                     refreshImages();
 
                     /*
@@ -232,10 +238,10 @@ define(function() {
                     $scope.refreshGalleriesWithReload();
 
                     ValidationService.resetForm(form);
-                    
+
                 })
                 .error(function() {
-                   // Add error message 
+                    // Handle error
                 });
 
         };
@@ -253,11 +259,12 @@ define(function() {
 
         }
 
-        $scope.putGallery = function() {
+        $scope.putGallery = function(form) {
 
-            let filesToBeSent = extractImageFiles($scope.galleryToBeSent.galleryname);
+            let imagePost = postImages($scope.galleryToBeSent.galleryname);
+            if(typeof(imagePost) != 'undefined') {
 
-            fileUpload.uploadFileToUrl(filesToBeSent, $scope.constructImageUploadUrl())
+                imagePost
 
                 .success(function() {
 
@@ -267,8 +274,10 @@ define(function() {
 
                 })
                 .error(function() {
-                    // Add error message
+                    // Handle error
                 });
+
+            }
 
             let galleryWithoutExistingImages = removeImagesFromObject($scope.galleryToBeSent);
 

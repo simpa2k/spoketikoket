@@ -15,7 +15,7 @@
 
         <div id="social-media-section">
             <a ng-repeat="socialmediaItem in socialmedia" class="social-media" href="{{ socialmediaItem.linkHref }}">
-                <img src="{{ socialmediaItem.imageSource}}"
+                <img src="{{ socialmediaItem.imageSource }}"
                      ng-mouseover="appendSocialMediaText($event, socialmediaItem.imageText)"
                      ng-mouseleave="removeSocialMediaText(socialmediaItem.imageText)">
             </a>
