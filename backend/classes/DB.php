@@ -165,7 +165,13 @@ class DB {
     }
 
     public function first() {
-        return $this->results()[0];
+
+        if(count($this->results()) > 0) {
+            return $this->results()[0];
+        } else {
+            return null;
+        }
+
     }
 
     public function count() {
