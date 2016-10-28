@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: simpa2k
- * Date: 2016-05-15
- * Time: 16:28
- */
 
 require_once 'core/init.php';
 

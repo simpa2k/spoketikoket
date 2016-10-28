@@ -187,15 +187,21 @@ abstract class BaseController {
 
     public function checkToken($requestParameters) {
 
-        $usernameAndToken = $this->filterParameters(array('username', 'token'), $requestParameters);
+        if(isset($requestParameters['username'])) {
 
-        $db = $this->model->getDB();
+            $db = $this->model->getDB();
 
-        if($db->get('user', $this->formatParameters($usernameAndToken))->results() != null) {
-            return true;
-        } else {
-            http_response_code(401);
-        }
+            $action = 'SELECT *';
+            $table = 'user, token';
+            $where = array(0 => array('username', '=', $requestParameters['username']));
+            $joinCondition = array(0 => array('user.id', 'userId'));
+
+            if($db->action($action, $table, $where, $joinCondition)->results() != null) {
+                return true;
+            }
+
+        } 
+        http_response_code(401);
     }
 
     public abstract function post($request);

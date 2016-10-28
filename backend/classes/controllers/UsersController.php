@@ -45,20 +45,6 @@ class UsersController extends BaseController {
         
         if(password_verify($submittedPassword, $user->password)) {
             
-            /*
-             * Check if a token exists
-             *  If one doesn't exist:
-             *    Generate token
-             *  Else:
-             *    Check if it has expired
-             *      If it has expired:
-             *        Update token
-             *      Else:
-             *        Get the token
-             *        Update its date time
-             * 
-             */
-
             $currentToken = $this->getModel()->getToken($user->id);
             $currentDateTime = date('Y-m-d H:i:s');
 
@@ -77,6 +63,7 @@ class UsersController extends BaseController {
 
             } else {
 
+                // This check is just completely wrong, it needs to check if a certain time period has passed.
                 if($currentDateTime > $currentToken->created) {
 
                     $token = Token::generate();
@@ -90,11 +77,6 @@ class UsersController extends BaseController {
 
             return $this->getModel()->getToken($user->id)->token;
 
-            /*$token = Token::generate();
-            $this->getModel()->updateToken($user->id, $token);
-
-            return array('token' => $token);*/
-            
         } else {
             http_response_code(401);
         }

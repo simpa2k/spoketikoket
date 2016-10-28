@@ -1,7 +1,8 @@
 <?php
 class Token {
     public static function generate() {
-        return Session::put(Config::get('session/token_name'), md5(uniqid()));
+        //return Session::put(Config::get('session/token_name'), md5(uniqid()));
+        return bin2hex(openssl_random_pseudo_bytes(16));
     }
     
     public static function check($token) {
