@@ -160,6 +160,31 @@ class DB {
         return false;
     }
 
+    public function setAutoIncrement($table, $value) {
+
+        $sql = "ALTER TABLE $table AUTO_INCREMENT = $value";
+
+        if(!$this->query($sql)->error()) {
+            return $this;
+        }
+
+        return false;
+
+    }
+
+    public function getTableData($tableData, $tableName) {
+
+        $sql = "SELECT $tableData FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . 
+            Config::get('mysql/db') . "' AND TABLE_NAME = '$tableName'";
+
+        if(!$this->query($sql)->error()) {
+            return $this;
+        }
+
+        return false;
+        
+    }
+
     public function results() {
         return $this->_results;
     }
