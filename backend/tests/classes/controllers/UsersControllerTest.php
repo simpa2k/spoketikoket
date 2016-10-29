@@ -98,8 +98,8 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
         $token = $uc->getAction($request);
 
         $checkTokenRequestParameters = array(
-            "username" => "admin",
-            "token" => "token"
+            "username" => $this->username,
+            "token" => $token 
         );
 
         $this->assertTrue($uc->checkToken($checkTokenRequestParameters));
