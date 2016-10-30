@@ -125,9 +125,9 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
         $tokenDataBaseEntry = $this->db->get('token', array(0 => array("userId", "=", $userId)))->first();
 
         $storedTokenCreationDate = new DateTime($tokenDataBaseEntry->created);
-        $earlierStoredTokenExpirationDate = $storedTokenCreationDate->sub(new DateInterval('PT' . 40 . 'M'))->format('Y-m-d H:i:s');
+        $earlierStoredTokenCreationDate = $storedTokenCreationDate->sub(new DateInterval('PT' . 40 . 'M'))->format('Y-m-d H:i:s');
 
-        $this->db->update('token', "userId = $userId", array("created" => $earlierStoredTokenExpirationDate));
+        $this->db->update('token', "userId = $userId", array("created" => $earlierStoredTokenCreationDate));
 
         $checkTokenRequestParameters = array(
             "username" => $this->username,
