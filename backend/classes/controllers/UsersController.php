@@ -48,31 +48,20 @@ class UsersController extends BaseController {
             $currentToken = $this->getModel()->getToken($user->id);
             $currentDateTime = date('Y-m-d H:i:s');
 
+            $token = Token::generate();
+
             $updatedToken = array(
-                'created' => $currentDateTime
+                'created' => $currentDateTime,
+                'token' => $token
             );
 
             if($currentToken == null) {
 
-                $token = Token::generate();
-
                 $updatedToken['userId'] = $user->id;
-                $updatedToken['token'] = $token;
-
                 $this->getModel()->insertToken($updatedToken);
 
             } else {
-
-                // This check is just completely wrong, it needs to check if a certain time period has passed.
-                if($currentDateTime > $currentToken->created) {
-
-                    $token = Token::generate();
-                    $updatedToken['token'] = $token;
-
-                }
-
                 $this->getModel()->updateToken($user->id, $updatedToken);
-
             }
 
             return $this->getModel()->getToken($user->id)->token;
