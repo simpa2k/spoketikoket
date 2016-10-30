@@ -38,11 +38,16 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
         
     }
 
-    private function deleteDummyUserAndToken() {
+    private function getUserId() {
 
         $user = $this->db->get('user', array(0 => array('username', '=', $this->username)))->first();
-        $userId = $user->id;
+        return $user->id;
+        
+    }
 
+    private function deleteDummyUserAndToken() {
+
+        $userId = $this->getUserId();
         $this->db->delete('token', array(0 => array('userId', '=', $userId)));
         $this->db->delete('user', array(0 => array('id', '=', $userId)));
         
@@ -104,6 +109,33 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue($uc->checkToken($checkTokenRequestParameters));
 
+    }
+
+    public function testCheckTokenReturnsNullOnExpiredToken() {
+
+        $request = new Request();
+
+        $uc = new UsersController(new UsersModel());
+
+        // getAction automatically attempts login if username and password are set
+        $token = $uc->getAction($request);
+
+        // Setting existing token's created date to 40 minutes ago
+        $userId = $this->getUserId();
+        $tokenDataBaseEntry = $this->db->get('token', array(0 => array("userId", "=", $userId)))->first();
+
+        $storedTokenCreationDate = new DateTime($tokenDataBaseEntry->created);
+        $earlierStoredTokenExpirationDate = $storedTokenCreationDate->sub(new DateInterval('PT' . 40 . 'M'))->format('Y-m-d H:i:s');
+
+        $this->db->update('token', "userId = $userId", array("created" => $earlierStoredTokenExpirationDate));
+
+        $checkTokenRequestParameters = array(
+            "username" => $this->username,
+            "token" => $token 
+        );
+
+        $this->assertNull($uc->checkToken($checkTokenRequestParameters));
+        
     }
 
 }

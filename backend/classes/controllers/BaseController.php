@@ -196,8 +196,23 @@ abstract class BaseController {
             $where = array(0 => array('username', '=', $requestParameters['username']));
             $joinCondition = array(0 => array('user.id', 'userId'));
 
-            if($db->action($action, $table, $where, $joinCondition)->results() != null) {
-                return true;
+            $results = $db->action($action, $table, $where, $joinCondition)->first();
+
+            if($results != null) {
+
+                $storedToken = $results->token;
+                $sentToken = $requestParameters['token'];
+
+                $storedTokenCreationDate = new DateTime($results->created);
+                $storedTokenExpirationDate = $storedTokenCreationDate->add(new DateInterval('PT' . 30 . 'M'));
+                $currentDate = new DateTime("now");
+
+                $tokenMatches = $storedToken == $sentToken;
+                $tokenValid = $currentDate < $storedTokenExpirationDate;
+
+                if($tokenMatches && $tokenValid) {
+                    return true;
+                }
             }
 
         } 
