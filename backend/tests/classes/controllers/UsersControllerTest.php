@@ -87,7 +87,7 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
         $uc = new UsersController(new UsersModel());
 
         // getAction automatically attempts login if username and password are set
-        $token = $uc->getAction($request);
+        $token = $uc->getAction($request)['token'];
 
         $this->assertTrue(strlen($token) == 32);
 
@@ -100,7 +100,7 @@ class UsersControllerTest extends \PHPUnit_Framework_TestCase {
         $uc = new UsersController(new UsersModel());
 
         // getAction automatically attempts login if username and password are set
-        $token = $uc->getAction($request);
+        $token = $uc->getAction($request)['token'];
 
         $checkTokenRequestParameters = array(
             "username" => $this->username,
