@@ -64,7 +64,11 @@ class UsersController extends BaseController {
                 $this->getModel()->updateToken($user->id, $updatedToken);
             }
 
-            return $this->getModel()->getToken($user->id)->token;
+            /*
+             * ToDo: It's unnecessary to make a database query again here
+             */
+
+            return array("token" => $this->getModel()->getToken($user->id)->token);
 
         } else {
             http_response_code(401);
