@@ -275,11 +275,13 @@ class Gallery {
 
     public function setGalleryCover($imagePath) {
 
+        $imageName = basename($imagePath);
+
         if(is_dir($this->galleryCoverPath)) {
 
-            $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) use($imagePath) {
+            $this->performOnDirectoryContents($this->galleryCoverPath, self::$acceptedFormats, function($existingGalleryCover) use($imageName) {
 
-               if(basename($imagePath) != basename($existingGalleryCover)) {
+                if($imageName != basename($existingGalleryCover)) {
                    unlink($existingGalleryCover); 
                }
 
@@ -289,7 +291,7 @@ class Gallery {
             mkdir($this->galleryCoverPath);
         }
 
-        $this->createResizedImageCopy($this->path . '/' . basename($imagePath), self::$galleryCoverWidth, $this->galleryCoverPath);
+        $this->createResizedImageCopy($this->path . '/' . $imageName, self::$galleryCoverWidth, $this->galleryCoverPath);
         
     }
 
