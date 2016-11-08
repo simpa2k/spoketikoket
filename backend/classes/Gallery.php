@@ -114,6 +114,16 @@ class Gallery {
 
     }
 
+    private function pruneLeadingDotsAndSlash($path) {
+
+        if(strlen($path) > 2 && $path[0] == '.' && $path[1] == '.' && $path[2] == '/') {
+            return substr($path, 3);
+        } else {
+            return $path;
+        }
+        
+    }
+
     public function setName($newName) {
 
         $metaData = $this->getMetaData();
@@ -176,8 +186,8 @@ class Gallery {
                 unset($images[$index]);
             } else {
                 $images[$index] = array(
-                    'full' => $this->path . '/' . $image,
-                    'thumb' => $this->thumbnailPath . $image
+                    'full' => $this->pruneLeadingDotsAndSlash($this->path . '/' . $image),
+                    'thumb' => $this->pruneLeadingDotsAndSlash($this->thumbnailPath . $image)
                 );
 
                 /*if( (!$galleryCoverFound) && ($image == $galleryCoverName) ) {
@@ -279,7 +289,7 @@ class Gallery {
             mkdir($this->galleryCoverPath);
         }
 
-        $this->createResizedImageCopy($imagePath, self::$galleryCoverWidth, $this->galleryCoverPath);
+        $this->createResizedImageCopy($this->path . '/' . basename($imagePath), self::$galleryCoverWidth, $this->galleryCoverPath);
         
     }
 
@@ -290,7 +300,7 @@ class Gallery {
         if(empty($galleryCover)) {
             return null;
         } else {
-            return $galleryCover[0];
+            return $this->pruneLeadingDotsAndSlash($galleryCover[0]);
         }
 
     }
