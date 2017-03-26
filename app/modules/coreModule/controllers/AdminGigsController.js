@@ -54,16 +54,16 @@ define(function() {
     
         $scope.gigToBeSent = {};
 
-            /*
-             foundVenueRecently tries to determine
-             if the user is trying to add a new venue
-             or is searching for an already added one.
-             As it is now the address, city and webpage fields
-             will be cleared if a venue was just found and the
-             user continues to change the input field, but
-             not if a venue wasn't found. This might not be the optimal solution, however.
-             */
-            var foundVenueRecently = false;
+        /*
+         foundVenueRecently tries to determine
+         if the user is trying to add a new venue
+         or is searching for an already added one.
+         As it is now the address, city and webpage fields
+         will be cleared if a venue was just found and the
+         user continues to change the input field, but
+         not if a venue wasn't found. This might not be the optimal solution, however.
+         */
+        var foundVenueRecently = false;
 
             $scope.searchVenues = function() {
 

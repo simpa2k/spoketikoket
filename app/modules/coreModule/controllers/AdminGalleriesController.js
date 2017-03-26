@@ -40,7 +40,6 @@ define(function() {
             return $scope.addingNewGallery ? '' : 'btn-group';
         };
 
-
         $scope.editGallery = function(galleryName) {
 
             let selectedGallery = {
