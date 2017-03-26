@@ -256,7 +256,7 @@ define(function() {
 
             return modifiedGallery;
 
-        }
+        };
 
         $scope.putGallery = function(form) {
 
