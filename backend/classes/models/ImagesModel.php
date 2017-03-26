@@ -14,6 +14,7 @@ require_once('core/init.php');
 class ImagesModel extends BaseModel {
 
     private $gallery,
+            $galleries,
             $galleriesPath;
 
     public function __construct() {
@@ -199,9 +200,9 @@ class ImagesModel extends BaseModel {
             } else {
 
                 $galleryPath = $this->galleriesPath . $galleryName;
-                $gallery = $this->galleries[$galleryName];
+                $gallery = null;
 
-                if($gallery == null) {
+                if(!array_key_exists($galleryName, $this->galleries)) {
 
                     $galleryMetaData = $filesAndGalleryName;
                     unset($galleryMetaData['files']);
