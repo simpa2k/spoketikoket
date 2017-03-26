@@ -309,7 +309,7 @@ define(function() {
                 SendObjectService.deleteObject(galleriesEndpoint, galleryWithoutExistingImages, function() {
 
                     $scope.imagesToBeSent[$scope.galleryToBeSentID].splice(0, $scope.imagesToBeSent[$scope.galleryToBeSentID].length);
-                    delete $scope.imagesToBeSent[$scope.galleryToBeSent.galleryname] 
+                    delete $scope.imagesToBeSent[$scope.galleryToBeSent.galleryname];
 
                     refreshGalleries();
                     ValidationService.resetForm(form);
