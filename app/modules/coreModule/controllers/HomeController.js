@@ -24,11 +24,8 @@ define(function() {
                 imageText: "images/socialmedia/facebooktext.png"
             },
             {
-                //linkHref: "http://www.soundcloud.com/sp-ket-i-k-ket",
-                //imageSource: "images/socialmedia/sc29.png",
-                //imageText: "images/socialmedia/soundcloudtext.png"
                 linkHref: "https://open.spotify.com/artist/3mGBGDMzA9TYvtj8aFnQxL",
-                imageSource: "images/socialmedia/spotify.png",
+                imageSource: "images/socialmedia/spotify_29.png",
                 imageText: ""
             },
             {
@@ -36,7 +33,7 @@ define(function() {
                 imageSource: "images/socialmedia/yt29.png",
                 imageText: "images/socialmedia/youtubetext.png"
             }
-        ]
+        ];
 
         $scope.dateFilter = function() {
             return function(gig) {
