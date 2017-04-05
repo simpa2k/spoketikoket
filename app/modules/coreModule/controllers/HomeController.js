@@ -24,9 +24,12 @@ define(function() {
                 imageText: "images/socialmedia/facebooktext.png"
             },
             {
-                linkHref: "http://www.soundcloud.com/sp-ket-i-k-ket",
-                imageSource: "images/socialmedia/sc29.png",
-                imageText: "images/socialmedia/soundcloudtext.png"
+                //linkHref: "http://www.soundcloud.com/sp-ket-i-k-ket",
+                //imageSource: "images/socialmedia/sc29.png",
+                //imageText: "images/socialmedia/soundcloudtext.png"
+                linkHref: "https://open.spotify.com/artist/3mGBGDMzA9TYvtj8aFnQxL",
+                imageSource: "images/socialmedia/spotify.png",
+                imageText: ""
             },
             {
                 linkHref: "https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw",
