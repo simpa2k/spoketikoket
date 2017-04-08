@@ -7,9 +7,44 @@ define(function() {
 	    var embeddeditemsEndpoint = $rootScope.serverRoot + 'embeddeditems';
 		var videosEndpoint = embeddeditemsEndpoint + '?type=video';
 		var soundsEndpoint = embeddeditemsEndpoint + '?type=sound';
+        var spotifyEndpoint = embeddeditemsEndpoint + '?type=spotify';
 	    var promise;
 		var videosPromise;
 		var soundsPromise;
+        var spotifyPromise;
+
+        let youtube = {
+
+            width: "560",
+            height: "315",
+            frameborder: "0",
+
+        };
+
+        let soundcloud = {
+
+            width: "100%",
+            height: "166",
+            scrolling: "no",
+            frameborder: "no",
+
+        };
+
+        let spotify = {
+
+            width: "300",
+            height: "380",
+            frameborder: "0",
+            allowtransparency: "true"
+
+        };
+
+        let setAttributes = function(embeddedItems, extraAttributes) {
+
+            angular.forEach(embeddedItems, function(embeddedItem) {
+            	Object.assign(embeddedItem, extraAttributes);
+			});
+		};
 
 	    var embeddeditemsService = {
 	        getEmbeddeditems: function() {
@@ -21,35 +56,50 @@ define(function() {
 	        },
 			refreshEmbeddeditems: function() {
 	            promise = $http.get(embeddeditemsEndpoint).then(function(response) {
+
+	                // ToDo: attributes need to be set here
 	                return response.data
+
 	            });
 	            return promise;
 	        },
 			getVideos: function() {
 	        	if(!videosPromise) {
 	        		videosPromise = $http.get(videosEndpoint).then(function(response) {
+
+                        setAttributes(response.data, youtube);
 	        			return response.data;
+
 					});
 				}
 				return videosPromise;
 			},
 			refreshVideos: function() {
 				videosPromise = $http.get(videosEndpoint).then(function(response) {
+
+                    setAttributes(response.data, youtube);
 					return response.data;
+
 				});
 				return videosPromise;
 			},
 			getSounds: function() {
 				if(!soundsPromise) {
 					soundsPromise = $http.get(soundsEndpoint).then(function(response) {
+
+                        setAttributes(response.data, soundcloud);
 						return response.data;
+
 					});
 				}
 				return soundsPromise;
 			},
 			refreshSounds: function() {
 				soundsPromise = $http.get(soundsEndpoint).then(function(response) {
+
+                    setAttributes(response.data, soundcloud);
 					return response.data;
+
 				});
 				return soundsPromise;
 			}

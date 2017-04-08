@@ -66,10 +66,10 @@
 
                                 <div ng-repeat="video in videos" id="{{ constructItemID(video.type, $index) }}">
                                     <iframe class="selectable admin-item"
-                                            width="560"
-                                            height="315"
+                                            width="{{ video.width }}"
+                                            height="{{ video.height }}"
                                             src="{{ trustUrl(video.src) }}"
-                                            frameborder="0"
+                                            frameborder="{{ video.frameborder }}"
                                             allowfullscreen>
                                     </iframe>
 
@@ -184,10 +184,10 @@
                             <form name="soundEditForm" novalidate>
 
                                 <div ng-repeat="sound in sounds" id="{{ constructItemID(sound.type, $index) }}">
-                                    <iframe width="100%"
-                                            height="166"
-                                            scrolling="no"
-                                            frameborder="no"
+                                    <iframe width="{{ sound.width }}"
+                                            height="{{ sound.height }}"
+                                            scrolling="{{ sound.scrolling }}"
+                                            frameborder="{{ sound.frameborder }}"
                                             src="{{ trustUrl(sound.src) }}">
                                     </iframe>
 
