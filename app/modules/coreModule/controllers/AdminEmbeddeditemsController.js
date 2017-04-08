@@ -93,16 +93,27 @@ define(function() {
 
 		};
 
+		let copyWhiteListedProperties = function(dest, source, properties) {
+
+			for (let key in source) {
+
+				if (source.hasOwnProperty(key) && properties.indexOf(key) !== -1) {
+					dest[key] = source[key];
+				}
+			}
+			return dest;
+		};
+
 	    $scope.setPutState = function(embeddeditem, index) {
 
             let uniqueId = embeddeditem.type + '-' + index;
             let objectCopy = $scope.embeddeditemsToBeSent[uniqueId];
 
-            if(typeof(objectCopy) == 'undefined') {
-                objectCopy = jQuery.extend({}, embeddeditem);
-                delete objectCopy.$$hashKey;
+            if(typeof(objectCopy) === 'undefined') {
 
+                objectCopy = copyWhiteListedProperties({}, embeddeditem, ['id', 'src', 'type']);
                 $scope.embeddeditemsToBeSent[uniqueId] = objectCopy;
+
             }
 
 			$scope.embeddeditemToBeSent = objectCopy;

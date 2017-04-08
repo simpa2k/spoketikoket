@@ -13,36 +13,62 @@ define(function() {
 		var soundsPromise;
         var spotifyPromise;
 
-        let youtube = {
+        let iframeAttributes = {
 
-            width: "560",
-            height: "315",
-            frameborder: "0",
+        	youtube: {
 
+                width: "560",
+                height: "315",
+                frameborder: "0",
+
+            },
+            soundcloud: {
+
+                width: "100%",
+                height: "166",
+                scrolling: "no",
+                frameborder: "no",
+
+            },
+            spotify: {
+
+                width: "100%",
+                height: "380",
+                frameborder: "0",
+                allowtransparency: "true"
+
+            },
+			default: {
+
+                width: "100%",
+                height: "166",
+                scrolling: "no",
+                frameborder: "no",
+
+			}
         };
 
-        let soundcloud = {
 
-            width: "100%",
-            height: "166",
-            scrolling: "no",
-            frameborder: "no",
+        let determineType = function(embeddedItem) {
 
-        };
+        	const anchor = document.createElement('a');
+        	anchor.href = embeddedItem.src;
 
-        let spotify = {
+        	let hostname = anchor.hostname;
+        	let hostnameElements = hostname.split('.');
 
-            width: "300",
-            height: "380",
-            frameborder: "0",
-            allowtransparency: "true"
+        	// ToDo: this currently only handles urls with a subdomain, which is fine for the APIs used currently.
+        	return hostnameElements.length >= 2 ? hostnameElements[1] : 'default';
 
-        };
+		};
 
-        let setAttributes = function(embeddedItems, extraAttributes) {
+        let setAttributes = function(embeddedItems) {
 
             angular.forEach(embeddedItems, function(embeddedItem) {
-            	Object.assign(embeddedItem, extraAttributes);
+
+            	const type = determineType(embeddedItem);
+            	Object.assign(embeddedItem, iframeAttributes[type]);
+
 			});
 		};
 
@@ -67,7 +93,7 @@ define(function() {
 	        	if(!videosPromise) {
 	        		videosPromise = $http.get(videosEndpoint).then(function(response) {
 
-                        setAttributes(response.data, youtube);
+                        setAttributes(response.data);
 	        			return response.data;
 
 					});
@@ -77,7 +103,7 @@ define(function() {
 			refreshVideos: function() {
 				videosPromise = $http.get(videosEndpoint).then(function(response) {
 
-                    setAttributes(response.data, youtube);
+                    setAttributes(response.data);
 					return response.data;
 
 				});
@@ -87,7 +113,7 @@ define(function() {
 				if(!soundsPromise) {
 					soundsPromise = $http.get(soundsEndpoint).then(function(response) {
 
-                        setAttributes(response.data, soundcloud);
+                        setAttributes(response.data);
 						return response.data;
 
 					});
@@ -97,7 +123,7 @@ define(function() {
 			refreshSounds: function() {
 				soundsPromise = $http.get(soundsEndpoint).then(function(response) {
 
-                    setAttributes(response.data, soundcloud);
+                    setAttributes(response.data);
 					return response.data;
 
 				});
