@@ -1,0 +1,19 @@
+<div class="col-sm-8">
+    <div class="col-sm-6 col-sm-offset-3">
+        <form name="{{ formName }}" novalidate>
+
+            <dynamic-input ng-repeat="(field, attributes) in model"
+                           class="form-group"
+                           field="{{ field }}"
+                           model="objectToSend"
+                           attributes="attributes">
+            </dynamic-input>
+
+            <button class="btn btn-primary pull-left" ng-click="send(formName)">{{ action }}</button>
+            <button class="btn btn-primary pull-left" ng-hide="addingNew" ng-click="setPostState()">Ny</button>
+
+            <button class="btn btn-danger pull-right" ng-hide="addingNew" ng-click="delete(formName)">Ta bort</button>
+
+        </form>
+    </div>
+</div>

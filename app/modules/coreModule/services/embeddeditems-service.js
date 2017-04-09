@@ -57,7 +57,7 @@ define(function() {
         	let hostname = anchor.hostname;
         	let hostnameElements = hostname.split('.');
 
-        	// ToDo: this currently only handles urls with a subdomain, which is fine for the APIs used currently.
+        	// ToDo: this currently only handles urls with a subdomain, which is fine for the APIs currently used.
         	return hostnameElements.length >= 2 ? hostnameElements[1] : 'default';
 
 		};

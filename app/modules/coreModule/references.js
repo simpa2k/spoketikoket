@@ -14,6 +14,7 @@ define(function() {
 		'modules/coreModule/controllers/AdminGalleriesController',
 		'modules/coreModule/controllers/AdminEmbeddeditemsController',
 		'modules/coreModule/controllers/AdminMembersController',
+        'modules/coreModule/controllers/AdminAnnouncementsController',
 		'modules/coreModule/services/append-credentials-service',
 		'modules/coreModule/services/contactpersons-service',
 		'modules/coreModule/services/description-service',
@@ -29,6 +30,9 @@ define(function() {
 		'modules/coreModule/directives/sticky-navbar/sticky-navbar',
 		'modules/coreModule/directives/gallery',
 		'modules/coreModule/directives/gig',
+        'modules/coreModule/directives/admin-page/admin-page',
+        'modules/coreModule/directives/admin-page/attribute-list',
+        'modules/coreModule/directives/admin-page/dynamic-input',
 		'modules/coreModule/directives/file-model',
 		'modules/coreModule/directives/valid-file',
 		'modules/coreModule/filters/priceFilter'

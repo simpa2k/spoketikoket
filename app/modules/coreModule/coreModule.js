@@ -101,6 +101,12 @@ define(['modules/coreModule/runners/authenticationRunner', 'modules/coreModule/r
 				url: '/contact',
 				templateUrl: 'partials/admin-contact.html',
 				controller: 'AdminContactpersonsController'
+			})
+
+			.state('admin.announcements', {
+				url:'/announcements',
+				template: '<admin-page model="model" form-name="{{ formName }}"></admin-page>',
+				controller: 'AdminAnnouncementsController'
 			});
 
 		$httpProvider.interceptors.push('sessionInjector');
