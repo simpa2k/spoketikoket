@@ -2,7 +2,7 @@
     <div class="box col-sm-4">
         <div class="selectable-container">
             <div ng-repeat="item in items" class="admin-item selectable row">
-                <item item="item"></item>
+                <admin-item item="item" ng-click="setPutState(item)"></admin-item>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 define(function() {
 
-    let item = function() {
+    let adminItem = function() {
 
         let ignore = ['id', '$$hashKey'];
 
@@ -23,5 +23,5 @@ define(function() {
     };
 
     angular.module('coreModule')
-        .directive('item', item);
+        .directive('adminItem', adminItem);
 });

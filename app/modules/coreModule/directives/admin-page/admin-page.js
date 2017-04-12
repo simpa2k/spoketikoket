@@ -6,12 +6,41 @@ define(function() {
 
             $scope.objectToSend = {};
 
-            $scope.action = "Lägg till";
-            $scope.addingNew = true;
+            $scope.setPutState = function(item) {
 
-            $scope.send = function(formName) {
+                $scope.objectToSend = angular.copy(item);
+
+                $scope.addingNew = false;
+                $scope.action = "Bekräfta ändringar";
+
+                $scope.send = $scope.put;
+
+            };
+
+            $scope.setPostState = function() {
+
+                $scope.objectToSend = {};
+
+                $scope.action = "Lägg till";
+                $scope.addingNew = true;
+
+                $scope.send = $scope.post;
+
+            };
+
+            $scope.put = function(formName) {
                 console.log($scope.objectToSend);
-            }
+            };
+
+            $scope.post = function(formName) {
+                console.log($scope.objectToSend);
+            };
+
+            $scope.delete = function(formName) {
+                console.log($scope.objectToSend);
+            };
+
+            $scope.setPostState();
 
         }];
 

@@ -2,6 +2,18 @@ define(function() {
 
     let dynamicInput = function($compile) {
 
+        let controller = ['$scope', function($scope) {
+
+            $scope.datePopup = {
+                opened: false
+            };
+
+            $scope.openDatePopup = function() {
+                $scope.datePopup.opened = true;
+            };
+
+        }];
+
         let getStandardAttributes = function(field) {
 
             return {
@@ -44,13 +56,21 @@ define(function() {
 
         let appendDateInput = function(parent, field, scope) {
 
+            let p = $compile('<p class="input-group"></p>')(scope);
+
             let standardAttributes = getStandardAttributes(field);
 
-            standardAttributes.uibDatePickerPopup = "";
-            standardAttributes.isOpen = "";
-            standardAttributes.closeText = "";
+            standardAttributes.type = 'text';
+            standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
+            standardAttributes.isOpen = 'datePopup.opened';
+            standardAttributes.closeText = 'Stäng';
 
-            appendElement(parent, 'input', field, standardAttributes, scope);
+            appendElement(p, 'input', field, standardAttributes, scope);
+            let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
+
+            p.append(btn);
+
+            parent.append(p);
 
         };
 
@@ -64,6 +84,15 @@ define(function() {
             standardAttributes.showMeridian = false;
 
             appendElement(parent, 'div', field, standardAttributes, scope);
+
+        };
+
+        let createElement = function(element, field, attributes, scope) {
+
+            let input = $compile('<' + element + '></' + element + '>')(scope);
+            buildAttributes(input, attributes, scope);
+
+            return input;
 
         };
 
@@ -84,15 +113,14 @@ define(function() {
                 type: '@',
                 model: '='
             },
+            controller: controller,
             link: function(scope, element, attributes) {
 
                 switch(attributes.type) {
 
-                    case 'date':
-                        appendDateInput(element, attributes.field, scope);
-                        break;
-                    case 'time':
-                        appendTimeInput(element, attributes.field, scope);
+                    case 'datetime':
+                        appendDateInput(element, 'date', scope);
+                        appendTimeInput(element, 'time', scope);
                         break;
                     default:
                         appendInput(element, attributes.field, attributes, scope);

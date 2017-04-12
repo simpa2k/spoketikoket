@@ -10,15 +10,9 @@ define(function() {
 
         $scope.formStructure = [
             {
-                label: 'Välj datum:',
+                label: 'Välj datum och tid:',
                 fields: {
-                    date: 'date'
-                }
-            },
-            {
-                label: 'Välj tid:',
-                fields: {
-                    time: 'time'
+                    datetime: 'datetime'
                 }
             },
             {
