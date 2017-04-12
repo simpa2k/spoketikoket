@@ -20,7 +20,7 @@ define(function() {
 
                 id: field,
                 class: 'form-control',
-                ngModel: 'model[field]',
+                ngModel: 'model.' + field,
                 placeholder: field,
 
             }
@@ -58,19 +58,24 @@ define(function() {
 
             let p = $compile('<p class="input-group"></p>')(scope);
 
-            let standardAttributes = getStandardAttributes(field);
+            //let standardAttributes = getStandardAttributes(field);
+            let standardAttributes = {};
 
-            standardAttributes.type = 'text';
-            standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
-            standardAttributes.isOpen = 'datePopup.opened';
-            standardAttributes.closeText = 'Stäng';
+            //standardAttributes.type = 'text';
+            //standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
+            standardAttributes.uibDatepicker = '';
+            standardAttributes.class = 'well well-sm';
+            standardAttributes.ngModel = 'model.' + field;
+            //standardAttributes.isOpen = 'datePopup.opened';
+            //standardAttributes.closeText = 'Stäng';
 
-            appendElement(p, 'input', field, standardAttributes, scope);
-            let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
+            //appendElement(p, 'input', field, standardAttributes, scope);
+            appendElement(parent, 'div', field, standardAttributes, scope);
+            //let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
 
-            p.append(btn);
+            //p.append(btn);
 
-            parent.append(p);
+            //parent.append(p);
 
         };
 
@@ -119,8 +124,8 @@ define(function() {
                 switch(attributes.type) {
 
                     case 'datetime':
-                        appendDateInput(element, 'date', scope);
-                        appendTimeInput(element, 'time', scope);
+                        appendDateInput(element, attributes.field, scope);
+                        appendTimeInput(element, attributes.field, scope);
                         break;
                     default:
                         appendInput(element, attributes.field, attributes, scope);
