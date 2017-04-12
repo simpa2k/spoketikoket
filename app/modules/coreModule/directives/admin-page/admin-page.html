@@ -14,8 +14,8 @@
 
                     <label for="{{ entityName + '-' + $index }}">{{ group.label }}</label>
                     <div id="{{ entityName + '-' + $index }}">
-                        <dynamic-input ng-repeat="(field, type) in group.fields"
-                                       field="{{ field }}"
+                        <dynamic-input ng-repeat="(fieldName, type) in group.fields"
+                                       field-name="{{ fieldName }}"
                                        type="{{ type }}"
                                        model="objectToSend">
                         </dynamic-input>

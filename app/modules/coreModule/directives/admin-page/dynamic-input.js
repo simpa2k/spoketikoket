@@ -12,22 +12,16 @@ define(function() {
                 $scope.datePopup.opened = true;
             };
 
-            $scope.$watch(function() {
-                return $scope.datePopup.opened;
-            }, function(value) {
-                console.log(value);
-            });
-
         }];
 
-        let getStandardAttributes = function(field) {
+        let getStandardAttributes = function(fieldName) {
 
             return {
 
-                id: field,
+                id: fieldName,
                 class: 'form-control',
-                ngModel: 'model.' + field,
-                placeholder: field,
+                ngModel: 'model.' + fieldName,
+                placeholder: fieldName,
 
             }
         };
@@ -51,16 +45,16 @@ define(function() {
 
         };
 
-        let appendInput = function(parent, field, attributes, scope) {
+        let appendInput = function(parent, fieldName, attributes, scope) {
 
-            let standardAttributes = getStandardAttributes(field);
+            let standardAttributes = getStandardAttributes(fieldName);
             standardAttributes.type = 'text';
 
-            appendElement(parent, 'input', field, standardAttributes, scope);
+            appendElement(parent, 'input', standardAttributes, scope);
 
         };
 
-        let appendDateInput = function(parent, field, scope) {
+        let appendDateInput = function(parent, fieldName, scope) {
 
             let p = $compile('<p class="input-group"></p>')(scope);
 
@@ -68,7 +62,7 @@ define(function() {
 
                 id: 'date',
                 class: 'form-control',
-                ngModel: 'model.' + field,
+                ngModel: 'model.' + fieldName,
                 placeholder: 'date',
 
             };
@@ -76,9 +70,13 @@ define(function() {
             standardAttributes.type = 'text';
             standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
             standardAttributes.isOpen = 'datePopup.opened';
+
+
+            standardAttributes.currentText = 'Dagens datum';
+            standardAttributes.clearText = 'Rensa';
             standardAttributes.closeText = 'Stäng';
 
-            appendElement(p, 'input', field, standardAttributes, scope);
+            appendElement(p, 'input', standardAttributes, scope);
             let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
 
             p.append(btn);
@@ -86,32 +84,22 @@ define(function() {
 
             parent.append(p);
 
-
         };
 
-        let appendTimeInput = function(parent, field, scope) {
+        let appendTimeInput = function(parent, fieldName, scope) {
 
-            let standardAttributes = getStandardAttributes(field);
+            let standardAttributes = getStandardAttributes(fieldName);
 
             delete standardAttributes.class;
 
             standardAttributes.uibTimepicker = "";
             standardAttributes.showMeridian = false;
 
-            appendElement(parent, 'div', field, standardAttributes, scope);
+            appendElement(parent, 'div', standardAttributes, scope);
 
         };
 
-        let createElement = function(element, field, attributes, scope) {
-
-            let input = $compile('<' + element + '></' + element + '>')(scope);
-            buildAttributes(input, attributes, scope);
-
-            return input;
-
-        };
-
-        let appendElement = function(parent, element, field, attributes, scope) {
+        let appendElement = function(parent, element, attributes, scope) {
 
             let input = $compile('<' + element + '></' + element + '>')(scope);
             buildAttributes(input, attributes, scope);
@@ -124,7 +112,7 @@ define(function() {
 
             restrict: 'EA',
             scope: {
-                field: '@',
+                fieldName: '@',
                 type: '@',
                 model: '='
             },
@@ -134,11 +122,11 @@ define(function() {
                 switch(attributes.type) {
 
                     case 'datetime':
-                        appendDateInput(element, attributes.field, scope);
-                        appendTimeInput(element, attributes.field, scope);
+                        appendDateInput(element, attributes.fieldName, scope);
+                        appendTimeInput(element, attributes.fieldName, scope);
                         break;
                     default:
-                        appendInput(element, attributes.field, attributes, scope);
+                        appendInput(element, attributes.fieldName, attributes, scope);
                         break;
 
                 }

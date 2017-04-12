@@ -9,6 +9,7 @@ define(function() {
         $scope.entityName = 'announcements';
 
         $scope.formStructure = [
+
             {
                 label: 'Välj datum och tid:',
                 fields: {
