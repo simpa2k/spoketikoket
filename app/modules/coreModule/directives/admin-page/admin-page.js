@@ -20,12 +20,13 @@ define(function() {
             restrict: 'E',
             replace: true,
             scope: {
-                model: '=',
-                formName: '@'
+                items: '=',
+                formStructure: '=',
+                formName: '@',
+                entityName: '@'
             },
             templateUrl: 'app/modules/coreModule/directives/admin-page/admin-page.html',
             controller: controller
-
         }
     };
 

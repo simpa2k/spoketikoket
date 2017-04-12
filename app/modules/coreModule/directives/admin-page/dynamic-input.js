@@ -2,6 +2,18 @@ define(function() {
 
     let dynamicInput = function($compile) {
 
+        let getStandardAttributes = function(field) {
+
+            return {
+
+                id: field,
+                class: 'form-control',
+                ngModel: 'model[field]',
+                placeholder: field,
+
+            }
+        };
+
         let buildAttributes = function(element, attributes, scope) {
 
             angular.forEach(attributes, function(value, key) {
@@ -21,52 +33,71 @@ define(function() {
 
         };
 
-        let appendLabel = function(element, field, scope) {
+        let appendInput = function(parent, field, attributes, scope) {
 
-            let label = $compile('<label for="{{ field }}">{{ field }}</label>')(scope);
-            element.append(label);
+            let standardAttributes = getStandardAttributes(field);
+            standardAttributes.type = 'text';
+
+            appendElement(parent, 'input', field, standardAttributes, scope);
 
         };
 
-        let appendInput = function(element, field, attributes, scope) {
+        let appendDateInput = function(parent, field, scope) {
 
-            let input = $compile('<input id="{{ field }}" class="form-control" name="{{ field }}" ng-model="model[field]" placeholder="{{ field }}"></input>')(scope);
+            let standardAttributes = getStandardAttributes(field);
+
+            standardAttributes.uibDatePickerPopup = "";
+            standardAttributes.isOpen = "";
+            standardAttributes.closeText = "";
+
+            appendElement(parent, 'input', field, standardAttributes, scope);
+
+        };
+
+        let appendTimeInput = function(parent, field, scope) {
+
+            let standardAttributes = getStandardAttributes(field);
+
+            delete standardAttributes.class;
+
+            standardAttributes.uibTimepicker = "";
+            standardAttributes.showMeridian = false;
+
+            appendElement(parent, 'div', field, standardAttributes, scope);
+
+        };
+
+        let appendElement = function(parent, element, field, attributes, scope) {
+
+            let input = $compile('<' + element + '></' + element + '>')(scope);
             buildAttributes(input, attributes, scope);
 
-            element.append(input);
-
-        };
-
-        let appendCustomElement = function(element, field, attributes, scope) {
-
-            let input = $compile('<' + attributes.element + ' id="{{ field }}"></' + attributes.element + '>')(scope);
-            buildAttributes(input, attributes.additionalAttributes, scope);
-
-            element.append(input);
+            parent.append(input);
 
         };
 
         return {
 
-            restrict: 'E',
+            restrict: 'EA',
             scope: {
                 field: '@',
-                model: '=',
-                attributes: '='
+                type: '@',
+                model: '='
             },
-            template: '<div></div>',
-            replace: true,
             link: function(scope, element, attributes) {
 
-                let evaluatedAttributes = scope.$eval(attributes.attributes);
+                switch(attributes.type) {
 
-                let field = attributes.field;
-                appendLabel(element, field, scope);
+                    case 'date':
+                        appendDateInput(element, attributes.field, scope);
+                        break;
+                    case 'time':
+                        appendTimeInput(element, attributes.field, scope);
+                        break;
+                    default:
+                        appendInput(element, attributes.field, attributes, scope);
+                        break;
 
-                if (typeof evaluatedAttributes.element !== 'undefined') {
-                    appendCustomElement(element, field, evaluatedAttributes, scope);
-                } else {
-                    appendInput(element, field, evaluatedAttributes.additionalAttributes, scope);
                 }
             }
         }

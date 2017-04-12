@@ -7296,6 +7296,16 @@ body {
   border: 1px solid #123848;
   border-radius: 3px;
 }
+.admin-page .selectable-container,
+.admin-page .opacity-altering-selectable-container {
+  height: 90vh;
+  overflow-y: scroll;
+}
+.admin-page .selectable-container .row,
+.admin-page .opacity-altering-selectable-container .row {
+  margin-left: 0;
+  margin-right: 0;
+}
 #delete-modal {
   background-color: #123848;
   color: #D0D7DA;

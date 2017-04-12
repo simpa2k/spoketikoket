@@ -4,24 +4,40 @@ define(function() {
 
     app.controller('AdminAnnouncementsController', function($scope) {
 
+        $scope.items = $scope.gigs;
         $scope.formName = 'announcementsForm';
-        $scope.entityName = 'announcement';
-        $scope.model = {
-            address: {},
-            city: {},
-            date: {},
-            time: {
-                element: 'div',
-                additionalAttributes: {
-                    uibTimepicker: "",
-                    showMeridian: false
+        $scope.entityName = 'announcements';
+
+        $scope.formStructure = [
+            {
+                label: 'Välj datum:',
+                fields: {
+                    date: 'date'
                 }
             },
-            info: {},
-            price: {},
-            ticketlink: {},
-            venue_name: {},
-            webpage: {}
-        }
+            {
+                label: 'Välj tid:',
+                fields: {
+                    time: 'time'
+                }
+            },
+            {
+                label: 'Annan nyttig information:',
+                fields: {
+                    ticketlink: 'text',
+                    info: 'text',
+                    price: 'text'
+                }
+            },
+            {
+                label: 'Välj spelställe:',
+                fields: {
+                    venue_name: 'text',
+                    address: 'text',
+                    city: 'text',
+                    webpage: 'text'
+                }
+            }
+        ]
     });
 });

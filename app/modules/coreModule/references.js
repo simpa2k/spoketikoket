@@ -33,6 +33,7 @@ define(function() {
         'modules/coreModule/directives/admin-page/admin-page',
         'modules/coreModule/directives/admin-page/attribute-list',
         'modules/coreModule/directives/admin-page/dynamic-input',
+        'modules/coreModule/directives/admin-page/admin-item',
 		'modules/coreModule/directives/file-model',
 		'modules/coreModule/directives/valid-file',
 		'modules/coreModule/filters/priceFilter'
