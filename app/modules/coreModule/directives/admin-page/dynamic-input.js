@@ -12,6 +12,12 @@ define(function() {
                 $scope.datePopup.opened = true;
             };
 
+            $scope.$watch(function() {
+                return $scope.datePopup.opened;
+            }, function(value) {
+                console.log(value);
+            });
+
         }];
 
         let getStandardAttributes = function(field) {
@@ -58,24 +64,28 @@ define(function() {
 
             let p = $compile('<p class="input-group"></p>')(scope);
 
-            //let standardAttributes = getStandardAttributes(field);
-            let standardAttributes = {};
+            let standardAttributes = {
 
-            //standardAttributes.type = 'text';
-            //standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
-            standardAttributes.uibDatepicker = '';
-            standardAttributes.class = 'well well-sm';
-            standardAttributes.ngModel = 'model.' + field;
-            //standardAttributes.isOpen = 'datePopup.opened';
-            //standardAttributes.closeText = 'Stäng';
+                id: 'date',
+                class: 'form-control',
+                ngModel: 'model.' + field,
+                placeholder: 'date',
 
-            //appendElement(p, 'input', field, standardAttributes, scope);
-            appendElement(parent, 'div', field, standardAttributes, scope);
-            //let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
+            };
 
-            //p.append(btn);
+            standardAttributes.type = 'text';
+            standardAttributes.uibDatepickerPopup = 'd/M, yyyy';
+            standardAttributes.isOpen = 'datePopup.opened';
+            standardAttributes.closeText = 'Stäng';
 
-            //parent.append(p);
+            appendElement(p, 'input', field, standardAttributes, scope);
+            let btn = $compile('<span class="input-group-btn"><button type="button" class="btn btn-default" ng-click="openDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button></span>')(scope);
+
+            p.append(btn);
+            $compile(p)(scope);
+
+            parent.append(p);
+
 
         };
 
