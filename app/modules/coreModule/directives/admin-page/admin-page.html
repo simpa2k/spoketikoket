@@ -1,12 +1,12 @@
 <div class="admin-page">
-    <div class="box col-sm-4">
+    <div class="box col-sm-4" ng-if="items">
         <div class="selectable-container">
             <div ng-repeat="item in items" class="admin-item selectable row">
                 <admin-item item="item" ng-click="setPutState(item)"></admin-item>
             </div>
         </div>
     </div>
-    <div class="col-sm-8">
+    <div class="{{ items ? 'col-sm-8' : 'col-sm-12' }}">
         <div class="col-sm-6 col-sm-offset-3">
             <form name="{{ formName }}" novalidate>
 

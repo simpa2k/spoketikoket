@@ -4,11 +4,21 @@ define(function() {
 
     app.controller('AdminAnnouncementsController', function($scope) {
 
-        $scope.items = $scope.gigs;
+        //$scope.items = $scope.description;
         $scope.formName = 'announcementsForm';
         $scope.entityName = 'announcements';
 
         $scope.formStructure = [
+
+            {
+                label: 'Beskrivning:',
+                fields: {
+                    description: 'textarea'
+                }
+            }
+        ];
+
+        /*$scope.formStructure = [
 
             {
                 label: 'Välj datum och tid:',
@@ -32,13 +42,7 @@ define(function() {
                     city: 'text',
                     webpage: 'text'
                 }
-            },
-            {
-                label: 'Test',
-                fields: {
-                    textarea: 'textarea'
-                }
             }
-        ]
+        ]*/
     });
 });
