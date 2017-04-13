@@ -32,6 +32,12 @@ define(function() {
                     city: 'text',
                     webpage: 'text'
                 }
+            },
+            {
+                label: 'Test',
+                fields: {
+                    textarea: 'textarea'
+                }
             }
         ]
     });

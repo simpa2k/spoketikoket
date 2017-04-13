@@ -5,10 +5,12 @@ define(function() {
      * Currently, the following types are supported:
      *
      *  * datetime
+     *  * textarea
      *  * text
      *
      * The datetime type generates one uib-datepicker-popup and one
-     * uib-timepicker from the UI Bootstrap library.
+     * uib-timepicker from the UI Bootstrap library. The textarea type
+     * generates a TinyMce HTML editor.
      */
     let dynamicInput = function($compile) {
 
@@ -119,9 +121,9 @@ define(function() {
 
             };
 
-            standardAttributes.type = 'text'; // Type should be set to 'text' to avoid browsers displaying their own datepickers.
+            standardAttributes.type = 'text';                    // Type should be set to 'text' to avoid browsers displaying their own datepickers.
             standardAttributes.uibDatepickerPopup = 'd/M, yyyy'; // "April 12th 2017" will be displayed as "12/4, 2017".
-            standardAttributes.isOpen = 'datePopup.opened'; // Specifying the variable to store open/closed state.
+            standardAttributes.isOpen = 'datePopup.opened';      // Specifying the variable to store open/closed state.
 
 
             // Doing a bit of translating from the standard button texts.
@@ -166,6 +168,25 @@ define(function() {
         };
 
         /**
+         * Function to create and append a textarea to a given parent.
+         * Will create a TinyMce HTML editor.
+         *
+         * @param parent The element to append the newly create textarea to.
+         * @param fieldName The name of the field that the input maps to.
+         * @param scope The current scope.
+         */
+        let appendTextarea = function (parent, fieldName, scope) {
+
+            let standardAttributes = getStandardAttributes(fieldName);
+            delete standardAttributes.placeholder;
+
+            standardAttributes.uiTinymce = '';
+
+            appendElement(parent, 'textarea', standardAttributes, scope);
+
+        };
+
+        /**
          * Function to create and append an angular element to a given parent.
          *
          * @param parent The parent to append the newly created element to.
@@ -199,6 +220,9 @@ define(function() {
                     case 'datetime':
                         appendDateInput(element, attributes.fieldName, scope);
                         appendTimeInput(element, attributes.fieldName, scope);
+                        break;
+                    case 'textarea':
+                        appendTextarea(element, attributes.fieldName, scope);
                         break;
                     default:
                         appendInput(element, attributes.fieldName, scope);
