@@ -178,11 +178,11 @@ define(function() {
         let appendTextarea = function (parent, fieldName, scope) {
 
             let standardAttributes = getStandardAttributes(fieldName);
-            delete standardAttributes.placeholder;
+            delete standardAttributes.placeholder; // TinyMce doesn't use it anyway, but it wouldn't hurt to leave it either.
 
-            standardAttributes.uiTinymce = '';
+            standardAttributes.uiTinymce = ''; // No value needed.
 
-            appendElement(parent, 'textarea', standardAttributes, scope);
+            appendElement(parent, 'textarea', standardAttributes, scope); // Create the textarea input.
 
         };
 
