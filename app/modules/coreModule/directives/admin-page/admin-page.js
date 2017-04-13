@@ -58,9 +58,7 @@ define(function() {
              */
             $scope.setPostState = function() {
 
-                //$scope.objectToSend = {}; // Emptying the object to be POSTed.
-                $scope.objectToSend = $scope.createObject();
-                console.log($scope.objectToSend);
+                $scope.objectToSend = $scope.createObject(); // Resetting the object to be POSTed.
 
                 $scope.action = "Lägg till";
                 $scope.addingNew = true; // Hide the confirm and delete buttons.
