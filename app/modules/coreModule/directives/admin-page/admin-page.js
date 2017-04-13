@@ -58,7 +58,9 @@ define(function() {
              */
             $scope.setPostState = function() {
 
-                $scope.objectToSend = {}; // Emptying the object to be POSTed.
+                //$scope.objectToSend = {}; // Emptying the object to be POSTed.
+                $scope.objectToSend = $scope.createObject();
+                console.log($scope.objectToSend);
 
                 $scope.action = "Lägg till";
                 $scope.addingNew = true; // Hide the confirm and delete buttons.
@@ -138,7 +140,8 @@ define(function() {
                 formStructure: '=',
                 formName: '@',
                 entityName: '@',
-                refreshCallback: '&'
+                refreshCallback: '&',
+                createObject: '&'
             },
             templateUrl: 'app/modules/coreModule/directives/admin-page/admin-page.html',
             controller: controller

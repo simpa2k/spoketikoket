@@ -10,6 +10,10 @@ define(function() {
             $scope.announcements = announcements;
         };
 
+        $scope.createAnnouncement = function() {
+            return {date: new Date()};
+        };
+
         $scope.formStructure = [
 
             {
