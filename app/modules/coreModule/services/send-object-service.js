@@ -44,18 +44,21 @@ define(function() {
 	    };
 	
 	    self.putObject = function(endpoint, object, callback) {
-	        $http.put(self.createUri(endpoint, object)).then(function(response) {
+
+	    	$http.put(self.createUri(endpoint, object)).then(function(response) {
 	            callback(response.data);
 	        });
 	    };
 	
 	    self.postObject = function(endpoint, object, callback) {
+
 	        $http.post(self.createUri(endpoint, object)).then(function(response) {
 	            callback(response.data);
 	        });
 	    };
 	
 	    self.deleteObject = function(endpoint, object, callback) {
+
 	        $http.delete(self.createUri(endpoint, object)).then(function(response) {
 	            callback(response.data);
 	        });

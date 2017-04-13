@@ -16,7 +16,8 @@ define(function() {
                                               ImagesService,
                                               MembersService,
                                               UsersService,
-                                              EmbeddeditemsService) {
+                                              EmbeddeditemsService,
+                                              AnnouncementsService) {
 
         $scope.background = parallaxHelper.createAnimator(-0.3, 300, -250);
         $scope.foreground = parallaxHelper.createAnimator(-0.1, 150, -150);
@@ -64,6 +65,10 @@ define(function() {
 
         EmbeddeditemsService.getSounds().then(function(sounds) {
             $scope.sounds = sounds;
+        });
+
+        AnnouncementsService.getAnnouncements().then(function(announcements) {
+            $scope.announcements = announcements;
         });
 
         $scope.trustUrl = function(src) {

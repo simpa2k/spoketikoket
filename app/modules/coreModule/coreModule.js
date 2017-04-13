@@ -105,7 +105,7 @@ define(['modules/coreModule/runners/authenticationRunner', 'modules/coreModule/r
 
 			.state('admin.announcements', {
 				url:'/announcements',
-				template: '<admin-page items="items" form-structure="formStructure" form-name="{{ formName }}" entity-name="{{ entityName }}"></admin-page>',
+				templateUrl: 'partials/admin-announcements.html',
 				controller: 'AdminAnnouncementsController'
 			});
 

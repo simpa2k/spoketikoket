@@ -22,6 +22,7 @@ define(function() {
 		'modules/coreModule/services/images-service',
 		'modules/coreModule/services/embeddeditems-service',
 		'modules/coreModule/services/members-service',
+        'modules/coreModule/services/announcements-service',
 		'modules/coreModule/services/send-object-service',
 		'modules/coreModule/services/users-service',
 		'modules/coreModule/services/venues-service',

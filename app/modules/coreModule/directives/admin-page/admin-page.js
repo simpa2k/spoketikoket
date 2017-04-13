@@ -26,7 +26,8 @@ define(function() {
      */
     let adminPage =  function() {
 
-        let controller = ['$scope', function($scope) {
+        let controller = ['$scope', 'SendObjectService', 'ValidationService',
+            function($scope, SendObjectService, ValidationService) {
 
             /**
              * Function to populate form fields with information from one data
@@ -39,7 +40,7 @@ define(function() {
                 // Copying selected item to ensure nothing is changed before the confirm button is clicked.
                 $scope.objectToSend = angular.copy(item);
 
-                $scope.addingNew = false; // This displays the confirm and delete buttons.
+                $scope.addingNew = false; // Display the confirm and delete buttons.
                 $scope.action = "Bekräfta ändringar";
 
                 /*
@@ -60,7 +61,7 @@ define(function() {
                 $scope.objectToSend = {}; // Emptying the object to be POSTed.
 
                 $scope.action = "Lägg till";
-                $scope.addingNew = true; // This hides the confirm and delete buttons.
+                $scope.addingNew = true; // Hide the confirm and delete buttons.
 
                 /*
                  * $scope.send is the function actually called on clicking the
@@ -72,39 +73,59 @@ define(function() {
             };
 
             /**
+             * Function to refresh data and reset form validation after a
+             * request has been performed.
+             *
+             * @param data The data to be used for the refresh.
+             * @param formName The form to be reset.
+             */
+            let refresh = function(data, formName) {
+
+                $scope.refreshCallback(data);
+                ValidationService.resetForm(formName);
+
+            };
+
+            /**
              * Function to perform a PUT on a data item.
              *
-             * @param formName The name of the form to reset upon completion of
+             * @param formName The name of the form to be reset upon completion of
              * the request.
              */
             $scope.put = function(formName) {
-                console.log($scope.objectToSend);
+
+                SendObjectService.putObject($scope.entityName, $scope.objectToSend, (data) => {
+                    refresh(data, formName);
+                });
             };
 
             /**
              * Function to POST a data item.
              *
-             * @param formName The name of the form to reset upon completion of
+             * @param formName The name of the form to be reset upon completion of
              * the request.
              */
             $scope.post = function(formName) {
-                console.log($scope.objectToSend);
+
+                SendObjectService.postObject($scope.entityName, $scope.objectToSend, (data) => {
+                    refresh(data, formName);
+                });
             };
 
             /**
              * Function to DELETE a data item.
              *
-             * @param formName The name of the form to reset upon completion of
+             * @param formName The name of the form to be reset upon completion of
              * the request.
              */
             $scope.delete = function(formName) {
-                console.log($scope.objectToSend);
+
+                SendObjectService.deleteObject($scope.entityName, $scope.objectToSend, (data) => {
+                    refresh(data, formName);
+                });
             };
 
-            /*
-             * Initializing admin page with an empty form.
-             */
-            $scope.setPostState();
+            $scope.setPostState(); // Initializing the admin page with an empty form.
 
         }];
 
@@ -116,7 +137,8 @@ define(function() {
                 items: '=',
                 formStructure: '=',
                 formName: '@',
-                entityName: '@'
+                entityName: '@',
+                refreshCallback: '&'
             },
             templateUrl: 'app/modules/coreModule/directives/admin-page/admin-page.html',
             controller: controller
