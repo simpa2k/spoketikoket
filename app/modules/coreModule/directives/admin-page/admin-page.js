@@ -129,6 +129,7 @@ define(function() {
 
         }];
 
+        // ToDo: It is inefficient to go through the form structure twice, once in this function and once when generating inputs.
         /**
          * Function to parse a form structure and from it determine what fields
          * should be displayed on each admin item.
