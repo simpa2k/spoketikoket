@@ -129,6 +129,27 @@ define(function() {
 
         }];
 
+        /**
+         * Function to parse a form structure and from it determine what fields
+         * should be displayed on each admin item.
+         *
+         * @param formStructure The form structure to parse.
+         * @returns {Array} The name of the fields to display.
+         */
+        let pickoutFieldsToDisplay = function(formStructure) {
+
+            let fieldsToDisplay = [];
+
+            angular.forEach(formStructure, function(formGroup) {
+
+                angular.forEach(formGroup.fields, function(type, fieldName) {
+                    fieldsToDisplay.push(fieldName);
+                })
+            });
+            return fieldsToDisplay;
+
+        };
+
         return {
 
             restrict: 'E',
@@ -142,7 +163,12 @@ define(function() {
                 createObject: '&'
             },
             templateUrl: 'app/modules/coreModule/directives/admin-page/admin-page.html',
-            controller: controller
+            controller: controller,
+            link: function(scope, element, attributes) {
+
+                scope.fields = pickoutFieldsToDisplay(scope.$eval(attributes.formStructure));
+
+            }
         }
     };
 

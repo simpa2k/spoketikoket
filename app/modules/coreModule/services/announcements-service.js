@@ -12,7 +12,16 @@ define(function() {
                     resolve([{date: new Date(), content: 'Hej allihopa!'}, {date: new Date(), content: 'Hejdå allihopa!'}]);
                 });
 
-            }
+            },
+            formStructure: [
+
+                {
+                    label: 'Beskrivning:',
+                    fields: {
+                        content: 'textarea'
+                    }
+                }
+            ]
         };
         return announcementsService;
 

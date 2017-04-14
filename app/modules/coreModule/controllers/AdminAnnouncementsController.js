@@ -2,7 +2,7 @@ define(function() {
 
     let app = angular.module('coreModule');
 
-    app.controller('AdminAnnouncementsController', function($scope) {
+    app.controller('AdminAnnouncementsController', ['$scope', 'AnnouncementsService', function($scope, AnnouncementsService) {
 
         $scope.formName = 'announcementsForm';
         $scope.entityName = 'announcements';
@@ -14,14 +14,7 @@ define(function() {
             return {date: new Date()};
         };
 
-        $scope.formStructure = [
+        $scope.formStructure = AnnouncementsService.formStructure;
 
-            {
-                label: 'Beskrivning:',
-                fields: {
-                    content: 'textarea'
-                }
-            }
-        ];
-    });
+    }]);
 });
