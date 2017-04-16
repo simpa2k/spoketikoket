@@ -1,15 +1,23 @@
 <div class="admin-page">
+
     <div class="box col-sm-4" ng-if="items">
+
         <p class="text-center non-bordered-large-section-heading">{{ entityName | capitalize }}</p>
+
         <div class="selectable-container">
             <div ng-repeat="item in items" class="admin-item selectable row">
                 <admin-item item="item" fields="fields" ng-click="setPutState(item)"></admin-item>
             </div>
         </div>
+
     </div>
+
     <div class="{{ items ? 'col-sm-8' : 'col-sm-12' }}">
         <div class="col-sm-6 col-sm-offset-3">
+
             <form name="{{ formName }}" novalidate>
+
+                <p class="non-bordered-large-section-heading text-center">{{ heading }}</p>
 
                 <div ng-repeat="group in formStructure" class="form-group">
 
@@ -30,6 +38,8 @@
                 <button class="btn btn-danger pull-right" ng-hide="addingNew" ng-click="delete(formName)">Ta bort</button>
 
             </form>
+
         </div>
     </div>
+
 </div>

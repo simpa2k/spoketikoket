@@ -42,6 +42,7 @@ define(function() {
 
                 $scope.addingNew = false; // Display the confirm and delete buttons.
                 $scope.action = "Bekräfta ändringar";
+                $scope.heading = "Redigera";
 
                 /*
                  * $scope.send is the function actually called on clicking the
@@ -60,8 +61,9 @@ define(function() {
 
                 $scope.objectToSend = $scope.createObject(); // Resetting the object to be POSTed.
 
-                $scope.action = "Lägg till";
                 $scope.addingNew = true; // Hide the confirm and delete buttons.
+                $scope.action = "Lägg till";
+                $scope.heading = "Skapa";
 
                 /*
                  * $scope.send is the function actually called on clicking the
