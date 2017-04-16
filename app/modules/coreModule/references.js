@@ -37,7 +37,8 @@ define(function() {
         'modules/coreModule/directives/admin-page/admin-item',
 		'modules/coreModule/directives/file-model',
 		'modules/coreModule/directives/valid-file',
-		'modules/coreModule/filters/priceFilter'
+		'modules/coreModule/filters/priceFilter',
+        'modules/coreModule/filters/capitalize'
 	]
 
 });

@@ -1,5 +1,6 @@
 <div class="admin-page">
     <div class="box col-sm-4" ng-if="items">
+        <p class="text-center non-bordered-large-section-heading">{{ entityName | capitalize }}</p>
         <div class="selectable-container">
             <div ng-repeat="item in items" class="admin-item selectable row">
                 <admin-item item="item" fields="fields" ng-click="setPutState(item)"></admin-item>

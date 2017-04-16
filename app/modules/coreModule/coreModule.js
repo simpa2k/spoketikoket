@@ -121,4 +121,6 @@ define(['modules/coreModule/runners/authenticationRunner', 'modules/coreModule/r
 		});
 	});
 
+	return coreModule;
+
 });
