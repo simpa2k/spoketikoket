@@ -13,7 +13,8 @@ define(function() {
 	                promise = $http.get(membersEndpoint).then(function(response) {
 	                    return response.data
 	                });
-	            } return promise;
+	            }
+	            return promise;
 	        },
 			refreshMembers: function() {
 	            promise = $http.get(membersEndpoint).then(function(response) {
