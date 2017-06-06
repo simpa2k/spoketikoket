@@ -62,14 +62,33 @@ define(function() {
 
 		};
 
-        let setAttributes = function(embeddedItems) {
+        const isPriority = function(type) {
+        	return type === 'spotify';
+		};
+
+        /*
+         * Note that this function both modifies the original
+         * array and returns a new one, sorted by prioritized items.
+         */
+        let formatItems = function(embeddedItems) {
+
+        	let sortedAndSet = [];
 
             angular.forEach(embeddedItems, function(embeddedItem) {
 
             	const type = determineType(embeddedItem);
             	Object.assign(embeddedItem, iframeAttributes[type]);
 
+                if (isPriority(type)) {
+                	sortedAndSet.unshift(embeddedItem);
+                } else {
+                	sortedAndSet.push(embeddedItem);
+				}
+
 			});
+
+            return sortedAndSet;
+
 		};
 
 	    var embeddeditemsService = {
@@ -84,7 +103,7 @@ define(function() {
 	            promise = $http.get(embeddeditemsEndpoint).then(function(response) {
 
 	                // ToDo: attributes need to be set here
-	                return response.data
+	                return formatItems(response.data);
 
 	            });
 	            return promise;
@@ -93,8 +112,8 @@ define(function() {
 	        	if(!videosPromise) {
 	        		videosPromise = $http.get(videosEndpoint).then(function(response) {
 
-                        setAttributes(response.data);
-	        			return response.data;
+                        return formatItems(response.data);
+	        			//return response.data;
 
 					});
 				}
@@ -103,8 +122,8 @@ define(function() {
 			refreshVideos: function() {
 				videosPromise = $http.get(videosEndpoint).then(function(response) {
 
-                    setAttributes(response.data);
-					return response.data;
+                    return formatItems(response.data);
+					//return response.data;
 
 				});
 				return videosPromise;
@@ -113,8 +132,7 @@ define(function() {
 				if(!soundsPromise) {
 					soundsPromise = $http.get(soundsEndpoint).then(function(response) {
 
-                        setAttributes(response.data);
-						return response.data;
+                        return formatItems(response.data);
 
 					});
 				}
@@ -123,8 +141,7 @@ define(function() {
 			refreshSounds: function() {
 				soundsPromise = $http.get(soundsEndpoint).then(function(response) {
 
-                    setAttributes(response.data);
-					return response.data;
+                    return formatItems(response.data);
 
 				});
 				return soundsPromise;

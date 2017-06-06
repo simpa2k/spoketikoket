@@ -24,7 +24,7 @@ class BandSeeder {
         $this->seedContactPersons();
         $this->seedDescription();
         $this->seedGigs();
-        $this->seedMembers();
+        //$this->seedMembers();
         //$this->seedNewsItems();
         //$this->seedQuotes();
 
@@ -56,7 +56,33 @@ class BandSeeder {
 
         $this->seedVenues();
 
-        for($i = 1; $i < 31; $i++) {
+        $gigs = array (
+            0 => array (
+                'datetime' => '2017-09-11',
+                'venue_name' => 'Tivoli'
+            ),
+            1 => array (
+                'datetime' => '2017-09-10 13:00:00',
+                'ticketlink' => 'http://www.pranafestival.org',
+                'venue_name' => 'Prana Festival'
+            ),
+            2 => array (
+                'datetime' => '2017-08-25',
+                'venue_name' => 'Folk Spot Tønder'
+            )
+        );
+
+        foreach ($gigs as $gig) {
+            $this->_db->insert('gig', array(
+                'datetime' => $gig['datetime'],
+                'ticketlink' => $gig['ticketlink'],
+                'info' => $gig['info'],
+                'venue_name' => $gig['venue_name'],
+                'price' => $gig['price']
+            ));
+        }
+
+        /*for($i = 1; $i < 31; $i++) {
 
             $day = $i < 10 ? "0$i" : $i;
             $date = "2016-09-$day";
@@ -69,18 +95,33 @@ class BandSeeder {
                 'price' => '120'
             ));
 
-        }
+        }*/
 
     }
 
     public function seedVenues() {
 
-        $venues = array(
+        /*$venues = array(
             0 => array(
                 'name' => 'Stället',
                 'city' => 'Stockholm',
                 'address' => 'Ställegatan 29',
                 'webpage' => 'www.stället.ställe'
+            )
+        );*/
+        $venues = array (
+            0 => array (
+                'name' => 'Tivoli',
+                'city' => 'København'
+            ),
+            1 => array (
+                'name' => 'Prana Festival',
+                'city' => 'Göteborg',
+            ),
+            2 => array (
+                'name' => 'Folk Spot Tønder',
+                'city' => 'Tønder',
+                'address' => 'Tønder Festival',
             )
         );
 
