@@ -21,7 +21,8 @@ define(function() {
             {
                 linkHref: "http://www.facebook.com/spoketikoket",
                 imageSource: "images/socialmedia/facebooklogga_29.png",
-                imageText: "images/socialmedia/facebooktext.png"
+                //imageText: "images/socialmedia/facebooktext.png"
+                imageText: "" // This is to make things look consistent, since there is no text for the spotify button yet.
             },
             {
                 linkHref: "https://open.spotify.com/artist/3mGBGDMzA9TYvtj8aFnQxL",
@@ -31,7 +32,8 @@ define(function() {
             {
                 linkHref: "https://www.youtube.com/channel/UCBnvUMnm1tU1O2ioTnUNJNw",
                 imageSource: "images/socialmedia/yt29.png",
-                imageText: "images/socialmedia/youtubetext.png"
+                //imageText: "images/socialmedia/youtubetext.png"
+                imageText: ""
             }
         ];
 
