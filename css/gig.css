@@ -6790,15 +6790,18 @@ button.close {
   border: 1px solid #123848;
 }
 #gigs {
-  height: 100vh;
   overflow-y: hidden;
   color: #123848;
 }
 #gigs .large-section-heading {
   text-shadow: #afab93 2px 2px 2px;
 }
-#gigs #gigs-container {
-  height: 90%;
+#gigs #earlier-gigs {
+  cursor: pointer;
+}
+#gigs #gigs-container,
+#gigs #earlier-gigs-container {
+  height: 70vh;
   overflow-y: auto;
   padding-bottom: 2%;
 }

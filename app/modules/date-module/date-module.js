@@ -10,7 +10,53 @@ define(function() {
             callback(date);
         };
 
-        self.compareYearMonthDay = function(date1, date2) {
+        self.laterThan = function(date1, date2) {
+
+            return self.compareYearMonthDay(date1, date2, (date1Year, date1Month, date1Day, date2Year, date2Month, date2Day) => {
+
+                if(date1Year === date2Year) {
+
+                 if(date1Month === date2Month) {
+
+                     return date1Day >= date2Day;
+
+                 } else if (date1Month > date2Month) {
+
+                     return true;
+
+                 }
+               } else if(date1Year > date2Year) {
+                     return true;
+               }
+               return false;
+
+            })
+        };
+
+        self.earlierThan = function(date1, date2) {
+
+            return self.compareYearMonthDay(date1, date2, (date1Year, date1Month, date1Day, date2Year, date2Month, date2Day) => {
+
+                if(date1Year === date2Year) {
+
+                    if(date1Month === date2Month) {
+
+                        return date1Day <= date2Day;
+
+                    } else if (date1Month < date2Month) {
+
+                        return true;
+
+                    }
+                } else if(date1Year < date2Year) {
+                    return true;
+                }
+                return false;
+
+            })
+        };
+
+        self.compareYearMonthDay = function(date1, date2, comparisonFunction) {
             date1Year = date1.getFullYear();
             date2Year = date2.getFullYear();
 
@@ -20,17 +66,8 @@ define(function() {
             date1Day = date1.getDate();
             date2Day = date2.getDate();
 
-            if(date1Year == date2Year) {
-                if(date1Month == date2Month) {
-                    return date1Day >= date2Day;
-                } else if (date1Month > date2Month) {
-                    return true;
-                }
-            } else if(date1Year > date2Year) {
-                return true;
-            }
+            return comparisonFunction(date1Year, date1Month, date1Day, date2Year, date2Month, date2Day);
 
-            return false;
         };
 
         self.parseDate = function(date) {

@@ -39,10 +39,19 @@ define(function() {
 
         $scope.dateFilter = function() {
             return function(gig) {
-                return DateService.compareYearMonthDay(gig.datetime, $scope.currentDate);
+                return DateService.laterThan(gig.datetime, $scope.currentDate);
             }
         };
 
+        $scope.earlierGigsDateFilter = function() {
+            return function(gig) {
+                return DateService.earlierThan(gig.datetime, $scope.currentDate);
+            }
+        };
+
+        $scope.showEarlierGigs = function() {
+
+        }
     });
 
 });

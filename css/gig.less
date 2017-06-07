@@ -6,7 +6,7 @@
 
   //background-color: @white;
   //background-color: @black;
-  height: @screen-height;
+  //height: @screen-height;
   overflow-y: hidden;
   color: @gig-text-color;
 
@@ -16,9 +16,13 @@
     text-shadow: @dark-background-shadow 2px 2px 2px;
   }
 
-  #gigs-container {
+  #earlier-gigs {
+    cursor: pointer;
+  }
 
-    height: 90%;
+  #gigs-container, #earlier-gigs-container {
+
+    height: 70vh;
     overflow-y: auto;
     padding-bottom: 2%;
 
@@ -100,8 +104,5 @@
       display: initial;
 
     }
-
-
   }
-
 }
