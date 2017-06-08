@@ -40,7 +40,7 @@ define(function() {
 
         $scope.dateFilter = function() {
             return function(gig) {
-                return DateService.compareYearMonthDay(gig.datetime, $scope.datetime);
+                return DateService.laterThan(gig.datetime, $scope.currentDate);
             }
         };
 
