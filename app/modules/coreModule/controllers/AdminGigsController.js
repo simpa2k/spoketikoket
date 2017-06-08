@@ -40,7 +40,7 @@ define(function() {
 
         $scope.dateFilter = function() {
             return function(gig) {
-                return DateService.laterThan(gig.datetime, $scope.currentDate);
+                return DateService.laterThan(gig.datetime, $scope.datetime);
             }
         };
 
