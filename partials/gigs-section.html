@@ -5,7 +5,7 @@
 
             <div id="gigs" class="col-md-8 col-md-offset-2">
 
-                <p class="large-section-heading">KOMMANDE KONSERTER</p>
+                <p class="large-section-heading">{{ gigsHeading }}</p>
 
                 <div id="gigs-container" class="selectable-container">
                     <div ng-repeat="gig in gigs | filter:dateFilter()" class="gig selectable collapsed row {{ getColorClass($index, gigsColors) }}">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
 
-                <earlier-gigs gigs="gigs" earlier-gigs-filter="earlierGigsFilter()" get-color-class="getColorClass()"></earlier-gigs>
+                <p id="earlier-gigs" class="large-text" ng-click="showSelectedGigs()">{{ toggleGigsButtonText }}</p>
 
             </div>
 

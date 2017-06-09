@@ -39,19 +39,34 @@ define(function() {
 
         $scope.dateFilter = function() {
             return function(gig) {
-                return DateService.laterThan(gig.datetime, $scope.currentDate);
+                return $scope.filterFunction(gig.datetime, $scope.currentDate);
             }
         };
 
-        $scope.earlierGigsDateFilter = function() {
-            return function(gig) {
-                return DateService.earlierThan(gig.datetime, $scope.currentDate);
-            }
+        const showEarlierGigs = function() {
+
+            $scope.gigsHeading = 'SPELADE KONSERTER';
+            $scope.toggleGigsButtonText = 'Se var vi ska spela framöver';
+
+            $scope.filterFunction = DateService.earlierThan;
+
+            $scope.showSelectedGigs = showUpcomingGigs;
+
         };
 
-        $scope.showEarlierGigs = function() {
+        const showUpcomingGigs = function() {
 
-        }
+            $scope.gigsHeading = 'KOMMANDE KONSERTER';
+            $scope.toggleGigsButtonText = 'Se var vi har spelat tidigare';
+
+            $scope.filterFunction = DateService.laterThan;
+
+            $scope.showSelectedGigs = showEarlierGigs;
+
+        };
+
+        $scope.showSelectedGigs = showUpcomingGigs;
+        $scope.showSelectedGigs();
+
     });
-
 });

@@ -6936,11 +6936,22 @@ button.close {
   overflow-y: hidden;
   color: #123848;
 }
-#gigs .large-section-heading {
+#gigs #gigs-headings .large-section-heading {
   text-shadow: #afab93 2px 2px 2px;
 }
 #gigs #earlier-gigs {
+  text-align: center;
   cursor: pointer;
+  padding: 1% 1%;
+  width: 25%;
+  margin: 1% auto;
+  border: 1px solid #D0D7DA;
+  border-radius: 2px;
+  background-color: #B16356;
+  color: #123848;
+  -webkit-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  -moz-box-shadow: 2px 2px 3px 0px #c3bfa7;
+  box-shadow: 2px 2px 3px 0px #c3bfa7;
 }
 #gigs #gigs-container,
 #gigs #earlier-gigs-container {

@@ -4,20 +4,31 @@
 
 #gigs {
 
-  //background-color: @white;
-  //background-color: @black;
-  //height: @screen-height;
   overflow-y: hidden;
   color: @gig-text-color;
 
-  .large-section-heading {
-    //text-shadow: rgb(3, 3, 3) 2px 2px 2px;
-    // The following RGB value is @sand-color - 303030
-    text-shadow: @dark-background-shadow 2px 2px 2px;
+  #gigs-headings {
+
+    .large-section-heading {
+
+      // The following RGB value is @sand-color - 303030
+      text-shadow: @dark-background-shadow 2px 2px 2px;
+
+    }
   }
 
   #earlier-gigs {
+
+    text-align: center;
     cursor: pointer;
+    padding: 1% 1%;
+    width: 25%;
+    margin: 1% auto;
+    border: 1px solid @gig-border;
+    border-radius: 2px;
+    .red;
+    .shadowed;
+
   }
 
   #gigs-container, #earlier-gigs-container {
@@ -104,5 +115,9 @@
       display: initial;
 
     }
+  }
+
+  #earlier-gigs-container {
+
   }
 }
